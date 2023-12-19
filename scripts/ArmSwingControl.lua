@@ -39,14 +39,12 @@ function events.RENDER(delta, context)
   
   -- Left arm
   local leftArmStop = not armMovement and not shouldMove and not leftSwing and not ((crossL or crossR) or (using and usingL ~= "NONE")) and not firstPerson
-  leftArm:setParentType(leftArmStop and "Body" or "LeftArm")
-    :setRot(leftArmStop and -idleRot or nil)
+  leftArm:setRot(leftArmStop and -idleRot - vanilla_model.LEFT_ARM:getOriginRot(delta) or nil)
     :setPos(armPos - animOffset)
   
   -- Right arm
   local rightArmStop = not armMovement and not shouldMove and not rightSwing and not ((crossL or crossR) or (using and usingR ~= "NONE")) and not firstPerson
-  rightArm:setParentType(rightArmStop and "Body" or "RightArm")
-    :setRot(rightArmStop and idleRot or nil)
+  rightArm:setRot(rightArmStop and idleRot - vanilla_model.RIGHT_ARM:getOriginRot(delta) or nil)
     :setPos(armPos - animOffset)
   
   -- Keep arms still when upperbody rotates.

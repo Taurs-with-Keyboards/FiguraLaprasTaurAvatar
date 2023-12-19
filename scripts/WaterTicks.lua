@@ -15,10 +15,10 @@ function events.TICK()
   if player:isWet() then
     t.wet = 0
   end
-  if player:isInWater() then
+  if player:isInWater() or player:isInLava() then
     t.water = 0
   end
-  if player:isUnderwater() then
+  if player:isUnderwater() or player:isInLava() then
     t.under = 0
   end
 end

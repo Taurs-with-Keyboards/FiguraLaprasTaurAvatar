@@ -13,6 +13,8 @@ local Config = {
   -- Set to `false` to have them disabled by default.
   -- Set to `nil` to allow the merling origin to control them. This will also prevent an ActionWheel action from being created.
   glowingEyes = true,
+  -- Should the eyes only glow when underwater?
+  waterOnly = true,
   -- Should the Lapras Body make noise when you land after falling/jumping?
   landSound = true,
   -- How many ticks should it take for you to dry off after leaving water/rain? (20 ticks = 1 second)

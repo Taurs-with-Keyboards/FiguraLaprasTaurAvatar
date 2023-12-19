@@ -6,17 +6,16 @@ local lapras   = models.LaprasTaur
 local anim = animations.PokeBall
 
 -- Variables
-local isInBall  = false
+local isInBall     = false
 local wasInBall
-local toggle    = false
-local vehicle   = require("scripts.Vehicles")
+local toggle       = false
+local vehicle      = require("scripts.Vehicles")
+local hasPower     = require("lib.OriginsAPI").hasPower
 local scaleCurrent, scaleNextTick, scaleTarget, scaleCurrentPos = 1,1,1,1
 function events.TICK()
   -- Pokeball check
-  isInBall = toggle or vehicle.minecart or vehicle.horse or vehicle.pig or vehicle.strider or vehicle.isPassenger
-  
-  -- Model visibility
-  pokeball:setVisible(lapras:getScale():length() < 1)
+  toggle = toggle and not player:isInWater()
+  isInBall = ((toggle and not vehicle.isVehicle) or (not hasPower(player, "origins:lapras_dismount") and (vehicle.vehicle and not(vehicle.boat or vehicle.chest_boat) or vehicle.isPassenger))) or false
   
   -- Compare states
   if isInBall ~= wasInBall then
@@ -29,24 +28,53 @@ function events.TICK()
     anim.close:setPlaying(isInBall)
   end
   
-  -- Model changes
-  pokeball:setPos(vehicle.vehicle and vec(0, 14, 0) or 0)
-    :setRot(vehicle.vehicle and vec(30, 0, 0) or vec(15, 0, 0))
-  
   -- Scaling lerp
   scaleCurrent  = scaleNextTick
   scaleNextTick = math.lerp(scaleNextTick, scaleTarget, 0.2)
   
   -- Store previous state
   wasInBall = isInBall
-  
-  toggle = toggle and player:getVelocity().xz:length() == 0
 end
 
--- Scaling
+-- Rendering stuff
+local basePos = vec(0, 0, 0)
 function events.RENDER(delta, context)
   if context == "RENDER" or context == "FIRST_PERSON" or not client.isHudEnabled() then
-    -- Target and lerp
+    -- Vehicle pos table
+    local statePos = {
+      { state = vehicle.hasPassenger,  pos = 0  },
+      { state = vehicle.boat,          pos = 10 },
+      { state = vehicle.chest_boat,    pos = 0  }, -- This cant happen
+      { state = vehicle.minecart,      pos = 9  },
+      { state = vehicle.horse,         pos = 10 },
+      { state = vehicle.donkey,        pos = 10 },
+      { state = vehicle.mule,          pos = 10 },
+      { state = vehicle.zombieHorse,   pos = 8  },
+      { state = vehicle.skeletonHorse, pos = 11 },
+      { state = vehicle.pig,           pos = 10 },
+      { state = vehicle.strider,       pos = 10 },
+      { state = vehicle.camel,         pos = 9  },
+    }
+    
+    -- Base position check
+    for _, case in ipairs(statePos) do
+      if case.state then
+        basePos = vec(0, case.pos, 0)
+        break
+      elseif vehicle.vehicle then
+        -- Unsupported case
+        basePos = vec(0, 10, 0)
+      else
+        basePos = 0
+      end
+    end
+    
+    -- Pokeball
+    pokeball:setVisible(lapras:getScale():length() < 1)
+      :setPos(basePos)
+    lapras:setPos(basePos)
+    
+    -- Scaling target and lerp
     scaleTarget     = isInBall and 0 or 1
     scaleCurrentPos = math.lerp(scaleCurrent, scaleNextTick, delta)
     
@@ -55,6 +83,26 @@ function events.RENDER(delta, context)
     renderer:setShadowRadius(math.map(scaleCurrentPos, 0, 1, 0.2, 1.25))
   end
 end
+
+-- Keybind blockers
+local blocker   = function() return toggle and not host:isFlying() end
+local kbForward = keybinds:newKeybind("Pokeball Forward Blocker"):onPress(blocker)
+local kbBack    = keybinds:newKeybind("Pokeball Back Blocker"   ):onPress(blocker)
+local kbRight   = keybinds:newKeybind("Pokeball Right Blocker"  ):onPress(blocker)
+local kbLeft    = keybinds:newKeybind("Pokeball Left Blocker"   ):onPress(blocker)
+local kbCrouch  = keybinds:newKeybind("Pokeball Crouch Blocker" ):onPress(blocker)
+local kbAttack  = keybinds:newKeybind("Pokeball Attack Blocker" ):onPress(blocker)
+local kbUse     = keybinds:newKeybind("Pokeball Use Blocker"    ):onPress(blocker)
+
+function events.TICK()
+  kbForward:setKey(keybinds:getVanillaKey("key.forward"))
+  kbBack:setKey(keybinds:getVanillaKey("key.back"))
+  kbRight:setKey(keybinds:getVanillaKey("key.right"))
+  kbLeft:setKey(keybinds:getVanillaKey("key.left"))
+  kbCrouch:setKey(keybinds:getVanillaKey("key.sneak"))
+  kbAttack:setKey(keybinds:getVanillaKey("key.attack"))
+  kbUse:setKey(keybinds:getVanillaKey("key.use"))
+end 
 
 -- Pokeball toggler
 local function setPokeball(x)

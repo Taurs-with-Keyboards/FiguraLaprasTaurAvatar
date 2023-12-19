@@ -9,10 +9,10 @@ local landSound = config.landSound or false
 -- Sound player
 local wasInAir = false
 function events.TICK()
-  if landSound and wasInAir and g.ground and not vehicle.vehicle then
+  if landSound and wasInAir and g.ground and not vehicle.vehicle and not player:isInWater() then
     if models.PokeBall:getVisible() then
       sounds:playSound("cobblemon:poke_ball.hit", player:getPos(), 0.25)
-    elseif ticks.water > 0 then 
+    else
       local vel = player:getVelocity().y
       local volume = math.clamp((math.abs(-vel + 1) * ((config.waterTimer + -ticks.wet) / config.waterTimer)) / 2, 0, 1)
       if volume ~= 0 and player:isLoaded() then 

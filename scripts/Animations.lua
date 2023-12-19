@@ -32,13 +32,15 @@ do
     
     -- Rot lerp
     rotCurrent  = rotNextTick
-    rotNextTick = math.lerp(rotNextTick, rotTarget, 1)
+    rotNextTick = math.lerp(rotNextTick, rotTarget, 0.25)
     
     -- Pos lerp
     posCurrent  = posNextTick
     posNextTick = math.lerp(posNextTick, posTarget, 1)
   end
   
+  local baseRot = vec(0, 0, 0)
+  local basePos = vec(0, 0, 0)
   function events.RENDER(delta, context)
     if context == "RENDER" or context == "FIRST_PERSON" or (not client.isHudEnabled() and context ~= "MINECRAFT_GUI") then
       -- Animation modifiers
@@ -48,12 +50,12 @@ do
       local underwater = ticks.under      < 20
       
       -- Animation states
-      local groundIdleState     = not walking       and (not inWater or g.ground)    and not ((pose.swim and inWater) or pose.elytra) and not vehicle.vehicle and not anims.underwaterSwim:isPlaying()
-      local groundWalkState     =     walking       and (not inWater or g.ground)    and not ((pose.swim and inWater) or pose.elytra) and not vehicle.vehicle
-      local waterIdleState      = not walking       and ((inWater and not g.ground) or vehicle.vehicle) and not underwater 
-      local waterSwimState      =     walking       and ((inWater and not g.ground) or vehicle.vehicle) and not underwater
-      local underwaterIdleState = vel:length() == 0 and underwater                   and (not g.ground or pose.swim)
-      local underwaterSwimState = vel:length() ~= 0 and underwater                   and (not g.ground or pose.swim) and not anims.groundWalk:isPlaying()
+      local groundIdleState     = not walking       and (not inWater     or g.ground) and not ((pose.swim and inWater) or pose.elytra) and not vehicle.vehicle and not anims.underwaterSwim:isPlaying()
+      local groundWalkState     =     walking       and (not inWater     or g.ground) and not ((pose.swim and inWater) or pose.elytra) and not vehicle.vehicle
+      local waterIdleState      = not walking       and ((inWater  and  not g.ground) or vehicle.vehicle) and not underwater 
+      local waterSwimState      =     walking       and ((inWater  and  not g.ground) or vehicle.vehicle) and not underwater
+      local underwaterIdleState = vel:length() == 0 and underwater and (not g.ground or pose.swim)
+      local underwaterSwimState = vel:length() ~= 0 and underwater and (not g.ground or pose.swim) and not anims.groundWalk:isPlaying()
       
       -- Animation timeline renderer
       animTime = math.lerp(_time, time, delta)
@@ -66,16 +68,62 @@ do
       anims.underwaterIdle:setPlaying(underwaterIdleState)
       anims.underwaterSwim:setPlaying(underwaterSwimState)
       
+      -- Rot state table
+      local stateRot = {
+        { state = pose.sleep,  rot = 70 },
+        { state = pose.swim,   rot = 80 },
+        { state = pose.elytra, rot = 80 },
+        { state = pose.crawl,  rot = 90 },
+        { state = pose.spin,   rot = 90 },
+      }
+      
+      -- Pos state table
+      local statePos = {
+        { state = pose.crouch,  pos = vec(0, 2, 0)   },
+        { state = pose.elytra,  pos = vec(0, 0, 33)  },
+        { state = pose.crawl,   pos = vec(0, 0, 33)  },
+        { state = pose.sleep,   pos = vec(0, 0, 15)  },
+        { state = pose.spin,    pos = vec(0, 0, 22)  },
+        { state = pose.swim and
+          vehicle.isVehicle,    pos = vec(0, 15, 15) },
+        { state = pose.swim,    pos = vec(0, 10, 25) },
+      }
+      
+      -- Base rotation check
+      for _, case in ipairs(stateRot) do
+        if case.state then
+          baseRot = vec(case.rot, 0, 0)
+          break
+        else
+          baseRot = 0
+        end
+      end
+      
+      -- Base position check
+      for _, case in ipairs(statePos) do
+        if case.state then
+          basePos = case.pos
+          break
+        elseif vehicle.hasPassenger then
+          basePos = vec(0, -9, 10)
+          break
+        else
+          basePos = 0
+        end
+      end
+      
       -- Animation modifiers lerps
-      local posMod  = modelRoot:getAnimPos()
-      rotTarget     = (pose.crawl or pose.spin) and vec(90, 0, 0) or (pose.swim or pose.elytra) and vec(80, 0, 0) or pose.sleep and vec(70, 0, 0) or 0
+      rotTarget     = baseRot
       rotCurrentPos = math.lerp(rotCurrent, rotNextTick, delta)
-      posTarget     = ((pose.swim or pose.crawl) and vec(0, posMod.z - posMod.y, posMod.y - posMod.z) or 0) + (pose.crouch and vec(0, 2, 0) or (pose.crawl or pose.elytra) and vec(0, 0, 33) or pose.sleep and vec(0, 0, 15) or pose.spin and vec(0, 0, 22) or pose.swim and vec(0, 10, 25) or vehicle.hasPassenger and vec(0, -9, 10) or 0)
+      posTarget     = basePos
       posCurrentPos = math.lerp(posCurrent, posNextTick, delta)
       
       -- Animation modifiers application
-      lapras:setRot(rotCurrentPos)
-      modelRoot:setPos(posCurrentPos)
+      local animPos = modelRoot:getAnimPos(delta)
+      local animRot = lapras:getAnimRot(delta)
+      local passenger = vehicle.isVehicle or vehicle.hasPassenger
+      lapras:setRot(rotCurrentPos + (passenger and -animRot or 0))
+      modelRoot:setPos(posCurrentPos + (passenger and -animPos or (pose.swim or pose.crawl) and vec(0, animPos.z - animPos.y, animPos.y - animPos.z) or 0))
       
       -- Misc animations
       local crouch = player:isCrouching()
@@ -133,11 +181,11 @@ do
       local rollShouldRot  = ticks.water >= 20
       
       -- Pitch lerps
-      pitchTarget     = pitchShouldRot and math.clamp(vel * 70, -pitchLimit, pitchLimit) or 0
+      pitchTarget     = pitchShouldRot and player:getPassengers()[1] == nil and math.clamp(vel * 70, -pitchLimit, pitchLimit) or 0
       pitchCurrentPos = math.lerp(pitchCurrent, pitchNextTick, delta)
       
       -- Yaw lerps
-      yawTarget       = yawShouldRot and math.clamp(vanilla_model.HEAD:getOriginRot(delta).y, -yawLimit, yawLimit) or 0
+      yawTarget       = yawShouldRot and math.clamp((vanilla_model.HEAD:getOriginRot(delta).y + 180) % 360 - 180, -yawLimit, yawLimit) or 0
       yawCurrentPos   = math.lerp(yawCurrent, yawNextTick, delta)
       
       -- Roll lerps

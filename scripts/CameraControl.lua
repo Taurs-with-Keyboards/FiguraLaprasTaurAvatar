@@ -1,6 +1,7 @@
 -- Model setup
 local model     = models.LaprasTaur
 local modelRoot = model.Player
+local pokeball  = models.PokeBall
 
 -- Variable setup
 local config    = require("Config")
@@ -38,7 +39,7 @@ function events.RENDER(delta, context)
   if context == "FIRST_PERSON" or context == "RENDER" or (not client.isHudEnabled() and context ~= "MINECRAFT_GUI") then
     -- Pos checking
     local playerPos = player:getPos(delta)
-    trueHeadPos     = modelRoot.UpperBody.Head:partToWorldMatrix(delta):apply()
+    trueHeadPos     = model:getScale():length() >= 0.5 and modelRoot.UpperBody.Head:partToWorldMatrix(delta):apply() or pokeball:partToWorldMatrix(delta):apply(0, 2.25, 0)
     
     -- Pehkui scaling
     local nbt = player:getNbt()
@@ -77,9 +78,9 @@ function events.RENDER(delta, context)
     end
     
     -- Renders offset & rotation
-    local shouldOffset = not collision and camera and model:getScale():length() >= 0.5
+    local shouldOffset = not collision and camera and not pose.spin
     renderer:offsetCameraPivot(shouldOffset and offset or 0)
-      :offsetCameraRot(shouldOffset and (renderer:isCameraBackwards() and camRot / 2 or camRot) or 0)
+      :offsetCameraRot(shouldOffset and model:getScale():length() >= 0.5 and (renderer:isCameraBackwards() and camRot / 2 or camRot) or 0)
   end
 end
 

@@ -1,18 +1,6 @@
 -- Variable setup
 local spawnBubbles = require("Config").whirlPoolEffect
 
--- Bubbles toggle
-local syncedVariables = require("scripts.SyncedVariables")
-function setBubbles(boolean)
-  spawnBubbles = boolean
-  if player:isLoaded() then
-    sounds:playSound("minecraft:block.bubble_column.upwards_inside", player:getPos(), 0.25)
-  end
-end
-
--- Ping setup
-pings.setBubbles = setBubbles
-
 -- Bubble spawner
 local numBubbles = 8
 function events.TICK()
@@ -27,12 +15,27 @@ function events.TICK()
 end
 
 if spawnBubbles == nil then
-  -- Dolphin's grace based
+  
+  -- Dolphin's grace
+  local syncedVariables = require("scripts.SyncedVariables")
   function events.TICK()
     spawnBubbles = syncedVariables.dG
   end
+  
 else
-  -- Toggle based
+  
+  -- Bubbles toggle
+  function setBubbles(boolean)
+    spawnBubbles = boolean
+    if player:isLoaded() then
+      sounds:playSound("minecraft:block.bubble_column.upwards_inside", player:getPos(), 0.25)
+    end
+  end
+  
+  -- Ping setup
+  pings.setBubbles = setBubbles
+  
+  -- Action wheel
   return action_wheel:newAction()
       :title("Toggle Whirlpool Effect")
       :hoverColor(vectors.hexToRGB("5EB7DD"))
