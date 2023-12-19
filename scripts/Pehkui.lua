@@ -1,7 +1,10 @@
+-- Pehkui check
 local pehkui = client.hasResource("pehkui:icon.png")
 
+-- Ends script if Pehkui is not found
 if not host:isHost() or not pehkui then return end
 
+-- Pehkui function
 local function pehkuiCommands()
   host:sendChatCommand("/scale reset")
     :sendChatCommand("/scale set pehkui:hitbox_width 3.5")

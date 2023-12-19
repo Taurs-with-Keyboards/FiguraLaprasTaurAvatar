@@ -45,7 +45,7 @@ end
 
 -- Scaling
 function events.RENDER(delta, context)
-  if context == "RENDER" or context == "FIRST_PERSON" then
+  if context == "RENDER" or context == "FIRST_PERSON" or not client.isHudEnabled() then
     -- Target and lerp
     scaleTarget     = isInBall and 0 or 1
     scaleCurrentPos = math.lerp(scaleCurrent, scaleNextTick, delta)

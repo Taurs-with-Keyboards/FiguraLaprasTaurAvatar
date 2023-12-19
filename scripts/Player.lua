@@ -29,6 +29,18 @@ for _, part in pairs(vanillaSkinParts) do
   part:setPrimaryTexture(config.usesPlayerSkin and "SKIN" or nil)
 end
 
+local vanillaElytraParts = {
+  modelRoot.UpperBody.Body.Elytra,
+  modelRoot.LowerBody.Main.Elytra,
+}
+function events.TICK()
+  for _, part in pairs(vanillaElytraParts) do
+    part:setPrimaryTexture(config.usesPlayerSkin and (player:isSkinLayerVisible("CAPE") and "CAPE" or "ELYTRA") or nil)
+  end
+end
+
+modelRoot.UpperBody.Body.Cape:setPrimaryTexture(config.usesPlayerSkin and "CAPE" or nil)
+
 -- Sets the modelType of the avatar.
 local alex = config.isAlex or false
 modelRoot.UpperBody.LeftArm.Steve:setVisible(not alex and nil)
@@ -56,6 +68,9 @@ local layerParts = {
   LEFT_SLEEVE = {
     modelRoot.UpperBody.LeftArm.Steve.LeftArmLayer,
     modelRoot.UpperBody.LeftArm.Alex.LeftArmLayer,
+  },
+  CAPE = {
+    modelRoot.UpperBody.Body.Cape,
   },
 }
 function events.TICK()

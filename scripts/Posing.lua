@@ -8,6 +8,7 @@ t.sleep  = false -- Sleeping
 t.spin   = false -- Riptide Spin
 t.crawl  = false -- Crawling (Crawl mod required)
 
+-- Pose checking
 function events.TICK()
   local pose = player:getPose()
   t.stand  = pose == "STANDING"

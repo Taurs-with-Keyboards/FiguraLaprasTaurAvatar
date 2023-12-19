@@ -9,8 +9,6 @@
 
 --v2.3
 
-if not host:isHost() or require("Config").matchCamera ~= true then models.lib.crosshair.Crosshair:setVisible(false) return end
-
 renderer:setRenderCrosshair(false)
 
 local curDir = (...):gsub("(.)$", "%1.")
@@ -48,7 +46,7 @@ function events.RENDER(delta, context)
     
     local screenSpace = vectors.worldToScreenSpace(pos)
     local coords = screenSpace.xy:add(1, 1):mul(client:getScaledWindowSize()):div(-2, -2)
-    
+    model.Cooldown:setUV(0,1-host:getAttackCharge())
     if api.render then api.render(pos, entity or block, coords) end
     
     model:setPos(coords.xy_)
