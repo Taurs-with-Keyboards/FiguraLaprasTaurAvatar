@@ -9,35 +9,54 @@ local origins = config:load("EyesOrigins") or false
 local effect  = config:load("EyesEffect") or false
 local water   = config:load("EyesWater") or false
 
--- Eye glow renderer
-function events.RENDER(delta, context)
-	if context == "RENDER" or context == "FIRST_PERSON" or (not client.isHudEnabled() and context ~= "MINECRAFT_GUI") then
-		local glow = glow 
-		if toggle then -- Toggle check
-			glow = true
-			if origins then -- Origins check
-				local power = require("lib.OriginsAPI").getPowerData(player, "origins:water_vision")
-				glow = glow and power == 1
-			end
-			if water then -- Water check
-				glow = glow and not (water and not player:isUnderwater())
-			end
-			if effect then -- Night Vision check
-				local nV = require("scripts.SyncedVariables").nV
-				glow = glow or nV
-			end
-		else
-			glow = false
+-- Variables setup
+local glow = toggle
+local eyesStart = glow and 1 or 0
+local eyesCurrent, eyesNextTick, eyesTarget, eyesCurrentPos = eyesStart, eyesStart, eyesStart, eyesStart
+
+function events.TICK()
+	
+	glow = glow
+	if toggle then -- Toggle check
+		glow = true
+		if origins then -- Origins check
+			local power = require("lib.OriginsAPI").getPowerData(player, "origins:water_vision")
+			glow = glow and power == 1
 		end
-		modelEyes:primaryRenderType(glow and "EMISSIVE" or "NONE")
+		if water then -- Water check
+			glow = glow and not (water and not player:isUnderwater())
+		end
+		if effect then -- Night Vision check
+			local nV = require("scripts.SyncedVariables").nV
+			glow = glow or nV
+		end
+	else
+		glow = false
 	end
+	
+	-- Glowing Lerp
+	eyesCurrent = eyesNextTick
+	eyesNextTick = math.lerp(eyesNextTick, eyesTarget, 0.2)
+	
+end
+
+function events.RENDER(delta, context)
+	
+	-- Glowing Lerp
+	eyesTarget = glow and 1 or 0
+	eyesCurrentPos = math.lerp(eyesCurrent, eyesNextTick, delta)
+	
+	-- Apply Glow
+	modelEyes:secondaryColor(eyesCurrentPos)
+	modelEyes:secondaryRenderType(context == "RENDER" and "EMISSIVE" or "EYES")
+	
 end
 
 -- Glowing eyes toggler
 local function setToggle(boolean)
 	toggle = boolean
 	config:save("EyesToggle", toggle)
-	if host:isHost() and player:isLoaded() and toggle then
+	if player:isLoaded() and toggle then
 		sounds:playSound("entity.glow_squid.ambient", player:getPos(), 0.75)
 	end
 end
@@ -84,6 +103,18 @@ pings.setEyesEffect  = setEffect
 pings.setEyesWater   = setWater
 pings.syncEyes       = syncEyes
 
+local eyesBind   = config:load("EyesToggleKeybind") or "key.keyboard.keypad.1"
+local setEyesKey = keybinds:newKeybind("Glowing Eyes Toggle"):onPress(function() pings.setEyesToggle(not toggle) end):key(eyesBind)
+
+-- Keybind updater
+function events.TICK()
+	local key = setEyesKey:getKey()
+	if key ~= eyesBind then
+		eyesBind = key
+		config:save("EyesToggleKeybind", key)
+	end
+end
+
 -- Sync on tick
 if host:isHost() then
 	function events.TICK()
@@ -112,11 +143,17 @@ t.togglePage = action_wheel:newAction("GlowingEyes")
 	:onToggle(pings.setEyesToggle)
 	:toggled(toggle)
 
+-- Update toggle page info
+function events.TICK()
+	t.togglePage
+		:toggled(toggle)
+end
+
 t.originsPage = action_wheel:newAction("GlowingEyesOrigins")
 	:title("§9§lOrigins Power Toggle\n\n§bToggles the glowing based on Origin's underwater sight power.\nThe eyes will only glow when this power is active.")
 	:hoverColor(vectors.hexToRGB("5EB7DD"))
 	:toggleColor(vectors.hexToRGB("4078B0"))
-	:item("minecraft:red_dye")
+	:item("minecraft:cod")
 	:toggleItem("minecraft:tropical_fish")
 	:onToggle(pings.setEyesOrigins)
 	:toggled(origins)

@@ -9,8 +9,8 @@ local squapi  = require("lib.SquAPI")
 local pose    = require("scripts.Posing")
 local vehicle = require("scripts.Vehicles")
 
-squapi.torso(upperRoot, 0.3, _, false)
-squapi.torso(lowerRoot.Front, 0.4, _, false)
+squapi.smoothTorso(upperRoot, 0.3)
+squapi.smoothTorso(lowerRoot.Front, 0.4)
 
 squapi.crouch(anims.crouch, _, anims.crawl)
 

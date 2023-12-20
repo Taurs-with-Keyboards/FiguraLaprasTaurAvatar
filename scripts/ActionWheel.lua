@@ -15,70 +15,70 @@ action_wheel:setPage(mainPage)
 
 -- Main actions
 mainPage
-	:action( -1,
+	:action( 1,
 		action_wheel:newAction()
 			:title("§9§lGlowing Eyes Settings")
 			:hoverColor(vectors.hexToRGB("5EB7DD"))
 			:item("minecraft:ender_eye")
 			:onLeftClick(function() action_wheel:setPage(eyesPage) end))
 	
-	:action( -1,
+	:action( 2,
 		action_wheel:newAction()
 			:title("§9§lFall Sound Settings")
 			:hoverColor(vectors.hexToRGB("5EB7DD"))
 			:item("minecraft:pufferfish")
 			:onLeftClick(function() action_wheel:setPage(fallPage) end))
 	
-	:action( -1,
+	:action( 3,
 		action_wheel:newAction()
 			:title("§9§lWhirlpool Settings")
 			:hoverColor(vectors.hexToRGB("5EB7DD"))
 			:item("minecraft:magma_block")
 			:onLeftClick(function() action_wheel:setPage(whirPage) end))
 	
-	:action( -1,
+	:action( 4,
 		action_wheel:newAction()
 			:title("§9§lAvatar Settings")
 			:hoverColor(vectors.hexToRGB("5EB7DD"))
 			:item("minecraft:armor_stand")
 			:onLeftClick(function() action_wheel:setPage(avatPage) end))
 	
-	:action( -1,
+	:action( 5,
 		action_wheel:newAction()
 			:title("§9§lCamera Settings")
 			:hoverColor(vectors.hexToRGB("5EB7DD"))
 			:item("minecraft:redstone")
 			:onLeftClick(function() action_wheel:setPage(camPage) end))
 	
-	:action( -1, require("scripts.Pokeball").togglePage)
+	:action( 6, require("scripts.Pokeball").togglePage)
 
 -- Eye glow actions
 do
 	local eyes = require("scripts.GlowingEyes")
 	eyesPage
-		:action( -1, eyes.togglePage)
-		:action( -1, eyes.originsPage)
-		:action( -1, eyes.effectPage)
-		:action( -1, eyes.waterPage)
-		:action( -1, backPage)
+		:action( 1, eyes.togglePage)
+		:action( 2, eyes.originsPage)
+		:action( 3, eyes.effectPage)
+		:action( 4, eyes.waterPage)
+		:action( 5, backPage)
 end
 
 -- WhirlPool actions
 do
 	local whir = require("scripts.WhirlpoolEffect")
 	whirPage
-		:action( -1, whir.bubblePage)
-		:action( -1, whir.effectPage)
-		:action( -1, backPage)
+		:action( 1, whir.bubblePage)
+		:action( 2, whir.effectPage)
+		:action( 3, backPage)
 end
 
 -- Flop sound actions
 do
 	local fall = require("scripts.FallSound")
 	fallPage
-		:action( -1, fall.soundPage)
-		:action( -1, fall.dryPage)
-		:action( -1, backPage)
+		:action( 1, fall.soundPage)
+		:action( 2, fall.dryPage)
+		:action( 3, backPage)
 	
 	function events.TICK()
 		action_wheel:getPage("FallSoundPage"):getAction(2):title(fall.dryTitle)
@@ -89,18 +89,18 @@ end
 do
 	local avatar = require("scripts.Player")
 	avatPage
-		:action( -1, avatar.vanillaSkinPage)
-		:action( -1, avatar.modelPage)
-		:action( -1, require("scripts.Arms"))
-		:action( -1, backPage)
+		:action( 1, avatar.vanillaSkinPage)
+		:action( 2, avatar.modelPage)
+		:action( 3, require("scripts.Arms"))
+		:action( 4, backPage)
 end
 
 -- Camera actions
 do
 	local camera = require("scripts.CameraControl")
 	camPage
-		:action( -1, camera.posPage)
-		:action( -1, camera.rotPage)
-		:action( -1, camera.eyePage)
-		:action( -1, backPage)
+		:action( 1, camera.posPage)
+		:action( 2, camera.rotPage)
+		:action( 3, camera.eyePage)
+		:action( 4, backPage)
 end

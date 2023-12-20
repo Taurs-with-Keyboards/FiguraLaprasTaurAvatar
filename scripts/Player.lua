@@ -20,15 +20,15 @@ local skinParts = {
 	upperRoot.Body.Body,
 	upperRoot.Body.BodyLayer,
 	
-	model.RightArm.Default,
-	model.RightArm.Slim,
-	upperRoot.RightArm.Default,
-	upperRoot.RightArm.Slim,
+	model.RightArmFP.rightArmDefaultFP,
+	model.RightArmFP.rightArmSlimFP,
+	upperRoot.RightArm.rightArmDefault,
+	upperRoot.RightArm.rightArmSlim,
 	
-	model.LeftArm.Default,
-	model.LeftArm.Slim,
-	upperRoot.LeftArm.Default,
-	upperRoot.LeftArm.Slim,
+	model.LeftArmFP.leftArmDefaultFP,
+	model.LeftArmFP.leftArmSlimFP,
+	upperRoot.LeftArm.leftArmDefault,
+	upperRoot.LeftArm.leftArmSlim,
 	
 	model.Portrait.Head,
 	model.Portrait.HatLayer,
@@ -48,19 +48,19 @@ function events.TICK()
 	-- Model shape
 	local slimShape = (vanillaSkin and vanillaAvatarType == "SLIM") or (slim and not vanillaSkin)
 	
-	model.LeftArm.Default:visible(not slimShape)
-	model.RightArm.Default:visible(not slimShape)
+	model.LeftArmFP.leftArmDefault:visible(not slimShape)
+	model.RightArmFP.rightArmDefault:visible(not slimShape)
 	upperRoot.LeftArm.Default:visible(not slimShape)
 	upperRoot.RightArm.Default:visible(not slimShape)
 	
-	model.LeftArm.Slim:visible(slimShape)
-	model.RightArm.Slim:visible(slimShape)
+	model.LeftArmFP.Slim:visible(slimShape)
+	model.RightArmFP.Slim:visible(slimShape)
 	upperRoot.LeftArm.Slim:visible(slimShape)
 	upperRoot.RightArm.Slim:visible(slimShape)
 	
 	-- Skin textures
 	for _, part in ipairs(skinParts) do
-		part:primaryTexture(vanillaSkin and "SKIN" or "CUSTOM", textures["textures.skin"])
+		part:primaryTexture(vanillaSkin and "SKIN" or nil)
 	end
 	
 	-- Cape/Elytra texture
@@ -81,9 +81,6 @@ local layerParts = {
 	JACKET = {
 		upperRoot.Body.BodyLayer,
 		lowerRoot.Front.FrontLayer,
-		lowerRoot.Main.MainLayer,
-		lowerRoot.Main.Shell.ExternalLayer,
-		lowerRoot.Main.Shell.Spikes.SpikesLayer,
 	},
 	RIGHT_SLEEVE = {
 		upperRoot.RightArm.Default.ArmLayer,
@@ -108,10 +105,20 @@ local layerParts = {
 	CAPE = {
 		upperRoot.Body.Cape,
 	},
+	LOWER_BODY = {
+		lowerRoot.Main.MainLayer,
+		lowerRoot.Main.Shell.ExternalLayer,
+		lowerRoot.Main.Shell.Spikes.SpikesLayer,
+	},
 }
 function events.TICK()
 	for playerPart, parts in pairs(layerParts) do
-		local enabled = player:isSkinLayerVisible(playerPart)
+		local enabled = enabled
+		if playerPart == "LOWER_BODY" then
+			enabled = player:isSkinLayerVisible("RIGHT_PANTS_LEG") or player:isSkinLayerVisible("LEFT_PANTS_LEG")
+		else
+			enabled = player:isSkinLayerVisible(playerPart)
+		end
 		for _, part in ipairs(parts) do
 			part:visible(enabled)
 		end
@@ -145,7 +152,7 @@ pings.syncPlayer           = syncPlayer
 if host:isHost() then
 	function events.TICK()
 		if world.getTime() % 200 == 0 then
-			pings.syncPlayer(vanillaSkin, slim, skin)
+			pings.syncPlayer(vanillaSkin, slim)
 		end
 	end
 end
