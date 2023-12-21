@@ -48,15 +48,15 @@ function events.TICK()
 	-- Model shape
 	local slimShape = (vanillaSkin and vanillaAvatarType == "SLIM") or (slim and not vanillaSkin)
 	
-	model.LeftArmFP.leftArmDefault:visible(not slimShape)
-	model.RightArmFP.rightArmDefault:visible(not slimShape)
-	upperRoot.LeftArm.Default:visible(not slimShape)
-	upperRoot.RightArm.Default:visible(not slimShape)
+	model.LeftArmFP.leftArmDefaultFP:visible(not slimShape)
+	model.RightArmFP.rightArmDefaultFP:visible(not slimShape)
+	upperRoot.LeftArm.leftArmDefault:visible(not slimShape)
+	upperRoot.RightArm.rightArmDefault:visible(not slimShape)
 	
-	model.LeftArmFP.Slim:visible(slimShape)
-	model.RightArmFP.Slim:visible(slimShape)
-	upperRoot.LeftArm.Slim:visible(slimShape)
-	upperRoot.RightArm.Slim:visible(slimShape)
+	model.LeftArmFP.leftArmSlimFP:visible(slimShape)
+	model.RightArmFP.rightArmSlimFP:visible(slimShape)
+	upperRoot.LeftArm.leftArmSlim:visible(slimShape)
+	upperRoot.RightArm.rightArmSlim:visible(slimShape)
 	
 	-- Skin textures
 	for _, part in ipairs(skinParts) do
@@ -80,35 +80,35 @@ local layerParts = {
 	},
 	JACKET = {
 		upperRoot.Body.BodyLayer,
-		lowerRoot.Front.FrontLayer,
+		lowerRoot.LowerBodyFront.FrontLayer,
 	},
 	RIGHT_SLEEVE = {
-		upperRoot.RightArm.Default.ArmLayer,
-		upperRoot.RightArm.Slim.ArmLayer,
+		upperRoot.RightArm.rightArmDefault.ArmLayer,
+		upperRoot.RightArm.rightArmSlim.ArmLayer,
 	},
 	LEFT_SLEEVE = {
-		upperRoot.LeftArm.Default.ArmLayer,
-		upperRoot.LeftArm.Slim.ArmLayer,
+		upperRoot.LeftArm.leftArmDefault.ArmLayer,
+		upperRoot.LeftArm.leftArmSlim.ArmLayer,
 	},
 	RIGHT_PANTS_LEG = {
-		lowerRoot.Main.FlipperFrontRight.FlipperLayer,
-		lowerRoot.Main.FlipperFrontRight.Tip.FlipperLayer,
-		lowerRoot.Main.FlipperBackRight.FlipperLayer,
-		lowerRoot.Main.FlipperBackRight.Tip.FlipperLayer,
+		lowerRoot.LowerBodyMain.FrontRightFlipper.FlipperLayer,
+		lowerRoot.LowerBodyMain.FrontRightFlipper.FrontRightFlipperTip.FlipperLayer,
+		lowerRoot.LowerBodyMain.BackRightFlipper.FlipperLayer,
+		lowerRoot.LowerBodyMain.BackRightFlipper.BackRightFlipperTip.FlipperLayer,
 	},
 	LEFT_PANTS_LEG = {
-		lowerRoot.Main.FlipperFrontLeft.FlipperLayer,
-		lowerRoot.Main.FlipperFrontLeft.Tip.FlipperLayer,
-		lowerRoot.Main.FlipperBackLeft.FlipperLayer,
-		lowerRoot.Main.FlipperBackLeft.Tip.FlipperLayer,
+		lowerRoot.LowerBodyMain.FrontLeftFlipper.FlipperLayer,
+		lowerRoot.LowerBodyMain.FrontLeftFlipper.FrontLeftFlipperTip.FlipperLayer,
+		lowerRoot.LowerBodyMain.BackLeftFlipper.FlipperLayer,
+		lowerRoot.LowerBodyMain.BackLeftFlipper.BackLeftFlipperTip.FlipperLayer,
 	},
 	CAPE = {
 		upperRoot.Body.Cape,
 	},
 	LOWER_BODY = {
-		lowerRoot.Main.MainLayer,
-		lowerRoot.Main.Shell.ExternalLayer,
-		lowerRoot.Main.Shell.Spikes.SpikesLayer,
+		lowerRoot.LowerBodyMain.MainLayer,
+		lowerRoot.LowerBodyMain.Shell.ExternalLayer,
+		lowerRoot.LowerBodyMain.Shell.Spikes.SpikesLayer,
 	},
 }
 function events.TICK()

@@ -11,89 +11,89 @@ kattArmor.Armor.Leggings:setLayer(1)
 
 -- Armor parts
 kattArmor.Armor.Helmet
-	:addParts(upperRoot.Head.Armor.Helmet)
-	:addTrimParts(upperRoot.Head.Armor.HelmetTrim)
+	:addParts(upperRoot.Head.headArmor.Helmet)
+	:addTrimParts(upperRoot.Head.headArmor.HelmetTrim)
 kattArmor.Armor.Chestplate
 	:addParts(
-		upperRoot.Body.Armor.Chestplate,
-		model.RightArm.Armor.Chestplate,
-		model.LeftArm.Armor.Chestplate,
-		upperRoot.RightArm.Armor.Chestplate,
-		upperRoot.LeftArm.Armor.Chestplate,
-		lowerRoot.Main.Shell.Armor.Chestplate,
-		lowerRoot.Main.Shell.Spikes.Armor.Chestplate
+		upperRoot.Body.bodyArmor.Chestplate,
+		model.RightArmFP.rightArmArmorFP.Chestplate,
+		model.LeftArmFP.leftArmArmorFP.Chestplate,
+		upperRoot.RightArm.rightArmArmor.Chestplate,
+		upperRoot.LeftArm.leftArmArmor.Chestplate,
+		lowerRoot.LowerBodyMain.Shell.ShellArmor.Chestplate,
+		lowerRoot.LowerBodyMain.Shell.Spikes.SpikesArmor.SpikesChestplate
 	)
 	:addTrimParts(
-		upperRoot.Body.Armor.ChestplateTrim,
-		model.RightArm.Armor.ChestplateTrim,
-		model.LeftArm.Armor.ChestplateTrim,
-		upperRoot.RightArm.Armor.ChestplateTrim,
-		upperRoot.LeftArm.Armor.ChestplateTrim,
-		lowerRoot.Main.Shell.Armor.ChestplateTrim,
-		lowerRoot.Main.Shell.Spikes.Armor.ChestplateTrim
+		upperRoot.Body.bodyArmor.ChestplateTrim,
+		model.RightArmFP.rightArmArmorFP.ChestplateTrim,
+		model.LeftArmFP.leftArmArmorFP.ChestplateTrim,
+		upperRoot.RightArm.rightArmArmor.ChestplateTrim,
+		upperRoot.LeftArm.leftArmArmor.ChestplateTrim,
+		lowerRoot.LowerBodyMain.Shell.ShellArmor.ChestplateTrim,
+		lowerRoot.LowerBodyMain.Shell.Spikes.SpikesArmor.SpikesChestplateTrim
 	)
 kattArmor.Armor.Leggings
 	:addParts(
-		upperRoot.Body.Armor.Belt,
-		lowerRoot.Front.Armor.Leggings,
-		lowerRoot.Main.Armor.Leggings
+		upperRoot.Body.bodyArmor.Belt,
+		lowerRoot.LowerBodyFront.LowerBodyFrontArmor.Leggings,
+		lowerRoot.LowerBodyMain.LowerBodyMainArmor.Leggings
 	)
 	:addTrimParts(
-		upperRoot.Body.Armor.BeltTrim,
-		lowerRoot.Front.Armor.LeggingsTrim,
-		lowerRoot.Main.Armor.LeggingsTrim
+		upperRoot.Body.bodyArmor.BeltTrim,
+		lowerRoot.LowerBodyFront.LowerBodyFrontArmor.LeggingsTrim,
+		lowerRoot.LowerBodyMain.LowerBodyMainArmor.LeggingsTrim
 	)
 kattArmor.Armor.Boots
 	:addParts(
-		lowerRoot.Main.FlipperFrontRight.Armor.Boot,
-		lowerRoot.Main.FlipperFrontRight.Tip.Armor.Boot,
-		lowerRoot.Main.FlipperFrontLeft.Armor.Boot,
-		lowerRoot.Main.FlipperFrontLeft.Tip.Armor.Boot,
-		lowerRoot.Main.FlipperBackRight.Armor.Boot,
-		lowerRoot.Main.FlipperBackRight.Tip.Armor.Boot,
-		lowerRoot.Main.FlipperBackLeft.Armor.Boot,
-		lowerRoot.Main.FlipperBackLeft.Tip.Armor.Boot
+		lowerRoot.LowerBodyMain.FrontRightFlipper.FrontRightFlipperArmor.Boot,
+		lowerRoot.LowerBodyMain.FrontRightFlipper.FrontRightFlipperTip.FrontRightFlipperTipArmor.Boot,
+		lowerRoot.LowerBodyMain.FrontLeftFlipper.FrontLeftFlipperArmor.Boot,
+		lowerRoot.LowerBodyMain.FrontLeftFlipper.FrontLeftFlipperTip.FrontLeftFlipperTipArmor.Boot,
+		lowerRoot.LowerBodyMain.BackRightFlipper.BackRightFlipperArmor.Boot,
+		lowerRoot.LowerBodyMain.BackRightFlipper.BackRightFlipperTip.BackRightFlipperTipArmor.Boot,
+		lowerRoot.LowerBodyMain.BackLeftFlipper.BackLeftFlipperArmor.Boot,
+		lowerRoot.LowerBodyMain.BackLeftFlipper.BackLeftFlipperTip.BackLeftFlipperTipArmor.Boot
 	)
 	:addTrimParts(
-		lowerRoot.Main.FlipperFrontRight.Armor.BootTrim,
-		lowerRoot.Main.FlipperFrontRight.Tip.Armor.BootTrim,
-		lowerRoot.Main.FlipperFrontLeft.Armor.BootTrim,
-		lowerRoot.Main.FlipperFrontLeft.Tip.Armor.BootTrim,
-		lowerRoot.Main.FlipperBackRight.Armor.BootTrim,
-		lowerRoot.Main.FlipperBackRight.Tip.Armor.BootTrim,
-		lowerRoot.Main.FlipperBackLeft.Armor.BootTrim,
-		lowerRoot.Main.FlipperBackLeft.Tip.Armor.BootTrim
+		lowerRoot.LowerBodyMain.FrontRightFlipper.FrontRightFlipperArmor.BootTrim,
+		lowerRoot.LowerBodyMain.FrontRightFlipper.FrontRightFlipperTip.FrontRightFlipperTipArmor.BootTrim,
+		lowerRoot.LowerBodyMain.FrontLeftFlipper.FrontLeftFlipperArmor.BootTrim,
+		lowerRoot.LowerBodyMain.FrontLeftFlipper.FrontLeftFlipperTip.FrontLeftFlipperTipArmor.BootTrim,
+		lowerRoot.LowerBodyMain.BackRightFlipper.BackRightFlipperArmor.BootTrim,
+		lowerRoot.LowerBodyMain.BackRightFlipper.BackRightFlipperTip.BackRightFlipperTipArmor.BootTrim,
+		lowerRoot.LowerBodyMain.BackLeftFlipper.BackLeftFlipperArmor.BootTrim,
+		lowerRoot.LowerBodyMain.BackLeftFlipper.BackLeftFlipperTip.BackLeftFlipperTipArmor.BootTrim
 	)
 
 -- Leather armor
 kattArmor.Materials.leather
 	:setTexture(textures["textures.armor.leatherArmor"])
 	:addParts(kattArmor.Armor.Helmet,
-		upperRoot.Head.Armor.HelmetLeather
+		upperRoot.Head.headArmor.HelmetLeather
 	)
 	:addParts(kattArmor.Armor.Chestplate,
-		upperRoot.Body.Armor.ChestplateLeather,
-		model.RightArm.Armor.ChestplateLeather,
-		model.LeftArm.Armor.ChestplateLeather,
-		upperRoot.RightArm.Armor.ChestplateLeather,
-		upperRoot.LeftArm.Armor.ChestplateLeather,
-		lowerRoot.Main.Shell.Armor.ChestplateLeather,
-		lowerRoot.Main.Shell.Spikes.Armor.ChestplateLeather
+		upperRoot.Body.bodyArmor.ChestplateLeather,
+		model.RightArmFP.rightArmArmorFP.ChestplateLeather,
+		model.LeftArmFP.leftArmArmorFP.ChestplateLeather,
+		upperRoot.RightArm.rightArmArmor.ChestplateLeather,
+		upperRoot.LeftArm.leftArmArmor.ChestplateLeather,
+		lowerRoot.LowerBodyMain.Shell.ShellArmor.ChestplateLeather,
+		lowerRoot.LowerBodyMain.Shell.Spikes.SpikesArmor.SpikesChestplateLeather
 	)
 	:addParts(kattArmor.Armor.Leggings,
-		upperRoot.Body.Armor.BeltLeather,
-		lowerRoot.Front.Armor.LeggingsLeather,
-		lowerRoot.Main.Armor.LeggingsLeather
+		upperRoot.Body.bodyArmor.BeltLeather,
+		lowerRoot.LowerBodyFront.LowerBodyFrontArmor.LeggingsLeather,
+		lowerRoot.LowerBodyMain.LowerBodyMainArmor.LeggingsLeather
 	)
 	:addParts(kattArmor.Armor.Boots,
-		lowerRoot.Main.FlipperFrontRight.Armor.BootLeather,
-		lowerRoot.Main.FlipperFrontRight.Tip.Armor.BootLeather,
-		lowerRoot.Main.FlipperFrontLeft.Armor.BootLeather,
-		lowerRoot.Main.FlipperFrontLeft.Tip.Armor.BootLeather,
-		lowerRoot.Main.FlipperBackRight.Armor.BootLeather,
-		lowerRoot.Main.FlipperBackRight.Tip.Armor.BootLeather,
-		lowerRoot.Main.FlipperBackLeft.Armor.BootLeather,
-		lowerRoot.Main.FlipperBackLeft.Tip.Armor.BootLeather
+		lowerRoot.LowerBodyMain.FrontRightFlipper.FrontRightFlipperArmor.BootLeather,
+		lowerRoot.LowerBodyMain.FrontRightFlipper.FrontRightFlipperTip.FrontRightFlipperTipArmor.BootLeather,
+		lowerRoot.LowerBodyMain.FrontLeftFlipper.FrontLeftFlipperArmor.BootLeather,
+		lowerRoot.LowerBodyMain.FrontLeftFlipper.FrontLeftFlipperTip.FrontLeftFlipperTipArmor.BootLeather,
+		lowerRoot.LowerBodyMain.BackRightFlipper.BackRightFlipperArmor.BootLeather,
+		lowerRoot.LowerBodyMain.BackRightFlipper.BackRightFlipperTip.BackRightFlipperTipArmor.BootLeather,
+		lowerRoot.LowerBodyMain.BackLeftFlipper.BackLeftFlipperArmor.BootLeather,
+		lowerRoot.LowerBodyMain.BackLeftFlipper.BackLeftFlipperTip.BackLeftFlipperTipArmor.BootLeather
 	)
 
 -- Chainmail armor

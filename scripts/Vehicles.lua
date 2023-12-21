@@ -1,6 +1,6 @@
 -- Model setup
 local model = models.LaprasTaur
-local shell = model.Player.LowerBody.Main.Shell
+local shell = model.Player.LowerBody.LowerBodyMain.Shell
 
 -- Table setup
 local t         = {}

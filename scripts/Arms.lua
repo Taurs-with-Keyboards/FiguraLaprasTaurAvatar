@@ -5,8 +5,8 @@ local upperRoot = model.Player.UpperBody
 -- Arm setup
 local leftArm      = upperRoot.LeftArm
 local rightArm     = upperRoot.RightArm
-local fakeLeftArm  = model.LeftArm
-local fakeRightArm = model.RightArm
+local fakeLeftArm  = model.LeftArmFP
+local fakeRightArm = model.RightArmFP
 
 -- Config setup
 config:name("LaprasTaur")

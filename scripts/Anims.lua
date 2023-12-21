@@ -97,10 +97,10 @@ do
 			-- Misc animations
 			local lE = vanilla_model.LEFT_ELYTRA:getOriginRot()
 			local rE = vanilla_model.RIGHT_ELYTRA:getOriginRot()
-			lowerRoot.Main.FlipperFrontLeft:rot(pose.elytra and vec(lE.y, (lE.z * 0.75) + 67.5, lE.x) or nil)
-			lowerRoot.Main.FlipperFrontRight:rot(pose.elytra and vec(rE.y, (rE.z * 0.75) - 67.5, -rE.x) or nil)
-			lowerRoot.Main.FlipperBackLeft:rot(pose.elytra and vec(lE.y, (lE.z * 0.75) + 67.5, lE.x) or nil)
-			lowerRoot.Main.FlipperBackRight:rot(pose.elytra and vec(rE.y, (rE.z * 0.75) - 67.5, -rE.x) or nil)
+			lowerRoot.LowerBodyMain.FrontLeftFlipper:rot(pose.elytra and vec(lE.y, (lE.z * 0.75) + 67.5, lE.x) or nil)
+			lowerRoot.LowerBodyMain.FrontRightFlipper:rot(pose.elytra and vec(rE.y, (rE.z * 0.75) - 67.5, -rE.x) or nil)
+			lowerRoot.LowerBodyMain.BackLeftFlipper:rot(pose.elytra and vec(lE.y, (lE.z * 0.75) + 67.5, lE.x) or nil)
+			lowerRoot.LowerBodyMain.BackRightFlipper:rot(pose.elytra and vec(rE.y, (rE.z * 0.75) - 67.5, -rE.x) or nil)
 		end
 	end
 end
@@ -117,7 +117,7 @@ do
 	function events.RENDER(delta, context)
 		if context == "RENDER" or context == "FIRST_PERSON" or (not client.isHudEnabled() and context ~= "MINECRAFT_GUI") then
 			local scale = math.sin(math.lerp(lastSpeed, speed, delta)) * 0.0125 + 1.0125
-			lowerRoot.Front.Front:scale(scale)
+			lowerRoot.LowerBodyFront.Front:scale(scale)
 		end
 	end
 end
@@ -125,14 +125,14 @@ end
 -- Parrot control
 do
 	local parts = {
-		lowerRoot.Main.LeftParrotPivot,
-		lowerRoot.Main.RightParrotPivot,
+		lowerRoot.LowerBodyMain.LeftParrotPivot,
+		lowerRoot.LowerBodyMain.RightParrotPivot,
 	}
 	
 	function events.RENDER(delta, context)
 		if context == "RENDER" or context == "FIRST_PERSON" or (not client.isHudEnabled() and context ~= "MINECRAFT_GUI") then
 			for _, parrot in pairs(parts) do
-				parrot:rot(-lowerRoot.Main:getTrueRot().x__ + -lowerRoot:getTrueRot().x__)
+				parrot:rot(-lowerRoot.LowerBodyMain:getTrueRot().x__ + -lowerRoot:getTrueRot().x__)
 			end
 		end
 	end

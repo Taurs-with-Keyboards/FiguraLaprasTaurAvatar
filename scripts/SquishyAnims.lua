@@ -10,7 +10,7 @@ local pose    = require("scripts.Posing")
 local vehicle = require("scripts.Vehicles")
 
 squapi.smoothTorso(upperRoot, 0.3)
-squapi.smoothTorso(lowerRoot.Front, 0.4)
+squapi.smoothTorso(lowerRoot.LowerBodyFront, 0.4)
 
 squapi.crouch(anims.crouch, _, anims.crawl)
 
@@ -18,15 +18,15 @@ function events.render(delta, context)
 	upperRoot.Head:pos(pose.crawl and -vanilla_model.HEAD:getOriginPos() or nil)
 	upperRoot.Body:rot(pose.crawl and -vanilla_model.BODY:getOriginRot() or nil)
 	upperRoot:offsetRot(pose.crawl and 0 or upperRoot:getOffsetRot())
-	lowerRoot.Front:offsetRot(lowerRoot.Front:getOffsetRot()._y_)
+	lowerRoot.LowerBodyFront:offsetRot(lowerRoot.LowerBodyFront:getOffsetRot()._y_)
 end
 
 -- Ear Animations
 local ears = upperRoot.Head.Ears
-squapi.ear(ears.LeftEar, ears.RightEar, false, _, 0.35, _, 1, 0.05, 0.1)
+squapi.ear(ears.LeftEar, ears.RightEar, false, _, 0.35, true, -1, 0.05, 0.1)
 
 -- LowerBody Physics
-local main = lowerRoot.Main
+local main = lowerRoot.LowerBodyMain
 
 squapi.lapras  = squapi.bounceObject:new()
 squapi.flipper = squapi.bounceObject:new()
@@ -36,17 +36,17 @@ function events.render(delta, context)
 	
 	main:offsetRot(squapi.lapras.pos, 0, 0)
 	
-	main.FlipperFrontLeft:offsetRot(0, 0, squapi.flipper.pos*2)
-	main.FlipperFrontLeft.Tip:offsetRot(0, 0, squapi.flipper.pos*1.5)
+	main.FrontLeftFlipper:offsetRot(0, 0, squapi.flipper.pos*2)
+	main.FrontLeftFlipper.FrontLeftFlipperTip:offsetRot(0, 0, squapi.flipper.pos*1.5)
 	
-	main.FlipperFrontRight:offsetRot(0, 0, -squapi.flipper.pos*2)
-	main.FlipperFrontRight.Tip:offsetRot(0, 0, -squapi.flipper.pos*1.5)
+	main.FrontRightFlipper:offsetRot(0, 0, -squapi.flipper.pos*2)
+	main.FrontRightFlipper.FrontRightFlipperTip:offsetRot(0, 0, -squapi.flipper.pos*1.5)
 	
-	main.FlipperBackLeft:offsetRot(0, 0, squapi.flipper.pos*2)
-	main.FlipperBackLeft.Tip:offsetRot(0, 0, squapi.flipper.pos*1.5)
+	main.BackLeftFlipper:offsetRot(0, 0, squapi.flipper.pos*2)
+	main.BackLeftFlipper.BackLeftFlipperTip:offsetRot(0, 0, squapi.flipper.pos*1.5)
 	
-	main.FlipperBackRight:offsetRot(0, 0, -squapi.flipper.pos*2)
-	main.FlipperBackRight.Tip:offsetRot(0, 0, -squapi.flipper.pos*1.5)
+	main.BackRightFlipper:offsetRot(0, 0, -squapi.flipper.pos*2)
+	main.BackRightFlipper.BackRightFlipperTip:offsetRot(0, 0, -squapi.flipper.pos*1.5)
 	
 	local strech  = not (pose.stand or pose.crouch or pose.swim or pose.sleep) or (pose.climb and not player:isOnGround())
 	
