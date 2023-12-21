@@ -10,9 +10,9 @@ local camRot = config:load("CameraRot") or false
 local eyePos = false
 
 -- Variable setup
-local pose      = require("scripts.Posing")
-local ball      = require("scripts.Pokeball")
-local vehicle   = require("scripts.Vehicles")
+local pose    = require("scripts.Posing")
+local ball    = require("scripts.Pokeball")
+local vehicle = require("scripts.Vehicles")
 
 -- Startup camera pos
 local trueHeadPos = 0

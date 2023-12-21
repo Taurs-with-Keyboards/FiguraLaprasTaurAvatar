@@ -5,9 +5,9 @@ local lowerRoot = model.Player.LowerBody
 local anims     = animations.LaprasTaur
 
 -- Variables
-local pose  = require("scripts.Posing")
-local ticks = require("scripts.WaterTicks")
-local g     = require("scripts.GroundCheck")
+local pose   = require("scripts.Posing")
+local ticks  = require("scripts.WaterTicks")
+local ground = require("lib.GroundCheck")
 
 -- Table setup
 local t = {}
@@ -46,14 +46,15 @@ do
 			local walking    = vel.zx:length() ~= 0
 			local inWater    = ticks.water     < 20
 			local underwater = ticks.under     < 20
+			local onGround   = ground()
 			
 			-- Animation states
-			local groundIdleState     = not walking and (not (inWater or player:getVehicle()) or g.ground) and not ((pose.swim and inWater) or pose.elytra) or pose.spin or (pose.climb and vel:length() == 0)
-			local groundWalkState     =     walking and (not (inWater or player:getVehicle()) or g.ground) and not ((pose.swim and inWater) or pose.elytra or pose.spin) or (pose.climb and vel:length() ~= 0)
-			local waterIdleState      = not walking and ((inWater or player:getVehicle()) and not g.ground) and not underwater
-			local waterSwimState      =     walking and ((inWater or player:getVehicle()) and not g.ground) and not underwater
-			local underwaterIdleState = vel:length() == 0 and underwater and (not g.ground or pose.swim)
-			local underwaterSwimState = vel:length() ~= 0 and underwater and (not g.ground or pose.swim)
+			local groundIdleState     = not walking and (not (inWater or player:getVehicle()) or onGround) and not ((pose.swim and inWater) or pose.elytra) or pose.spin or (pose.climb and vel:length() == 0)
+			local groundWalkState     =     walking and (not (inWater or player:getVehicle()) or onGround) and not ((pose.swim and inWater) or pose.elytra or pose.spin) or (pose.climb and vel:length() ~= 0)
+			local waterIdleState      = not walking and ((inWater or player:getVehicle()) and not onGround) and not underwater
+			local waterSwimState      =     walking and ((inWater or player:getVehicle()) and not onGround) and not underwater
+			local underwaterIdleState = vel:length() == 0 and underwater and (not onGround or pose.swim)
+			local underwaterSwimState = vel:length() ~= 0 and underwater and (not onGround or pose.swim)
 			
 			-- Animation timeline renderer
 			t.animTime = math.lerp(_time, time, delta)

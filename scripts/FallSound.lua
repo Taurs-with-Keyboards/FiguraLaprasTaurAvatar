@@ -7,13 +7,13 @@ if canDry == nil then canDry = true end
 local dryTimer = config:load("FallSoundDryTimer") or 400
 
 -- Variables setup
-local ticks = require("scripts.WaterTicks")
-local g     = require("scripts.GroundCheck")
+local ticks  = require("scripts.WaterTicks")
+local ground = require("lib.GroundCheck")
 
 -- Sound player
 local wasInAir = false
 function events.TICK()
-	if fallSound and wasInAir and g.ground and not player:getVehicle() and not player:isInWater() then
+	if fallSound and wasInAir and ground() and not player:getVehicle() and not player:isInWater() then
 		if models.Pokeball:getScale():length() > 0.5 then
 			sounds:playSound("cobblemon:poke_ball.hit", player:getPos(), 0.25)
 		else
@@ -25,7 +25,7 @@ function events.TICK()
 			end
 		end
 	end
-	wasInAir = not g.ground
+	wasInAir = not ground()
 end
 
 -- Sound toggler
