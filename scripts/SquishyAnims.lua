@@ -23,7 +23,7 @@ end
 
 -- Ear Animations
 local ears = upperRoot.Head.Ears
-squapi.ear(ears.LeftEar, ears.RightEar, false, _, 0.35, true, -1, 0.05, 0.1)
+squapi.ear(ears.LeftEar, ears.RightEar, false, _, 0.35, true, -0.5, 0.05, 0.1)
 
 -- LowerBody Physics
 local main = lowerRoot.LowerBodyMain
