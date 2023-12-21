@@ -1,8 +1,0 @@
-{
-  "name": "Lapras Taur",
-  "description": "\"Is said to have a gentle heart.\"",
-  "authors": ["Total (Avatar Maker)\n","Katt (Original scripts,\nCustom armor API, Crosshair API)\n","Grandpa Scout\n(Animation Blending API, Carrier API)\n","Jimmy (QA, Animation code)\n","Psycho Breadstick (QA, Origin)\n","Squishy (Squishy API)\n","The Cobblemon Team (Original models,\nanimations, textures, icons, and sounds)\n","The Pokemon Company (Lapras design)"],
-  "version": "0.1.2",
-  "color": "69CDEC",
-  "autoAnims":["LaprasTaur.groundIdle"]
-}
