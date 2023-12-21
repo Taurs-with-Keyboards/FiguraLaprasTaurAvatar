@@ -7,8 +7,8 @@ if canDry == nil then canDry = true end
 local dryTimer = config:load("FallSoundDryTimer") or 400
 
 -- Variables setup
-local g     = require("scripts.GroundCheck")
 local ticks = require("scripts.WaterTicks")
+local g     = require("scripts.GroundCheck")
 
 -- Sound player
 local wasInAir = false
@@ -17,8 +17,9 @@ function events.TICK()
 		if models.Pokeball:getScale():length() > 0.5 then
 			sounds:playSound("cobblemon:poke_ball.hit", player:getPos(), 0.25)
 		else
-			local vel    = player:getVelocity().y
-			local volume = math.clamp((math.abs(-vel + 1) * (canDry and ((dryTimer + -ticks.wet) / dryTimer) or 1)) / 2, 0, 1)
+			local vel    = math.abs(-player:getVelocity().y + 1)
+			local dry    = canDry and (dryTimer - ticks.wet) / dryTimer or 1
+			local volume = math.clamp((vel * dry) / 2, 0, 1)
 			if volume ~= 0 then
 				sounds:playSound("minecraft:entity.puffer_fish.flop", player:getPos(), volume, math.map(volume, 1, 0, 0.45, 0.65))
 			end
@@ -42,7 +43,7 @@ local function setDry(boolean)
 	config:save("FallSoundDry", canDry)
 end
 
--- Set Timer function
+-- Set timer function
 local function setDryTimer(x)
 	dryTimer = math.clamp(dryTimer + (x * 20), 100, 6000)
 	config:save("FallSoundDryTimer", dryTimer)
@@ -81,25 +82,27 @@ t.soundPage = action_wheel:newAction("FallSound")
 	:title("§9§lToggle Falling Sound\n\n§bToggles floping sound effects when landing on the ground.\nWhen inside your pokeball, a different sound plays.")
 	:hoverColor(vectors.hexToRGB("5EB7DD"))
 	:toggleColor(vectors.hexToRGB("4078B0"))
-	:item("minecraft:bucket")
-	:toggleItem("minecraft:water_bucket")
+	:item("minecraft:sponge")
+	:toggleItem("minecraft:wet_sponge")
 	:onToggle(pings.setFallSoundToggle)
 	:toggled(fallSound)
 
-function events.TICK()
-	local current = "§3Current drying timer: "..(canDry and ("§b§l"..(dryTimer / 20).." §3Seconds") or "§b∞")
-	t.dryTitle = "§9§lToggle Drying/Timer\n\n"..current.."\n\n§bToggles the gradual decrease in volume of the flopping sound,\nunless the player reenters water or rain, which resets the volume.\n\nScrolling up adds time, Scrolling down subtracts time.\nRight click resets timer to 20 seconds."
-end
-
 t.dryPage = action_wheel:newAction("FallSoundDrying")
-	:title(t.dryTitle)
 	:hoverColor(vectors.hexToRGB("5EB7DD"))
 	:toggleColor(vectors.hexToRGB("4078B0"))
-	:item("minecraft:pufferfish")
+	:item("minecraft:water_bucket")
 	:toggleItem("minecraft:leather")
 	:onToggle(pings.setFallSoundDry)
 	:onScroll(setDryTimer)
 	:onRightClick(function() dryTimer = 400 config:save("FallSoundDryTimer", dryTimer) end)
 	:toggled(canDry)
+
+-- Update dry page info
+function events.TICK()
+	t.dryPage
+		:title("§9§lToggle Drying/Timer\n\n§3Current drying timer: "..
+		(canDry and ("§b§l"..(dryTimer / 20).." §3Seconds") or "§bNone")..
+		"\n\n§bToggles the gradual drying of your tail until your legs form again.\n\nScrolling up adds time, Scrolling down subtracts time.\nRight click resets timer to 20 seconds.")
+end
 
 return t

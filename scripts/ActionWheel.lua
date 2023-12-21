@@ -79,10 +79,6 @@ do
 		:action( 1, fall.soundPage)
 		:action( 2, fall.dryPage)
 		:action( 3, backPage)
-	
-	function events.TICK()
-		action_wheel:getPage("FallSoundPage"):getAction(2):title(fall.dryTitle)
-	end
 end
 
 -- Avatar actions
