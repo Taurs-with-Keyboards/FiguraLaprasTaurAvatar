@@ -1,6 +1,6 @@
--- Model setup
-local model = models.LaprasTaur
-local shell = model.Player.LowerBody.LowerBodyMain.Shell
+-- Required scripts
+local model = require("scripts.ModelParts")
+local carrier = require("lib.GSCarrier")
 
 -- Table setup
 local t         = {}
@@ -64,11 +64,8 @@ function events.TICK()
 	
 	-- Vehicle renders/part toggles
 	renderer:setRenderVehicle(not(t.boat or t.chest_boat))
-	shell.Chest:visible(t.chest_boat)
+	model.chest:visible(t.chest_boat)
 end
-
--- GSCarrier setup
-local carrier = require("lib.GSCarrier")
 
 -- GSCarrier rider
 carrier.rider.addRoots(models)
@@ -81,27 +78,30 @@ carrier.rider.controller.setAimEnabled(false)
 -- GSCarrier vehicle
 carrier.vehicle.addTag("gscarrier:taur", "gscarrier:land", "gscarrier:water")
 
-carrier.vehicle.newSeat("Seat1", shell.RiderPos1, {
+-- Seat 1
+carrier.vehicle.newSeat("Seat1", model.shell.RiderPos1, {
 	priority = 3,
 	tags = {["gscarrier:flat"] = true},
-	condition = function() if shell.Chest:getVisible() then return false end end
+	condition = function() if model.chest:getVisible() then return false end end
 })
 
-carrier.vehicle.newSeat("Seat2", shell.RiderPos2, {
+carrier.vehicle.newSeat("Seat2", model.shell.RiderPos2, {
 	priority = 2,
 	tags = {["gscarrier:flat"] = true},
-	condition = function() if shell.Chest:getVisible() then return false end end
+	condition = function() if model.chest:getVisible() then return false end end
 })
 
-carrier.vehicle.newSeat("SeatChest", shell.Chest.RiderPosChest, {
+carrier.vehicle.newSeat("SeatChest", model.chest.RiderPosChest, {
 	priority = 1,
 	tags = {["gscarrier:chair"] = true},
-	condition = function() if not shell.Chest:getVisible() then return false end end
+	condition = function() if not model.chest:getVisible() then return false end end
 })
 
 function events.TICK()
+	
 	local vehicle = player:getVehicle()
 	carrier.vehicle.setRedirect(vehicle and vehicle:getType() == "minecraft:boat")
+	
 end
 
 -- Returns table

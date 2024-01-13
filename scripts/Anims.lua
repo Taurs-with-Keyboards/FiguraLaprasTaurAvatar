@@ -1,7 +1,6 @@
--- Model setup
-local model     = models.LaprasTaur
-local upperRoot = model.Player.UpperBody
-local lowerRoot = model.Player.LowerBody
+-- Required scripts
+local model = require("scripts.ModelParts")
+
 local anims     = animations.LaprasTaur
 
 -- Variables
@@ -13,6 +12,17 @@ local ground = require("lib.GroundCheck")
 local t = {}
 
 t.animTime = 0
+
+-- Calculate parent's rotations
+local function calculateParentRot(m)
+	
+	local parent = m:getParent()
+	if not parent then
+		return m:getTrueRot()
+	end
+	return calculateParentRot(parent) + m:getTrueRot()
+	
+end
 
 -- Base Animations
 do
@@ -92,16 +102,16 @@ do
 			posCurrentPos = math.lerp(posCurrent, posNextTick, delta)
 			
 			-- Animation modifiers application
-			local animPos = model.Player:getAnimPos()
-			model.Player:pos(posCurrentPos + ((pose.swim or pose.climb or pose.crawl) and vec(0, animPos.z - animPos.y, animPos.y - animPos.z) or 0))
+			local animPos = model.root:getAnimPos()
+			model.root:pos(posCurrentPos + ((pose.swim or pose.climb or pose.crawl) and vec(0, animPos.z - animPos.y, animPos.y - animPos.z) or 0))
 			
 			-- Misc animations
 			local lE = vanilla_model.LEFT_ELYTRA:getOriginRot()
 			local rE = vanilla_model.RIGHT_ELYTRA:getOriginRot()
-			lowerRoot.LowerBodyMain.FrontLeftFlipper:rot(pose.elytra and vec(lE.y, (lE.z * 0.75) + 67.5, lE.x) or nil)
-			lowerRoot.LowerBodyMain.FrontRightFlipper:rot(pose.elytra and vec(rE.y, (rE.z * 0.75) - 67.5, -rE.x) or nil)
-			lowerRoot.LowerBodyMain.BackLeftFlipper:rot(pose.elytra and vec(lE.y, (lE.z * 0.75) + 67.5, lE.x) or nil)
-			lowerRoot.LowerBodyMain.BackRightFlipper:rot(pose.elytra and vec(rE.y, (rE.z * 0.75) - 67.5, -rE.x) or nil)
+			model.frontLeftFlipper:rot(pose.elytra and vec(lE.y, (lE.z * 0.75) + 67.5, lE.x) or nil)
+			model.frontRightFlipper:rot(pose.elytra and vec(rE.y, (rE.z * 0.75) - 67.5, -rE.x) or nil)
+			model.backLeftFlipper:rot(pose.elytra and vec(lE.y, (lE.z * 0.75) + 67.5, lE.x) or nil)
+			model.backRightFlipper:rot(pose.elytra and vec(rE.y, (rE.z * 0.75) - 67.5, -rE.x) or nil)
 		end
 	end
 end
@@ -118,7 +128,7 @@ do
 	function events.RENDER(delta, context)
 		if context == "RENDER" or context == "FIRST_PERSON" or (not client.isHudEnabled() and context ~= "MINECRAFT_GUI") then
 			local scale = math.sin(math.lerp(lastSpeed, speed, delta)) * 0.0125 + 1.0125
-			lowerRoot.LowerBodyFront.Front:scale(scale)
+			model.front.Front:scale(scale)
 		end
 	end
 end
@@ -126,14 +136,14 @@ end
 -- Parrot control
 do
 	local parts = {
-		lowerRoot.LowerBodyMain.LeftParrotPivot,
-		lowerRoot.LowerBodyMain.RightParrotPivot,
+		model.main.LeftParrotPivot,
+		model.main.RightParrotPivot,
 	}
 	
 	function events.RENDER(delta, context)
 		if context == "RENDER" or context == "FIRST_PERSON" or (not client.isHudEnabled() and context ~= "MINECRAFT_GUI") then
 			for _, parrot in pairs(parts) do
-				parrot:rot(-lowerRoot.LowerBodyMain:getTrueRot().x__ + -lowerRoot:getTrueRot().x__)
+				parrot:rot(-model.main:getTrueRot().x__ + -model.lower:getTrueRot().x__)
 			end
 		end
 	end
@@ -144,7 +154,7 @@ function events.RENDER(delta, context)
 	if context == "RENDER" or context == "FIRST_PERSON" or (not client.isHudEnabled() and context ~= "MINECRAFT_GUI") then
 		local rot = vanilla_model.HEAD:getOriginRot()
 		rot.x = math.clamp(rot.x, -90, 30)
-		upperRoot.Spyglass:rot(rot)
+		model.upper.Spyglass:rot(rot)
 			:pos(pose.crouch and vec(0, -4, 0) or nil)
 	end
 end

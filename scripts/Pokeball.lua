@@ -1,29 +1,51 @@
--- Models setup
+-- Required scripts
+
+local vehicle = require("scripts.Vehicles")
 local pokeball = models.Pokeball
 local model    = models.LaprasTaur
 
--- Animation setup
+-- Animations setup
 local anims = animations.Pokeball
-
--- Table setup
-local t = {}
 
 -- Config setup
 config:name("LaprasTaur")
 local toggle = config:load("PokeballToggle") or false
 
--- Variables
+-- Variables setup
 local isInBall  = toggle
 local wasInBall = toggle
-local staticRot = 0
-t.scale         = 0
-local vehicle   = require("scripts.Vehicles")
+local staticYaw = 0
 
--- Lerping variables
-local startScale = toggle and 0 or 1
-local scaleCurrent, scaleNextTick, scaleTarget, scaleCurrentPos = startScale, startScale, startScale, startScale
-local posCurrent,   posNextTick,   posTarget,   posCurrentPos   = 0, 0, 0, 0
+-- Lerp scale table
+local scale = {
+	current    = 0,
+	nextTick   = 0,
+	target     = 0,
+	currentPos = 0
+}
+
+-- Lerp pos table
+local pos = {
+	current    = 0,
+	nextTick   = 0,
+	target     = 0,
+	currentPos = 0
+}
+
+-- Set lerp start on init
+function events.ENTITY_INIT()
+	
+	local apply = toggle and 0 or 1
+	for k, v in pairs(scale) do
+		scale[k] = apply
+	end
+	
+	pokeball:primaryRenderType("CUTOUT_CULL")
+	
+end
+
 function events.TICK()
+	
 	-- Pokeball check
 	isInBall = ((toggle and not vehicle.isVehicle) or (vehicle.vehicle and not(vehicle.boat or vehicle.chest_boat) or (vehicle.isPassenger or vehicle.player))) or false
 	
@@ -34,7 +56,7 @@ function events.TICK()
 		if not isInBall then sounds:stopSound() sounds:playSound("cobblemon:poke_ball.send_out", player:getPos(), 0.15) end
 		
 		if isInBall then 
-			staticRot = -player:getRot().y
+			staticYaw = -player:getBodyYaw()
 		end
 		
 		-- Animations
@@ -43,75 +65,88 @@ function events.TICK()
 	end
 	
 	-- Pos lerp
-	posCurrent  = posNextTick
-	posNextTick = math.lerp(posNextTick, posTarget, 0.25)
+	pos.current  = pos.nextTick
+	pos.nextTick = math.lerp(pos.nextTick, pos.target, 0.25)
 	
 	-- Scaling lerp
-	scaleCurrent  = scaleNextTick
-	scaleNextTick = math.lerp(scaleNextTick, scaleTarget, 0.2)
+	scale.current  = scale.nextTick
+	scale.nextTick = math.lerp(scale.nextTick, scale.target, 0.2)
 	
 	-- Store previous states
 	wasInBall = isInBall
+	
 end
 
 -- Rendering stuff
 function events.RENDER(delta, context)
-	if context == "FIRST_PERSON" or context == "RENDER" or (not client.isHudEnabled() and context ~= "MINECRAFT_GUI") then
-		-- Vehicle pos table
-		local statePos = {
-			{ state = vehicle.player,        pos = 10  },
-			{ state = (vehicle.boat or vehicle.chest_boat) and
-				vehicle.isPassenger,         pos = 14  },
-			{ state = vehicle.boat,          pos = 8   },
-			{ state = vehicle.chest_boat,    pos = 0   },
-			{ state = vehicle.minecart,      pos = 9   },
-			{ state = vehicle.horse,         pos = 10  },
-			{ state = vehicle.donkey,        pos = 10  },
-			{ state = vehicle.mule,          pos = 10  },
-			{ state = vehicle.zombieHorse,   pos = 8   },
-			{ state = vehicle.skeletonHorse, pos = 11  },
-			{ state = vehicle.pig,           pos = 10  },
-			{ state = vehicle.strider,       pos = 10  },
-			{ state = vehicle.camel,         pos = 9   },
-		}
-		
-		-- Base position check
-		for _, case in ipairs(statePos) do
-			if case.state then
-				posTarget = case.pos
-				break
-			elseif vehicle.vehicle then
-				-- Unsupported cases
-				posTarget = 10 -- Assumption
-			else
-				posTarget = 0
-			end
+	
+	-- Vehicle pos table
+	local statePos = {
+		{ state = vehicle.player,        pos = 10  },
+		{ state = (vehicle.boat or vehicle.chest_boat) and
+			vehicle.isPassenger,         pos = 14  },
+		{ state = vehicle.boat,          pos = 8   },
+		{ state = vehicle.chest_boat,    pos = 8   },
+		{ state = vehicle.minecart,      pos = 9   },
+		{ state = vehicle.horse,         pos = 10  },
+		{ state = vehicle.donkey,        pos = 10  },
+		{ state = vehicle.mule,          pos = 10  },
+		{ state = vehicle.zombieHorse,   pos = 8   },
+		{ state = vehicle.skeletonHorse, pos = 11  },
+		{ state = vehicle.pig,           pos = 10  },
+		{ state = vehicle.strider,       pos = 10  },
+		{ state = vehicle.camel,         pos = 9   },
+	}
+	
+	-- Base position check
+	for _, case in ipairs(statePos) do
+		if case.state then
+			pos.target = case.pos
+			break
+		elseif vehicle.vehicle then
+			-- Unsupported cases
+			pos.target = 10 -- Assumption
+		else
+			pos.target = 0
 		end
-		
-		-- Pos lerp
-		posCurrentPos = math.lerp(posCurrent, posNextTick, delta)
-		
-		-- Scaling target and lerp
-		scaleTarget     = isInBall and 0 or 1
-		scaleCurrentPos = math.lerp(scaleCurrent, scaleNextTick, delta)
-		
-		-- Apply scale, color, & pos
-		-- Lapras
-		model:scale(scaleCurrentPos)
-			:color(1, scaleCurrentPos, scaleCurrentPos)
-			:pos(vec(0, posCurrentPos, 0))
-		
-		-- Pokeball
-		pokeball:visible(context ~= "FIRST_PERSON")
-			:scale(math.map(scaleCurrentPos, 0, 1, 1, 0) * (vehicle.player and 0.5 or 1))
-			:pos(vec(0, posCurrentPos, 0))
-			:rot(vehicle.player and 0 or vec(0, staticRot + player:getBodyYaw(delta), 0))
-		
-		-- Shadow
-		renderer:shadowRadius(math.map(scaleCurrentPos, 0, 1, 0.2, 1.25))
-		
-		t.scale = scaleCurrentPos
 	end
+	
+	-- Pos lerp
+	pos.currentPos = math.lerp(pos.current, pos.nextTick, delta)
+	
+	-- Scaling target and lerp
+	scale.target     = isInBall and 0 or 1
+	scale.currentPos = math.lerp(scale.current, scale.nextTick, delta)
+	
+	-- GUI part reset
+	if context ~= "RENDER" and context ~= "FIRST_PERSON" and context ~= "OTHER" then
+		
+		model:pos(nil)
+		
+		pokeball:visible(nil)
+			:pos(nil)
+			:rot(nil)
+			:parentType("NONE")
+		
+	end
+	
+	renderer:shadowRadius(math.map(scale.currentPos, 0, 1, 0.2, 1.25))
+	
+end
+
+-- Application post GUI reset
+function events.POST_RENDER(delta, context)
+	
+	model:scale(scale.currentPos)
+		:color(1, scale.currentPos, scale.currentPos)
+		:pos(0, pos.currentPos, 0)
+	
+	pokeball:visible(not renderer:isFirstPerson())
+		:scale(math.map(scale.currentPos, 0, 1, 1, 0))
+		:pos(player:getPos(delta) * 16 + vec(0, pos.currentPos, 0))
+		:rot(vec(0, staticYaw + 180, 0))
+		:parentType("WORLD")
+	
 end
 
 -- Keybind animations/blockers
@@ -188,6 +223,9 @@ end
 
 -- Activate action
 setPokeball(toggle)
+
+-- Table setup
+local t = {}
 
 -- Return action wheel page
 t.togglePage = action_wheel:newAction("Pokeball")
