@@ -91,7 +91,6 @@ function events.RENDER(delta, context)
 	
 	model.leftArmFP:visible(firstPerson)
 	
-	-- Right arm
 	model.rightArm:rot((-vanilla_model.RIGHT_ARM:getOriginRot() + idleRot + bodyOffset) * rightArm.currentPos)
 		:visible(not firstPerson)
 	
