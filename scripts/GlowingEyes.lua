@@ -140,7 +140,7 @@ pings.setEyesWater       = setWater
 pings.syncEyes           = syncEyes
 
 -- Keybind
-local toggleBind   = config:load("EyesToggleKeybind") or "key.keyboard.keypad.3"
+local toggleBind   = config:load("EyesToggleKeybind") or "key.keyboard.keypad.1"
 local setToggleKey = keybinds:newKeybind("Glowing Eyes Toggle"):onPress(function() pings.setEyesToggle(not toggle) end):key(toggleBind)
 
 -- Keybind updater
