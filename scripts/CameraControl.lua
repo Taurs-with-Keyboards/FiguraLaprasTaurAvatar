@@ -1,29 +1,21 @@
--- Model setup
-local model     = models.LaprasTaur
-local upperRoot = model.Player.UpperBody
+-- Required scripts
+local model   = require("scripts.ModelParts")
+local pose    = require("scripts.Posing")
+local vehicle = require("scripts.Vehicles")
 
 -- Config setup
 config:name("LaprasTaur")
 local camPos = config:load("CameraPos") or false
-local eyePos = false
 
 -- Variable setup
-local pose    = require("scripts.Posing")
-local vehicle = require("scripts.Vehicles")
+local eyePos = false
 
--- Startup camera pos
+-- Set starting head pos on init
 local trueHeadPos = 0
 function events.ENTITY_INIT()
+	
 	trueHeadPos = player:getPos()
-end
-
--- Get the average of a vector
-local function average(vec)
-	local sum = 0
-	for _, v in ipairs{vec:unpack()} do
-		sum = sum + v
-	end
-	return sum / #vec
+	
 end
 
 function events.POST_RENDER(delta, context)
@@ -31,7 +23,7 @@ function events.POST_RENDER(delta, context)
 		
 		-- Pos checking
 		local playerPos = player:getPos(delta)
-		trueHeadPos     = upperRoot.Head:partToWorldMatrix():apply()
+		trueHeadPos     = model.head:partToWorldMatrix():apply()
 		
 		-- Pehkui scaling
 		local nbt   = player:getNbt()
@@ -48,42 +40,47 @@ function events.POST_RENDER(delta, context)
 			types and
 			types["pehkui:model_height"] and
 			types["pehkui:model_height"]["scale"] or 1)
-		
 		local offsetScale = vec(modelWidth, modelHeight, modelWidth) * playerScale
 		
-		-- Camera offset & rotation setup
+		-- Camera offset
 		local posOffset = (trueHeadPos - playerPos) * (context == "FIRST_PERSON" and offsetScale or 1) + vec(0, -player:getEyeHeight() + ((3/16) * offsetScale.y), 0)
 		
-		-- Renders offset & rotation
+		-- Renders offset
 		local posOffsetApply = not player:riptideSpinning()
 		renderer:offsetCameraPivot(camPos and posOffsetApply and posOffset or 0)
 			:eyeOffset(eyePos and camPos and posOffsetApply and posOffset or 0)
 		
 		-- Nameplate Placement
-		nameplate.ENTITY:pivot(posOffset + vec(0, player:getBoundingBox().y + (vehicle.isVehicle and (33/16) or (9/16)), 0))
-			:scale(model:getScale())
+		nameplate.ENTITY:pivot(posOffset + vec(0, player:getBoundingBox().y + 9/16, 0))
+			:scale(model.model:getScale())
 		
 		-- Disables head if sleeping in first person
-		upperRoot.Head:visible(not(pose.sleep and renderer:isFirstPerson()))
+		model.head:visible(not(pose.sleep and renderer:isFirstPerson()))
 		
 	end
 end
 
--- Camera pos toggler
+-- Camera pos toggle
 local function setPos(boolean)
+	
 	camPos = boolean
 	config:save("CameraPos", camPos)
+	
 end
 
--- Eye pos toggler
+-- Eye pos toggle
 local function setEye(boolean)
+	
 	eyePos = boolean
+	
 end
 
 -- Sync variables
 local function syncCamera(a, b)
+	
 	camPos = a
 	eyePos = b
+	
 end
 
 -- Setup pings
@@ -94,9 +91,11 @@ pings.syncCamera   = syncCamera
 -- Sync on tick
 if host:isHost() then
 	function events.TICK()
+		
 		if world.getTime() % 200 == 0 then
 			pings.syncCamera(camPos, eyePos)
 		end
+		
 	end
 end
 
