@@ -1,8 +1,6 @@
 -- Required scripts
-
+local model   = require("scripts.ModelParts")
 local vehicle = require("scripts.Vehicles")
-local pokeball = models.Pokeball
-local model    = models.LaprasTaur
 
 -- Animations setup
 local anims = animations.Pokeball
@@ -35,12 +33,12 @@ local pos = {
 -- Set lerp start on init
 function events.ENTITY_INIT()
 	
+	staticYaw = -player:getBodyYaw()
+	
 	local apply = toggle and 0 or 1
 	for k, v in pairs(scale) do
 		scale[k] = apply
 	end
-	
-	pokeball:primaryRenderType("CUTOUT_CULL")
 	
 end
 
@@ -121,9 +119,9 @@ function events.RENDER(delta, context)
 	-- GUI part reset
 	if context ~= "RENDER" and context ~= "FIRST_PERSON" and context ~= "OTHER" then
 		
-		model:pos(nil)
+		model.model:pos(nil)
 		
-		pokeball:visible(nil)
+		model.pokeball:visible(nil)
 			:pos(nil)
 			:rot(nil)
 			:parentType("NONE")
@@ -137,11 +135,11 @@ end
 -- Application post GUI reset
 function events.POST_RENDER(delta, context)
 	
-	model:scale(scale.currentPos)
+	model.model:scale(scale.currentPos)
 		:color(1, scale.currentPos, scale.currentPos)
 		:pos(0, pos.currentPos, 0)
 	
-	pokeball:visible(not renderer:isFirstPerson())
+	model.pokeball:visible(not renderer:isFirstPerson())
 		:scale(math.map(scale.currentPos, 0, 1, 1, 0))
 		:pos(player:getPos(delta) * 16 + vec(0, pos.currentPos, 0))
 		:rot(vec(0, staticYaw + 180, 0))
@@ -151,19 +149,27 @@ end
 
 -- Keybind animations/blockers
 local function forwardWobble()
+	
 	anims.wobbleForward:play()
+	
 end
 
 local function backWobble()
+	
 	anims.wobbleBack:play()
+	
 end
 
 local function rightWobble()
+	
 	anims.wobbleRight:play()
+	
 end
 
 local function leftWobble()
+	
 	anims.wobbleLeft:play()
+	
 end
 
 -- Keybind ping setup
@@ -175,25 +181,25 @@ pings.playLeftWobble    = leftWobble
 if host:isHost() then
 	local cantMove  = (toggle or vehicle.isPassenger or vehicle.player)
 	local kbForward = keybinds:newKeybind("Pokeball Forward Blocker"):onPress(function() if cantMove and not anims.wobbleForward:isPlaying() then pings.playForwardWobble() end return cantMove end)
-	local kbBack    = keybinds:newKeybind("Pokeball Back Blocker"   ):onPress(function() if cantMove and not anims.wobbleBack:isPlaying() then pings.playBackWobble() end return cantMove end)
-	local kbRight   = keybinds:newKeybind("Pokeball Right Blocker"  ):onPress(function() if cantMove and not anims.wobbleRight:isPlaying() then pings.playRightWobble() end return cantMove end)
-	local kbLeft    = keybinds:newKeybind("Pokeball Left Blocker"   ):onPress(function() if cantMove and not anims.wobbleLeft:isPlaying() then pings.playLeftWobble() end return cantMove end)
-	local kbJump    = keybinds:newKeybind("Pokeball Jump Blocker"   ):onPress(function() return cantMove and player:isInWater() end)
-	local kbCrouch  = keybinds:newKeybind("Pokeball Crouch Blocker" ):onPress(function() return toggle end)
-	local kbAttack  = keybinds:newKeybind("Pokeball Attack Blocker" ):onPress(function() return cantMove end)
-	local kbUse     = keybinds:newKeybind("Pokeball Use Blocker"    ):onPress(function() return cantMove end)
+	local kbBack    = keybinds:newKeybind("Pokeball Back Blocker")   :onPress(function() if cantMove and not anims.wobbleBack:isPlaying()    then pings.playBackWobble()    end return cantMove end)
+	local kbRight   = keybinds:newKeybind("Pokeball Right Blocker")  :onPress(function() if cantMove and not anims.wobbleRight:isPlaying()   then pings.playRightWobble()   end return cantMove end)
+	local kbLeft    = keybinds:newKeybind("Pokeball Left Blocker")   :onPress(function() if cantMove and not anims.wobbleLeft:isPlaying()    then pings.playLeftWobble()    end return cantMove end)
+	local kbJump    = keybinds:newKeybind("Pokeball Jump Blocker")   :onPress(function() return cantMove and player:isInWater() end)
+	local kbCrouch  = keybinds:newKeybind("Pokeball Crouch Blocker") :onPress(function() return toggle end)
+	local kbAttack  = keybinds:newKeybind("Pokeball Attack Blocker") :onPress(function() return cantMove end)
+	local kbUse     = keybinds:newKeybind("Pokeball Use Blocker")    :onPress(function() return cantMove end)
 
 	-- Keybind maintainer (Prevents changes)
 	function events.TICK()
 		cantMove = (toggle or vehicle.isPassenger or vehicle.player)
 		kbForward:key(keybinds:getVanillaKey("key.forward"))
-		kbBack:key(keybinds:getVanillaKey("key.back"))
-		kbRight:key(keybinds:getVanillaKey("key.right"))
-		kbLeft:key(keybinds:getVanillaKey("key.left"))
-		kbJump:key(keybinds:getVanillaKey("key.jump"))
-		kbCrouch:key(keybinds:getVanillaKey("key.sneak"))
-		kbAttack:key(keybinds:getVanillaKey("key.attack"))
-		kbUse:key(keybinds:getVanillaKey("key.use"))
+		kbBack   :key(keybinds:getVanillaKey("key.back")   )
+		kbRight  :key(keybinds:getVanillaKey("key.right")  )
+		kbLeft   :key(keybinds:getVanillaKey("key.left")   )
+		kbJump   :key(keybinds:getVanillaKey("key.jump")   )
+		kbCrouch :key(keybinds:getVanillaKey("key.sneak")  )
+		kbAttack :key(keybinds:getVanillaKey("key.attack") )
+		kbUse    :key(keybinds:getVanillaKey("key.use")    )
 	end
 end
 
