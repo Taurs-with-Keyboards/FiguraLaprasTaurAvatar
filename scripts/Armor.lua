@@ -187,10 +187,12 @@ local helmet     = config:load("ArmorHelmet")
 local chestplate = config:load("ArmorChestplate")
 local leggings   = config:load("ArmorLeggings")
 local boots      = config:load("ArmorBoots")
+local shell      = config:load("ArmorShell")
 if helmet     == nil then helmet     = true end
 if chestplate == nil then chestplate = true end
 if leggings   == nil then leggings   = true end
 if boots      == nil then boots      = true end
+if shell      == nil then shell      = true end
 
 function events.TICK()
 	
@@ -210,6 +212,10 @@ function events.TICK()
 		part:visible(boots)
 	end
 	
+	for _, part in ipairs(model.chestplateShellToggle) do
+		part:visible(shell)
+	end
+	
 end
 
 -- Armor all toggle
@@ -219,10 +225,12 @@ local function setAll(boolean)
 	chestplate = boolean
 	leggings   = boolean
 	boots      = boolean
+	shell      = boolean
 	config:save("ArmorHelmet", helmet)
 	config:save("ArmorChestplate", chestplate)
 	config:save("ArmorLeggings", leggings)
 	config:save("ArmorBoots", boots)
+	config:save("ArmorShell", shell)
 	if player:isLoaded() then
 		sounds:playSound("minecraft:item.armor.equip_generic", player:getPos(), 0.5)
 	end
@@ -273,13 +281,25 @@ local function setBoots(boolean)
 	
 end
 
+-- Armor shell toggle
+local function setShell(boolean)
+	
+	shell = boolean
+	config:save("ArmorShell", shell)
+	if player:isLoaded() then
+		sounds:playSound("minecraft:item.armor.equip_generic", player:getPos(), 0.5)
+	end
+	
+end
+
 -- Sync variables
-local function syncArmor(a, b, c, d)
+local function syncArmor(a, b, c, d, e)
 	
 	helmet     = a
 	chestplate = b
 	leggings   = c
 	boots      = d
+	shell      = e
 	
 end
 
@@ -289,6 +309,7 @@ pings.setArmorHelmet     = setHelmet
 pings.setArmorChestplate = setChestplate
 pings.setArmorLeggings   = setLeggings
 pings.setArmorBoots      = setBoots
+pings.setArmorShell      = setShell
 pings.syncArmor          = syncArmor
 
 -- Sync on tick
@@ -296,7 +317,7 @@ if host:isHost() then
 	function events.TICK()
 		
 		if world.getTime() % 200 == 0 then
-			pings.syncArmor(helmet, chestplate, leggings, boots)
+			pings.syncArmor(helmet, chestplate, leggings, boots, shell)
 		end
 		
 	end
@@ -307,6 +328,7 @@ setHelmet(helmet)
 setChestplate(chestplate)
 setLeggings(leggings)
 setBoots(boots)
+setShell(shell)
 
 -- Setup table
 local t = {}
@@ -352,14 +374,23 @@ t.bootsPage = action_wheel:newAction("BootsArmorToggle")
 	:toggleItem("minecraft:diamond_boots")
 	:onToggle(pings.setArmorBoots)
 
+t.shellPage = action_wheel:newAction("ShellArmorToggle")
+	:title("§9§lToggle Shell Armor\n\n§bToggles visibility of armor on shell.")
+	:hoverColor(vectors.hexToRGB("5EB7DD"))
+	:toggleColor(vectors.hexToRGB("4078B0"))
+	:item("minecraft:scute")
+	:toggleItem("minecraft:turtle_helmet")
+	:onToggle(pings.setArmorShell)
+
 -- Update action page info
 function events.TICK()
 	
-	t.allPage       :toggled(helmet and chestplate and leggings and boots)
+	t.allPage       :toggled(helmet and chestplate and leggings and boots and shell)
 	t.helmetPage    :toggled(helmet)
 	t.chestplatePage:toggled(chestplate)
 	t.leggingsPage  :toggled(leggings)
 	t.bootsPage     :toggled(boots)
+	t.shellPage     :toggled(shell)
 	
 end
 

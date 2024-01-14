@@ -132,7 +132,13 @@ t.chestplateToggle = {
 	t.leftArm.leftArmArmorChestplate,
 	t.rightArm.rightArmArmorChestplate,
 	t.leftArmFP.leftArmArmorChestplateFP,
-	t.rightArmFP.rightArmArmorChestplateFP,
+	t.rightArmFP.rightArmArmorChestplateFP
+	
+}
+
+-- All shell armor parts
+t.chestplateShellToggle = {
+	
 	t.shell.ShellArmorChestplate,
 	t.shell.Spikes.SpikesArmorChestplate
 	
