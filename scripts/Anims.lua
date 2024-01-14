@@ -13,17 +13,6 @@ local t = {}
 
 t.animTime = 0
 
--- Calculate parent's rotations
-local function calculateParentRot(m)
-	
-	local parent = m:getParent()
-	if not parent then
-		return m:getTrueRot()
-	end
-	return calculateParentRot(parent) + m:getTrueRot()
-	
-end
-
 -- Base Animations
 do
 	-- Animation variables
