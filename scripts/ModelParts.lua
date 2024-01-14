@@ -1,8 +1,9 @@
 -- Setup table
 local t = {}
 
--- Model setup
-t.model = models.LaprasTaur
+-- Models setup
+t.model    = models.LaprasTaur
+t.pokeball = models.Pokeball
 
 -- Model parts
 t.root  = t.model.Player
