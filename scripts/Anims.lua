@@ -11,7 +11,7 @@ local ground = require("lib.GroundCheck")
 -- Table setup
 local t = {}
 
-t.animTime = 0
+t.anim_time = 0
 
 -- Base Animations
 do
@@ -56,7 +56,7 @@ do
 			local underwaterSwimState = vel:length() ~= 0 and underwater and (not onGround or pose.swim)
 			
 			-- Animation timeline renderer
-			t.animTime = math.lerp(_time, time, delta)
+			t.anim_time = math.lerp(_time, time, delta)
 			
 			-- Animations
 			anims.groundIdle:playing(groundIdleState)

@@ -115,6 +115,9 @@ kattArmor.Materials.netherite
 -- Turtle helmet
 kattArmor.Materials.turtle
 	:setTexture(textures["textures.armor.turtleHelmet"])
+	:addParts(kattArmor.Armor.Helmet,
+		model.head.headArmorHelmet.TurtleHelmetSpikes
+	)
 
 -- Trims
 -- Coast
