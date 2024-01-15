@@ -23,7 +23,7 @@ squapi.smoothTorso(model.front, 0.4)
 
 squapi.crouch(anims.crouch, _, anims.crawl)
 
-function events.render(delta, context)
+function events.RENDER(delta, context)
 	
 	model.head:rot(-calculateParentRot(model.head:getParent()))
 		:pos(pose.crawl and -vanilla_model.HEAD:getOriginPos() or nil)
@@ -41,7 +41,7 @@ squapi.ear(model.ears.LeftEar, model.ears.RightEar, false, _, 0.35, true, -0.5, 
 squapi.lapras  = squapi.bounceObject:new()
 squapi.flipper = squapi.bounceObject:new()
 
-function events.render(delta, context)
+function events.RENDER(delta, context)
 	local yvel = squapi.yvel()
 	
 	model.main:offsetRot(squapi.lapras.pos, 0, 0)
