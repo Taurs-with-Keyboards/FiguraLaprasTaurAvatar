@@ -1,6 +1,7 @@
 -- Required scripts
 local model   = require("scripts.ModelParts")
 local vehicle = require("scripts.Vehicles")
+local squapi  = require("lib.SquAPI")
 
 -- Animations setup
 local anims = animations.Pokeball
@@ -147,60 +148,81 @@ function events.POST_RENDER(delta, context)
 	
 end
 
+local lean        = 15
+local leanForward = 0
+local leanBack    = 0
+local leanLeft    = 0
+local leanRight   = 0
+
 -- Keybind animations/blockers
-local function forwardWobble()
+local function forwardTilt(bool)
 	
-	anims.wobbleForward:play()
-	
-end
-
-local function backWobble()
-	
-	anims.wobbleBack:play()
+	leanForward = bool and lean or 0
 	
 end
 
-local function rightWobble()
+local function backTilt(bool)
 	
-	anims.wobbleRight:play()
+	leanBack = bool and lean or 0
 	
 end
 
-local function leftWobble()
+local function leftTilt(bool)
 	
-	anims.wobbleLeft:play()
+	leanLeft = bool and lean or 0
+	
+end
+
+local function rightTilt(bool)
+	
+	leanRight = bool and lean or 0
 	
 end
 
 -- Keybind ping setup
-pings.playForwardWobble = forwardWobble
-pings.playBackWobble    = backWobble
-pings.playRightWobble   = rightWobble
-pings.playLeftWobble    = leftWobble
+pings.pokeballForwardTilt = forwardTilt
+pings.pokeballBackTilt    = backTilt
+pings.pokeballLeftTilt    = leftTilt
+pings.pokeballRightTilt   = rightTilt
 
-if host:isHost() then
-	local cantMove  = (toggle or vehicle.isPassenger or vehicle.player)
-	local kbForward = keybinds:newKeybind("Pokeball Forward Blocker"):onPress(function() if cantMove and not anims.wobbleForward:isPlaying() then pings.playForwardWobble() end return cantMove end)
-	local kbBack    = keybinds:newKeybind("Pokeball Back Blocker")   :onPress(function() if cantMove and not anims.wobbleBack:isPlaying()    then pings.playBackWobble()    end return cantMove end)
-	local kbRight   = keybinds:newKeybind("Pokeball Right Blocker")  :onPress(function() if cantMove and not anims.wobbleRight:isPlaying()   then pings.playRightWobble()   end return cantMove end)
-	local kbLeft    = keybinds:newKeybind("Pokeball Left Blocker")   :onPress(function() if cantMove and not anims.wobbleLeft:isPlaying()    then pings.playLeftWobble()    end return cantMove end)
-	local kbJump    = keybinds:newKeybind("Pokeball Jump Blocker")   :onPress(function() return cantMove and player:isInWater() end)
-	local kbCrouch  = keybinds:newKeybind("Pokeball Crouch Blocker") :onPress(function() return toggle end)
-	local kbAttack  = keybinds:newKeybind("Pokeball Attack Blocker") :onPress(function() return cantMove end)
-	local kbUse     = keybinds:newKeybind("Pokeball Use Blocker")    :onPress(function() return cantMove end)
+local stop
+local kbForward = keybinds:newKeybind("Pokeball Tilt Forward") :onPress(function() pings.pokeballForwardTilt(true) return stop end):onRelease(function() pings.pokeballForwardTilt(false) end)
+local kbBack    = keybinds:newKeybind("Pokeball Tilt Backward"):onPress(function() pings.pokeballBackTilt(true)    return stop end):onRelease(function() pings.pokeballBackTilt(false)    end)
+local kbLeft    = keybinds:newKeybind("Pokeball Tilt Left")    :onPress(function() pings.pokeballLeftTilt(true)    return stop end):onRelease(function() pings.pokeballLeftTilt(false)    end)
+local kbRight   = keybinds:newKeybind("Pokeball Tilt Right")   :onPress(function() pings.pokeballRightTilt(true)   return stop end):onRelease(function() pings.pokeballRightTilt(false)   end)
+local kbJump    = keybinds:newKeybind("Pokeball Block Jump")   :onPress(function() return stop and player:isInWater() end)
+local kbCrouch  = keybinds:newKeybind("Pokeball Block Crouch") :onPress(function() return toggle end)
+local kbAttack  = keybinds:newKeybind("Pokeball Block Attack") :onPress(function() return stop end)
+local kbUse     = keybinds:newKeybind("Pokeball Block Use")    :onPress(function() return stop end)
 
-	-- Keybind maintainer (Prevents changes)
-	function events.TICK()
-		cantMove = (toggle or vehicle.isPassenger or vehicle.player)
-		kbForward:key(keybinds:getVanillaKey("key.forward"))
-		kbBack   :key(keybinds:getVanillaKey("key.back")   )
-		kbRight  :key(keybinds:getVanillaKey("key.right")  )
-		kbLeft   :key(keybinds:getVanillaKey("key.left")   )
-		kbJump   :key(keybinds:getVanillaKey("key.jump")   )
-		kbCrouch :key(keybinds:getVanillaKey("key.sneak")  )
-		kbAttack :key(keybinds:getVanillaKey("key.attack") )
-		kbUse    :key(keybinds:getVanillaKey("key.use")    )
-	end
+-- Keybind maintainer (Prevents changes)
+function events.TICK()
+	
+	stop         = (toggle or vehicle.isPassenger or vehicle.player)
+	local enable = scale.currentPos < 0.5
+	
+	kbForward:key(keybinds:getVanillaKey("key.forward")):enabled(enable)
+	kbBack   :key(keybinds:getVanillaKey("key.back")   ):enabled(enable)
+	kbRight  :key(keybinds:getVanillaKey("key.right")  ):enabled(enable)
+	kbLeft   :key(keybinds:getVanillaKey("key.left")   ):enabled(enable)
+	kbJump   :key(keybinds:getVanillaKey("key.jump")   ):enabled(enable)
+	kbCrouch :key(keybinds:getVanillaKey("key.sneak")  ):enabled(enable)
+	kbAttack :key(keybinds:getVanillaKey("key.attack") ):enabled(enable)
+	kbUse    :key(keybinds:getVanillaKey("key.use")    ):enabled(enable)
+	
+end
+
+-- Pokeball physics
+squapi.pokeball = squapi.bounceObject:new()
+
+function events.RENDER(delta, context)
+	
+	model.pokeball:offsetRot(squapi.pokeball.pos)
+	
+	local target = vec(leanBack - leanForward, 0, leanRight - leanLeft)
+	
+	squapi.pokeball:doBounce(target, 0.01, .075)
+	
 end
 
 -- Pokeball toggler
