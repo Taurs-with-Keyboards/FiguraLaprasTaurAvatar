@@ -37,7 +37,7 @@ end
 -- Ear Animations
 squapi.ear(model.ears.LeftEar, model.ears.RightEar, false, _, 0.35, true, -0.5, 0.05, 0.1)
 
--- LowerBody Physics
+-- LowerBody physics
 squapi.lapras  = squapi.bounceObject:new()
 squapi.flipper = squapi.bounceObject:new()
 
