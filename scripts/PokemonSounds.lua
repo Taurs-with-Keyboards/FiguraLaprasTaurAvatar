@@ -1,6 +1,10 @@
 -- Required scripts
 local model = require("scripts.ModelParts")
 
+-- Keybind config
+config:name("LaprasTaur")
+local bind = config:load("PokemonCryKeybind") or "key.keyboard.c"
+
 -- Get the average of a vector
 local function average(vec)
 	
@@ -28,35 +32,32 @@ end
 -- Keybind cry noise
 local cooldown = 0
 local function pokemonCry()
+	
 	sounds:playSound("cobblemon:pokemon.lapras.cry", player:getPos(), 0.6, math.random()*0.35+0.85)
 	cooldown = 0
+	
 end
 
 -- Keybind ping setup
 pings.playPokemonCry = pokemonCry
 
-if host:isHost() then
+-- Keybind
+local kbCry = keybinds:newKeybind("Pokemon Cry"):onPress(function() pings.playPokemonCry() end):key(bind)
 
-	-- Keybind config
-	config:name("LaprasTaur")
-	local bind = config:load("PokemonCryKeybind") or "key.keyboard.c"
+function events.TICK()
 	
 	-- Cooldown timer
-	function events.TICK()
-		if cooldown < 30 then
-			cooldown = cooldown + 1
-		end
+	if cooldown < 30 then
+		cooldown = cooldown + 1
 	end
 	
-	-- Keybind
-	local kbCry = keybinds:newKeybind("Pokemon Cry"):onPress(function() if cooldown == 30 and player:getDeathTime() == 0 then pings.playPokemonCry() end end):key(bind)
+	kbCry:enabled(cooldown == 30 and player:getDeathTime() == 0)
 	
 	-- Config updater
-	function events.TICK()
-		local key = kbCry:getKey()
-		if key ~= bind then
-			bind = key
-			config:save("PokemonCryKeybind", key)
-		end
+	local key = kbCry:getKey()
+	if key ~= bind then
+		bind = key
+		config:save("PokemonCryKeybind", key)
 	end
+	
 end
