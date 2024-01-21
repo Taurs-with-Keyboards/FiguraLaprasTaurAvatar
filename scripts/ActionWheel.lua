@@ -5,6 +5,7 @@ local fall      = require("scripts.FallSound")
 local avatar    = require("scripts.Player")
 local arms      = require("scripts.Arms")
 local camera    = require("scripts.CameraControl")
+local anims     = require("scripts.Anims")
 local armor     = require("scripts.Armor")
 local pokeball  = require("scripts.Pokeball")
 
@@ -15,6 +16,7 @@ local whirlpoolPage = action_wheel:newPage("WhirlpoolPage")
 local fallPage      = action_wheel:newPage("FallSoundPage")
 local avatarPage    = action_wheel:newPage("AvatarPage")
 local cameraPage    = action_wheel:newPage("CameraPage")
+local animsPage     = action_wheel:newPage("AnimationPage")
 local armorPage     = action_wheel:newPage("ArmorPage")
 
 -- Action back to main page
@@ -66,8 +68,15 @@ mainPage
 	
 	:action( -1,
 		action_wheel:newAction()
+			:title("§9§lAnimations")
+			:hoverColor(vectors.hexToRGB("5EB7DD"))
+			:item("minecraft:jukebox")
+			:onLeftClick(function() action_wheel:setPage(animsPage) end))
+	
+	:action( -1,
+		action_wheel:newAction()
 			:title("§9§lArmor Settings")
-			:hoverColor(vectors.hexToRGB("55FFFF"))
+			:hoverColor(vectors.hexToRGB("5EB7DD"))
 			:item("minecraft:iron_chestplate")
 			:onLeftClick(function() action_wheel:setPage(armorPage) end))
 	
@@ -97,13 +106,17 @@ fallPage
 avatarPage
 	:action( -1, avatar.vanillaSkinPage)
 	:action( -1, avatar.modelPage)
-	:action( -1, arms.movePage)
 	:action( -1, backPage)
 
 -- Camera actions
 cameraPage
 	:action( -1, camera.posPage)
 	:action( -1, camera.eyePage)
+	:action( -1, backPage)
+
+-- Animation actions
+animsPage
+	:action( -1, arms.movePage)
 	:action( -1, backPage)
 
 -- Armor actions
