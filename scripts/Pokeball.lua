@@ -23,6 +23,14 @@ local scale = {
 	currentPos = 0
 }
 
+-- Lerp pos table
+local pos = {
+	current    = 0,
+	nextTick   = 0,
+	target     = 0,
+	currentPos = 0
+}
+
 -- Set lerp start on init
 function events.ENTITY_INIT()
 	
@@ -55,6 +63,10 @@ function events.TICK()
 		anims.close:playing(isInBall)
 	end
 	
+	-- Pos lerp
+	pos.current  = pos.nextTick
+	pos.nextTick = math.lerp(pos.nextTick, pos.target, 0.25)
+	
 	-- Scaling lerp
 	scale.current  = scale.nextTick
 	scale.nextTick = math.lerp(scale.nextTick, scale.target, 0.2)
@@ -67,12 +79,48 @@ end
 -- Rendering stuff
 function events.RENDER(delta, context)
 	
+	-- Vehicle pos table
+	local statePos = {
+		{ state = vehicle.player,        pos = 10  },
+		{ state = (vehicle.boat or vehicle.chest_boat) and
+			vehicle.isPassenger,         pos = 14  },
+		{ state = vehicle.boat,          pos = 8   },
+		{ state = vehicle.chest_boat,    pos = 8   },
+		{ state = vehicle.minecart,      pos = 9   },
+		{ state = vehicle.horse,         pos = 10  },
+		{ state = vehicle.donkey,        pos = 10  },
+		{ state = vehicle.mule,          pos = 10  },
+		{ state = vehicle.zombieHorse,   pos = 8   },
+		{ state = vehicle.skeletonHorse, pos = 11  },
+		{ state = vehicle.pig,           pos = 10  },
+		{ state = vehicle.strider,       pos = 10  },
+		{ state = vehicle.camel,         pos = 9   },
+	}
+	
+	-- Base position check
+	for _, case in ipairs(statePos) do
+		if case.state then
+			pos.target = case.pos
+			break
+		elseif vehicle.vehicle then
+			-- Unsupported cases
+			pos.target = 10 -- Assumption
+		else
+			pos.target = 0
+		end
+	end
+	
+	-- Pos lerp
+	pos.currentPos = math.lerp(pos.current, pos.nextTick, delta)
+	
 	-- Scaling target and lerp
 	scale.target     = isInBall and 0 or 1
 	scale.currentPos = math.lerp(scale.current, scale.nextTick, delta)
 	
 	-- GUI part reset
 	if context ~= "RENDER" and context ~= "FIRST_PERSON" and context ~= "OTHER" then
+		
+		model.model:pos(nil)
 		
 		model.pokeball:visible(nil)
 			:pos(nil)
@@ -90,10 +138,11 @@ function events.POST_RENDER(delta, context)
 	
 	model.model:scale(scale.currentPos)
 		:color(1, scale.currentPos, scale.currentPos)
+		:pos(0, pos.currentPos, 0)
 	
 	model.pokeball:visible(not renderer:isFirstPerson())
 		:scale(math.map(scale.currentPos, 0, 1, 1, 0))
-		:pos(player:getPos(delta) * 16)
+		:pos(player:getPos(delta) * 16 + vec(0, pos.currentPos, 0))
 		:rot(vec(0, staticYaw + 180, 0))
 		:parentType("WORLD")
 	
