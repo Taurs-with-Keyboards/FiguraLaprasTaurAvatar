@@ -159,10 +159,13 @@ t.bootsToggle = {
 	
 	t.frontLeftFlipper.FrontLeftFlipperArmorBoot,
 	t.frontLeftFlipper.FrontLeftFlipperTip.FrontLeftFlipperTipArmorBoot,
+	
 	t.frontRightFlipper.FrontRightFlipperArmorBoot,
 	t.frontRightFlipper.FrontRightFlipperTip.FrontRightFlipperTipArmorBoot,
+	
 	t.backLeftFlipper.BackLeftFlipperArmorBoot,
 	t.backLeftFlipper.BackLeftFlipperTip.BackLeftFlipperTipArmorBoot,
+	
 	t.backRightFlipper.BackRightFlipperArmorBoot,
 	t.backRightFlipper.BackRightFlipperTip.BackRightFlipperTipArmorBoot
 	
