@@ -171,29 +171,5 @@ t.bootsToggle = {
 	
 }
 
---[[
-	
-	Because flat parts in the model are 2 faces directly on top
-	of eachother, and have 0 inflate, the two faces will z-fight.
-	This prevents z-fighting, as well as z-fighting at a distance,
-	as well as translucent stacking.
-	
-	Please add plane/flat parts with 2 faces to the table below.
-	0.01 works, but this works much better :)
-	
---]]
-
--- All plane parts
-t.planeParts = {
-	
-	
-	
-}
-
--- Apply
-for _, part in ipairs(t.planeParts) do
-	part:primaryRenderType("TRANSLUCENT_CULL")
-end
-
 -- Return model parts table
 return t
