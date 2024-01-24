@@ -47,6 +47,13 @@ t.portrait = t.model.Portrait
 t.skull   :visible(true)
 t.portrait:visible(true)
 
+t.parrots = {
+	
+	t.main.LeftParrotPivot,
+	t.main.RightParrotPivot
+	
+}
+
 -- All vanilla skin parts
 t.skin = {
 	
