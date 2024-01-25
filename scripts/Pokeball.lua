@@ -148,6 +148,45 @@ function events.POST_RENDER(delta, context)
 	
 end
 
+-- Pokeball toggler
+local function setPokeball(boolean)
+	toggle = boolean
+	config:save("PokeballToggle", toggle)
+end
+
+-- Sync variable
+local function syncPokeball(a)
+	toggle = a
+end
+
+-- Ping setup
+pings.setPokeball  = setPokeball
+pings.syncPokeball = syncPokeball
+
+-- Keybind
+local toggleBind   = config:load("PokeballToggleKeybind") or "key.keyboard.keypad.1"
+local setToggleKey = keybinds:newKeybind("Pokeball Toggle"):onPress(function() pings.setPokeball(not toggle) end):key(toggleBind)
+
+-- Keybind updater
+function events.TICK()
+	
+	local key = setToggleKey:getKey()
+	if key ~= toggleBind then
+		toggleBind = key
+		config:save("PokeballToggleKeybind", key)
+	end
+	
+end
+
+-- Sync on tick
+if host:isHost() then
+	function events.TICK()
+		if world.getTime() % 200 == 0 then
+			pings.syncPokeball(toggle)
+		end
+	end
+end
+
 local lean        = 15
 local leanForward = 0
 local leanBack    = 0
@@ -223,30 +262,6 @@ function events.RENDER(delta, context)
 	
 	squapi.pokeball:doBounce(target, 0.01, .075)
 	
-end
-
--- Pokeball toggler
-local function setPokeball(boolean)
-	toggle = boolean
-	config:save("PokeballToggle", toggle)
-end
-
--- Sync variable
-local function syncPokeball(a)
-	toggle = a
-end
-
--- Ping setup
-pings.setPokeball  = setPokeball
-pings.syncPokeball = syncPokeball
-
--- Sync on tick
-if host:isHost() then
-	function events.TICK()
-		if world.getTime() % 200 == 0 then
-			pings.syncPokeball(toggle)
-		end
-	end
 end
 
 -- Activate action
