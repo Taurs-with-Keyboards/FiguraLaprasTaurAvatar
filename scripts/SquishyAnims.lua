@@ -2,6 +2,7 @@
 local model   = require("scripts.ModelParts")
 local squapi  = require("lib.SquAPI")
 local pose    = require("scripts.Posing")
+local ground  = require("lib.GroundCheck")
 local vehicle = require("scripts.Vehicles")
 
 -- Animation setup
@@ -18,23 +19,14 @@ local function calculateParentRot(m)
 	
 end
 
+-- Squishy smooth torso
 squapi.smoothTorso(model.upper, 0.3)
 squapi.smoothTorso(model.front, 0.4)
 
-squapi.crouch(anims.crouch, _, anims.crawl)
+-- Squishy crounch
+squapi.crouch(anims.crouch)
 
-function events.RENDER(delta, context)
-	
-	model.head:rot(-calculateParentRot(model.head:getParent()))
-		:pos(pose.crawl and -vanilla_model.HEAD:getOriginPos() or nil)
-	
-	model.body:rot(pose.crawl and -vanilla_model.BODY:getOriginRot() or nil)
-	model.upper:offsetRot(pose.crawl and 0 or model.upper:getOffsetRot())
-	model.front:offsetRot(model.front:getOffsetRot()._y_)
-	
-end
-
--- Ear Animations
+-- Ear animations
 squapi.ear(model.ears.LeftEar, model.ears.RightEar, false, _, 0.35, true, -0.5, 0.05, 0.1)
 
 -- LowerBody physics
@@ -42,29 +34,66 @@ squapi.lapras  = squapi.bounceObject:new()
 squapi.flipper = squapi.bounceObject:new()
 
 function events.RENDER(delta, context)
-	local yvel = squapi.yvel()
 	
-	model.main:offsetRot(squapi.lapras.pos, 0, 0)
+	-- Variables
+	local yvel     = squapi.yvel()
+	local onGround = ground()
+	local water    = player:isInWater()
+	local dir      = math.map(math.abs(player:getLookDir()[2]), 0, 1, 1, -1)
+	local extend   = pose.swim or pose.elytra or pose.crawl or (pose.climb and not onGround())
+	local stiff    = water and 0.001 or 0.02
+	local bounce   = water and 0.05 or 0.1
 	
-	model.frontLeftFlipper:offsetRot(0, 0, squapi.flipper.pos*2)
-	model.frontLeftFlipper.FrontLeftFlipperTip:offsetRot(0, 0, squapi.flipper.pos*1.5)
+	-- Rotations
+	local laprasRot  = vec(squapi.lapras.pos,  0, 0)
+	local flipperRot = vec(0, 0, squapi.flipper.pos)
 	
-	model.frontRightFlipper:offsetRot(0, 0, -squapi.flipper.pos*2)
-	model.frontRightFlipper.FrontRightFlipperTip:offsetRot(0, 0, -squapi.flipper.pos*1.5)
+	-- Bounce off ground
+	if onGround and not extend then
+		laprasRot.x  = -math.abs(laprasRot.x)
+		flipperRot.z = -math.abs(flipperRot.z)
+	end
 	
-	model.backLeftFlipper:offsetRot(0, 0, squapi.flipper.pos*2)
-	model.backLeftFlipper.BackLeftFlipperTip:offsetRot(0, 0, squapi.flipper.pos*1.5)
+	-- Apply
+	model.main:offsetRot(laprasRot)
 	
-	model.backRightFlipper:offsetRot(0, 0, -squapi.flipper.pos*2)
-	model.backRightFlipper.BackRightFlipperTip:offsetRot(0, 0, -squapi.flipper.pos*1.5)
+	model.frontLeftFlipper:offsetRot(flipperRot)
+	model.frontLeftFlipper.FrontLeftFlipperTip:offsetRot(flipperRot)
 	
-	local strech  = not (pose.stand or pose.crouch or pose.swim or pose.sleep) or (pose.climb and not player:isOnGround())
+	model.frontRightFlipper:offsetRot(-flipperRot)
+	model.frontRightFlipper.FrontRightFlipperTip:offsetRot(-flipperRot)
 	
-	local laprasTarget = strech and 90 or vehicle.hasPassenger and 0 or yvel * (pose.swim and 80 or 40) + (pose.swim and 80 or 0)
-	if laprasTarget < -20 then laprasTarget = -20 end
-	local flipperTarget = pose.climb and 35 or (strech or pose.swim) and 0 or yvel * 40
-	if flipperTarget < -30 then flipperTarget = -30 end
+	model.backLeftFlipper:offsetRot(flipperRot)
+	model.backLeftFlipper.BackLeftFlipperTip:offsetRot(flipperRot)
 	
-	squapi.lapras:doBounce(laprasTarget, player:isInWater() and 0.001 or 0.02, .1)
-	squapi.flipper:doBounce(flipperTarget, player:isInWater() and 0.001 or 0.01, .1)
+	model.backRightFlipper:offsetRot(-flipperRot)
+	model.backRightFlipper.BackRightFlipperTip:offsetRot(-flipperRot)
+	
+	-- Targets
+	local laprasTarget  = (extend and 90 or 0) + (not vehicle.hasPassenger and math.clamp(yvel * (extend and 80 * dir or 40), -20, 20) or 0)
+	local flipperTarget = pose.climb and 60 or math.clamp(yvel * 80 * (extend and dir or 1), -60, 60)
+	
+	-- Do bounce
+	squapi.lapras:doBounce(laprasTarget,   stiff, bounce)
+	squapi.flipper:doBounce(flipperTarget, stiff, bounce)
+	
+end
+
+function events.RENDER(delta, context)
+	
+	-- Set upper pivot to proper pos when crouching
+	model.upper:offsetPivot(anims.crouch:isPlaying() and vec(0, 0, 5) or 0)
+	
+	-- Offset smooth torso in various parts
+	model.head:rot(-calculateParentRot(model.head:getParent()))
+	model.leftArm:offsetRot(-calculateParentRot(model.leftArm:getParent()))
+	model.rightArm:offsetRot(-calculateParentRot(model.rightArm:getParent()))
+	
+	-- Remove jank caused by crawling
+	model.body:offsetRot(pose.crawl and -vanilla_model.BODY:getOriginRot() or 0)
+	model.upper:offsetRot(pose.crawl and 0 or model.upper:getOffsetRot())
+	
+	-- Prevent smooth torso movement on x and z axis for front
+	model.front:offsetRot(model.front:getOffsetRot()._y_)
+	
 end
