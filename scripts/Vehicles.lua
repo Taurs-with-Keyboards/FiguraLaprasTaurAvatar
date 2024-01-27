@@ -1,5 +1,5 @@
 -- Required scripts
-local model = require("scripts.ModelParts")
+local model   = require("scripts.ModelParts")
 local carrier = require("lib.GSCarrier")
 
 -- GSCarrier rider
