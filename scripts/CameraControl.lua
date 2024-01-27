@@ -1,7 +1,6 @@
 -- Required scripts
 local model   = require("scripts.ModelParts")
 local pose    = require("scripts.Posing")
-local vehicle = require("scripts.Vehicles")
 
 -- Config setup
 config:name("LaprasTaur")

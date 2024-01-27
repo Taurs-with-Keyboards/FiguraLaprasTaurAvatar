@@ -3,7 +3,6 @@ local model   = require("scripts.ModelParts")
 local squapi  = require("lib.SquAPI")
 local pose    = require("scripts.Posing")
 local ground  = require("lib.GroundCheck")
-local vehicle = require("scripts.Vehicles")
 
 -- Animation setup
 local anims = animations.LaprasTaur
@@ -70,7 +69,7 @@ function events.RENDER(delta, context)
 	model.backRightFlipper.BackRightFlipperTip:offsetRot(-flipperRot)
 	
 	-- Targets
-	local laprasTarget  = (extend and 90 or 0) + (not vehicle.hasPassenger and math.clamp(yvel * (extend and 80 * dir or 40), -20, 20) or 0)
+	local laprasTarget  = (extend and 90 or 0) + math.clamp(yvel * (extend and 80 * dir or 40), -20, 20)
 	local flipperTarget = pose.climb and 60 or math.clamp(yvel * 80 * (extend and dir or 1), -60, 60)
 	
 	-- Do bounce

@@ -2,71 +2,6 @@
 local model = require("scripts.ModelParts")
 local carrier = require("lib.GSCarrier")
 
--- Table setup
-local t         = {}
-t.vehicle       = nil   -- Vehicle exists
-t.vehicleType   = false -- Vehicle type
-t.isPassenger   = false -- Player is passenger
-t.hasPassenger  = false -- Player has passenger (in vehicle)
-t.isVehicle     = false -- Player is vehicle 
-
-t.player        = false -- Is player
-t.boat          = false -- Is boat
-t.chest_boat    = false -- Is chest boat
-t.minecart      = false -- Is minecart
-t.horse         = false -- Is horse
-t.donkey        = false -- Is donkey
-t.mule          = false -- Is mule
-t.zombieHorse   = false -- Is Zombie Horse
-t.skeletonHorse = false -- Is Skeleton Horse
-t.pig           = false -- Is pig
-t.strider       = false -- Is strider
-t.camel         = false -- Is camel
-
--- Variables setup
-local prevType = false
-
-function events.TICK()
-	-- Get player name
-	local name = player:getName()
-	
-	-- Get vehicle data
-	t.vehicle = player:getVehicle()
-	if t.vehicle then
-		t.vehicleType  = t.vehicle:getType()
-		t.isPassenger  = t.vehicle:getControllingPassenger() and t.vehicle:getControllingPassenger():getName() ~= name or false
-		t.hasPassenger = #t.vehicle:getPassengers() > 1 and not t.isPassenger
-	else
-		t.vehicleType  = false
-		t.isPassenger  = false
-		t.hasPassenger = false
-	end
-	
-	t.isVehicle = #player:getPassengers() > 0
-	
-	-- Update vehicle type
-	if prevType ~= t.vehicleType then
-		t.player        = t.vehicleType == "minecraft:player"
-		t.boat          = t.vehicleType == "minecraft:boat"
-		t.chest_boat    = t.vehicleType == "minecraft:chest_boat"
-		t.minecart      = t.vehicleType == "minecraft:minecart"
-		t.horse         = t.vehicleType == "minecraft:horse"
-		t.donkey        = t.vehicleType == "minecraft:donkey"
-		t.mule          = t.vehicleType == "minecraft:mule"
-		t.zombieHorse   = t.vehicleType == "minecraft:zombie_horse"
-		t.skeletonHorse = t.vehicleType == "minecraft:skeleton_horse"
-		t.pig           = t.vehicleType == "minecraft:pig"
-		t.strider       = t.vehicleType == "minecraft:strider"
-		t.camel         = t.vehicleType == "minecraft:camel"
-	end
-	
-	prevType = t.vehicleType
-	
-	-- Vehicle renders/part toggles
-	renderer:setRenderVehicle(not(t.boat or t.chest_boat))
-	model.chest:visible(t.chest_boat)
-end
-
 -- GSCarrier rider
 carrier.rider.addRoots(models)
 carrier.rider.addTag("gscarrier:taur")
@@ -85,12 +20,14 @@ carrier.vehicle.newSeat("Seat1", model.shell.RiderPos1, {
 	condition = function() if model.chest:getVisible() then return false end end
 })
 
+-- Seat 2
 carrier.vehicle.newSeat("Seat2", model.shell.RiderPos2, {
 	priority = 2,
 	tags = {["gscarrier:flat"] = true},
 	condition = function() if model.chest:getVisible() then return false end end
 })
 
+-- Seat Chest
 carrier.vehicle.newSeat("SeatChest", model.chest.RiderPosChest, {
 	priority = 1,
 	tags = {["gscarrier:chair"] = true},
@@ -99,10 +36,15 @@ carrier.vehicle.newSeat("SeatChest", model.chest.RiderPosChest, {
 
 function events.TICK()
 	
-	local vehicle = player:getVehicle()
-	carrier.vehicle.setRedirect(vehicle and vehicle:getType() == "minecraft:boat")
+	-- Variables
+	local vehicle = player:getVehicle() or false
+	local type    = vehicle and vehicle:getType() or false
+	
+	-- Vehicle renders/part toggle
+	renderer:setRenderVehicle(type ~= "minecraft:boat" and type ~= "minecraft:chest_boat")
+	model.chest:visible(type == "minecraft:chest_boat")
+	
+	-- Redirect all passengers to pivots if vehicle is a boat
+	carrier.vehicle.setRedirect(type == "minecraft:boat")
 	
 end
-
--- Returns table
-return t

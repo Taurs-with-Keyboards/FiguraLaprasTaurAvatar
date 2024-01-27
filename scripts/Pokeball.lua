@@ -1,6 +1,5 @@
 -- Required scripts
 local model   = require("scripts.ModelParts")
-local vehicle = require("scripts.Vehicles")
 local squapi  = require("lib.SquAPI")
 
 -- Animations setup
@@ -11,6 +10,10 @@ config:name("LaprasTaur")
 local toggle = config:load("PokeballToggle") or false
 
 -- Variables setup
+local vehicle
+local vType
+local isRider
+local hasRider
 local isInBall  = toggle
 local wasInBall = toggle
 local staticYaw = 0
@@ -45,8 +48,17 @@ end
 
 function events.TICK()
 	
+	-- Variables
+	vehicle  = player:getVehicle() or false
+	vType     = vehicle and vehicle:getType() or false
+	isRider  = vehicle and vehicle:getControllingPassenger() and vehicle:getControllingPassenger():getName() ~= player:getName()
+	hasRider = (vehicle and #vehicle:getPassengers() > 1 and not isRider) or #player:getPassengers() > 0
+	
 	-- Pokeball check
-	isInBall = ((toggle and not vehicle.isVehicle) or (vehicle.vehicle and not(vehicle.boat or vehicle.chest_boat) or (vehicle.isPassenger or vehicle.player))) or false
+	isInBall =
+		toggle and not hasRider
+		or vehicle and (vType ~= "minecraft:boat" and vType ~= "minecraft:chest_boat")
+		or isRider
 	
 	-- Compare states
 	if isInBall ~= wasInBall then
@@ -79,35 +91,12 @@ end
 -- Rendering stuff
 function events.RENDER(delta, context)
 	
-	-- Vehicle pos table
-	local statePos = {
-		{ state = vehicle.player,        pos = 10  },
-		{ state = (vehicle.boat or vehicle.chest_boat) and
-			vehicle.isPassenger,         pos = 14  },
-		{ state = vehicle.boat,          pos = 8   },
-		{ state = vehicle.chest_boat,    pos = 8   },
-		{ state = vehicle.minecart,      pos = 9   },
-		{ state = vehicle.horse,         pos = 10  },
-		{ state = vehicle.donkey,        pos = 10  },
-		{ state = vehicle.mule,          pos = 10  },
-		{ state = vehicle.zombieHorse,   pos = 8   },
-		{ state = vehicle.skeletonHorse, pos = 11  },
-		{ state = vehicle.pig,           pos = 10  },
-		{ state = vehicle.strider,       pos = 10  },
-		{ state = vehicle.camel,         pos = 9   },
-	}
-	
 	-- Base position check
-	for _, case in ipairs(statePos) do
-		if case.state then
-			pos.target = case.pos
-			break
-		elseif vehicle.vehicle then
-			-- Unsupported cases
-			pos.target = 10 -- Assumption
-		else
-			pos.target = 0
-		end
+	if vehicle and (vType ~= "minecraft:boat" and vType ~= "minecraft:chest_boat") or isRider then
+		local hitbox = player:getBoundingBox()
+		pos.target = vec(0, hitbox.y * 6, -hitbox.z * 16 + 8)
+	else
+		pos.target = 0
 	end
 	
 	-- Pos lerp
@@ -237,7 +226,7 @@ local kbUse     = keybinds:newKeybind("Pokeball Block Use")    :onPress(function
 -- Keybind maintainer (Prevents changes)
 function events.TICK()
 	
-	stop         = (toggle or vehicle.isPassenger or vehicle.player)
+	stop         = toggle or isRider
 	local enable = scale.currentPos < 0.5
 	
 	kbForward:key(keybinds:getVanillaKey("key.forward")):enabled(enable)
