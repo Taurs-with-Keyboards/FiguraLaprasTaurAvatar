@@ -39,19 +39,19 @@ function events.RENDER(delta, context)
 	local onGround = ground()
 	local water    = player:isInWater()
 	local dir      = math.map(math.abs(player:getLookDir()[2]), 0, 1, 1, -1)
-	local extend   = pose.swim or pose.elytra or pose.crawl or (pose.climb and not onGround())
+	local extend   = pose.swim or pose.elytra or pose.crawl or (pose.climb and not onGround)
 	local stiff    = water and 0.001 or 0.02
 	local bounce   = water and 0.05 or 0.1
+	
+	-- Bounce off ground
+	if onGround and not extend then
+		squapi.lapras.vel  = -math.abs(squapi.lapras.vel)
+		squapi.flipper.vel = -math.abs(squapi.flipper.vel)
+	end
 	
 	-- Rotations
 	local laprasRot  = vec(squapi.lapras.pos,  0, 0)
 	local flipperRot = vec(0, 0, squapi.flipper.pos)
-	
-	-- Bounce off ground
-	if onGround and not extend then
-		laprasRot.x  = -math.abs(laprasRot.x)
-		flipperRot.z = -math.abs(flipperRot.z)
-	end
 	
 	-- Apply
 	model.main:offsetRot(laprasRot)
@@ -84,15 +84,16 @@ function events.RENDER(delta, context)
 	model.upper:offsetPivot(anims.crouch:isPlaying() and vec(0, 0, 5) or 0)
 	
 	-- Offset smooth torso in various parts
-	model.head:rot(-calculateParentRot(model.head:getParent()))
-	model.leftArm:offsetRot(-calculateParentRot(model.leftArm:getParent()))
-	model.rightArm:offsetRot(-calculateParentRot(model.rightArm:getParent()))
+	for _, group in ipairs(model.upper:getChildren()) do
+		group:offsetRot(-calculateParentRot(group:getParent()))
+	end
 	
 	-- Remove jank caused by crawling
 	model.body:offsetRot(pose.crawl and -vanilla_model.BODY:getOriginRot() or 0)
 	model.upper:offsetRot(pose.crawl and 0 or model.upper:getOffsetRot())
 	
-	-- Prevent smooth torso movement on x and z axis for front
-	model.front:offsetRot(model.front:getOffsetRot()._y_)
+	-- Prevent smooth torso movement on x and z axis for front, as well as rotating too far
+	local frontRot = model.front:getOffsetRot()
+	model.front:offsetRot(0, math.clamp(frontRot.y, -20, 20), 0)
 	
 end
