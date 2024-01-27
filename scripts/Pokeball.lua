@@ -139,13 +139,17 @@ end
 
 -- Pokeball toggler
 local function setPokeball(boolean)
+	
 	toggle = boolean
 	config:save("PokeballToggle", toggle)
+	
 end
 
 -- Sync variable
 local function syncPokeball(a)
+	
 	toggle = a
+	
 end
 
 -- Ping setup
@@ -170,9 +174,11 @@ end
 -- Sync on tick
 if host:isHost() then
 	function events.TICK()
+		
 		if world.getTime() % 200 == 0 then
 			pings.syncPokeball(toggle)
 		end
+	
 	end
 end
 
