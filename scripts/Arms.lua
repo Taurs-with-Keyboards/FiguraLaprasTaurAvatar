@@ -1,12 +1,6 @@
--- Model setup
-local model     = models.LaprasTaur
-local upperRoot = model.Player.UpperBody
-
--- Arm setup
-local leftArm      = upperRoot.LeftArm
-local rightArm     = upperRoot.RightArm
-local fakeLeftArm  = model.LeftArmFP
-local fakeRightArm = model.RightArmFP
+-- Required scripts
+local model = require("scripts.ModelParts")
+local pose  = require("scripts.Posing")
 
 -- Config setup
 config:name("LaprasTaur")
@@ -14,19 +8,38 @@ local armMove = config:load("AvatarArmMove") or false
 
 -- Variables setup
 local pose    = require("scripts.Posing")
-local leftArmCurrent,  leftArmNextTick,  leftArmTarget,  leftArmCurrentPos  = 0, 0, 0, 0
-local rightArmCurrent, rightArmNextTick, rightArmTarget, rightArmCurrentPos = 0, 0, 0, 0
+
+-- Left arm lerp table
+local leftArm = {
+	current    = 0,
+	nextTick   = 0,
+	target     = 0,
+	currentPos = 0
+}
+
+-- Right arm lerp table
+local rightArm = {
+	current    = 0,
+	nextTick   = 0,
+	target     = 0,
+	currentPos = 0
+}
+
+-- Set lerp start on init
+function events.ENTITY_INIT()
+	
+	local apply = armMove and 1 or 0
+	for k, v in pairs(leftArm) do
+		leftArm[k] = apply
+	end
+	for k, v in pairs(rightArm) do
+		rightArm[k] = apply
+	end
+	
+end
 
 -- Gradual value
 function events.TICK()
-	leftArmCurrent,  rightArmCurrent  = leftArmNextTick, rightArmNextTick
-	leftArmNextTick, rightArmNextTick = math.lerp(leftArmNextTick, leftArmTarget, 0.5), math.lerp(rightArmNextTick, rightArmTarget, 0.5)
-end
-
-function events.RENDER(delta, context)
-	-- Idle setup
-	local idleTimer   = world.getTime(delta)
-	local idleRot     = vec(math.deg(math.sin(idleTimer * 0.067) * 0.05), 0, math.deg(math.cos(idleTimer * 0.09) * 0.05 + 0.05))
 	
 	-- Arm variables
 	local handedness  = player:isLeftHanded()
@@ -43,41 +56,61 @@ function events.RENDER(delta, context)
 	local crossL      = leftItem.tag and leftItem.tag["Charged"] == 1
 	local crossR      = rightItem.tag and rightItem.tag["Charged"] == 1
 	
-	-- Movement context
-	local shouldMove  = pose.swim or pose.elytra or pose.crawl or pose.climb or player:getFrozenTicks() ~= 0
+	-- Movement overrides
+	local shouldMove = pose.swim or pose.elytra or pose.crawl or pose.climb
 	
-	-- Offsets
-	local bodyOffset  = vanilla_model.BODY:getOriginRot() * 0.75
+	-- Targets
+	leftArm.target  = (armMove or shouldMove or leftSwing or ((crossL or crossR) or (using and usingL ~= "NONE"))) and 0 or 1
+	rightArm.target = (armMove or shouldMove or rightSwing or ((crossL or crossR) or (using and usingR ~= "NONE"))) and 0 or 1
 	
-	-- Arm multiplier lerps
-	leftArmTarget     = (armMove or shouldMove or leftSwing or ((crossL or crossR) or (using and usingL ~= "NONE"))) and 0 or 1
-	rightArmTarget    = (armMove or shouldMove or rightSwing or ((crossL or crossR) or (using and usingR ~= "NONE"))) and 0 or 1
-	leftArmCurrentPos, rightArmCurrentPos = math.lerp(leftArmCurrent, leftArmNextTick, delta), math.lerp(rightArmCurrent, rightArmNextTick, delta)
+	-- Tick lerps
+	leftArm.current   = leftArm.nextTick
+	rightArm.current  = rightArm.nextTick
+	leftArm.nextTick  = math.lerp(leftArm.nextTick,  leftArm.target,  0.5)
+	rightArm.nextTick = math.lerp(rightArm.nextTick, rightArm.target, 0.5)
 	
-	local firstPerson = context == "FIRST_PERSON"
-	
-	-- Left arm
-	leftArm:rot((-vanilla_model.LEFT_ARM:getOriginRot() + -idleRot + bodyOffset) * leftArmCurrentPos)
-		:visible(not firstPerson)
-	
-	fakeLeftArm:visible(firstPerson)
-	
-	-- Right arm
-	rightArm:rot((-vanilla_model.RIGHT_ARM:getOriginRot() + idleRot + bodyOffset) * rightArmCurrentPos)
-		:visible(not firstPerson)
-		
-	fakeRightArm:visible(firstPerson)
 end
 
--- Arm Movement toggler
+function events.RENDER(delta, context)
+	
+	-- Override arm movements
+	local idleTimer  = world.getTime(delta)
+	local idleRot    = vec(math.deg(math.sin(idleTimer * 0.067) * 0.05), 0, math.deg(math.cos(idleTimer * 0.09) * 0.05 + 0.05))
+	local bodyOffset = (vanilla_model.BODY:getOriginRot() * 0.75) + model.body:getTrueRot()
+	
+	-- Render lerp
+	leftArm.currentPos  = math.lerp(leftArm.current,  leftArm.nextTick,  delta)
+	rightArm.currentPos = math.lerp(rightArm.current, rightArm.nextTick, delta)
+	
+	-- First person check
+	local firstPerson = context == "FIRST_PERSON"
+	
+	-- Apply
+	model.leftArm:rot((-((vanilla_model.LEFT_ARM:getOriginRot() + 180) % 360 - 180) + -idleRot + bodyOffset) * leftArm.currentPos)
+		:visible(not firstPerson)
+	
+	model.leftArmFP:visible(firstPerson)
+	
+	model.rightArm:rot((-((vanilla_model.RIGHT_ARM:getOriginRot() + 180) % 360 - 180) + idleRot + bodyOffset) * rightArm.currentPos)
+		:visible(not firstPerson)
+	
+	model.rightArmFP:visible(firstPerson)
+	
+end
+
+-- Arm movement toggle
 local function setArmMove(boolean)
+	
 	armMove = boolean
 	config:save("AvatarArmMove", armMove)
+	
 end
 
 -- Sync variable
 local function syncArms(a)
+	
 	armMove = a
+	
 end
 
 -- Ping setup
@@ -87,17 +120,22 @@ pings.syncArms         = syncArms
 -- Sync on tick
 if host:isHost() then
 	function events.TICK()
+		
 		if world.getTime() % 200 == 0 then
 			pings.syncArms(armMove)
 		end
+		
 	end
 end
 
 -- Activate action
 setArmMove(armMove)
 
--- Return action wheel page
-return action_wheel:newAction("ArmMovement")
+-- Table setup
+local t = {}
+
+-- Action wheel
+t.movePage = action_wheel:newAction("ArmMovement")
 	:title("§9§lArm Movement Toggle\n\n§bToggles the movement swing movement of the arms.\nActions are not effected.")
 	:hoverColor(vectors.hexToRGB("5EB7DD"))
 	:toggleColor(vectors.hexToRGB("4078B0"))
@@ -105,3 +143,6 @@ return action_wheel:newAction("ArmMovement")
 	:toggleItem("minecraft:rabbit_foot")
 	:onToggle(pings.setAvatarArmMove)
 	:toggled(armMove)
+
+-- Return action wheel pages
+return t
