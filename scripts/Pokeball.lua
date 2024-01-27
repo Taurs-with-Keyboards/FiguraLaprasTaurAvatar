@@ -106,34 +106,21 @@ function events.RENDER(delta, context)
 	scale.target     = isInBall and 0 or 1
 	scale.currentPos = math.lerp(scale.current, scale.nextTick, delta)
 	
-	-- GUI part reset
-	if context ~= "RENDER" and context ~= "FIRST_PERSON" and context ~= "OTHER" then
-		
-		model.model:pos(nil)
-		
-		model.pokeball:visible(nil)
-			:pos(nil)
-			:rot(nil)
-			:parentType("NONE")
-		
-	end
+	local firstPerson = context == "FIRST_PERSON"
+	local menus       = context == "PAPERDOLL" or context == "MINECRAFT_GUI" or context == "FIGURA_GUI"
+	
+	model.model
+		:pos(pos.currentPos)
+		:scale(scale.currentPos)
+		:color(not firstPerson and vec(1, scale.currentPos, scale.currentPos) or 1)
+	
+	model.pokeball
+		:pos(pos.currentPos)
+		:rot(menus and 0 or vec(0, player:getBodyYaw(delta) + staticYaw, 0))
+		:scale(math.map(scale.currentPos, 0, 1, 1, 0))
+		:visible(menus or not renderer:isFirstPerson())
 	
 	renderer:shadowRadius(math.map(scale.currentPos, 0, 1, 0.2, 1.25))
-	
-end
-
--- Application post GUI reset
-function events.POST_RENDER(delta, context)
-	
-	model.model:scale(scale.currentPos)
-		:color(1, scale.currentPos, scale.currentPos)
-		:pos(0, pos.currentPos, 0)
-	
-	model.pokeball:visible(not renderer:isFirstPerson())
-		:scale(math.map(scale.currentPos, 0, 1, 1, 0))
-		:pos(player:getPos(delta) * 16 + vec(0, pos.currentPos, 0))
-		:rot(vec(0, staticYaw + 180, 0))
-		:parentType("WORLD")
 	
 end
 
@@ -253,7 +240,7 @@ function events.RENDER(delta, context)
 	
 	model.pokeball:offsetRot(squapi.pokeball.pos)
 	
-	local target = vec(leanBack - leanForward, 0, leanRight - leanLeft)
+	local target = vec(leanBack - leanForward, 0, leanLeft - leanRight)
 	
 	squapi.pokeball:doBounce(target, 0.01, .075)
 	
