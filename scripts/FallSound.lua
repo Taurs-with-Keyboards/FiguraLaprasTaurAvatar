@@ -33,7 +33,7 @@ function events.TICK()
 			sounds:playSound("cobblemon:poke_ball.hit", player:getPos(), 0.25)
 		else
 			local vel    = math.abs(-player:getVelocity().y + 1)
-			local dry    = canDry and (dryTimer - waterTicks) / dryTimer or 1
+			local dry    = canDry and (dryTimer - waterTicks.wet) / dryTimer or 1
 			local volume = math.clamp((vel * dry) / 2, 0, 1)
 			
 			if volume ~= 0 then
