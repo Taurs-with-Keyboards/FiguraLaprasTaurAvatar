@@ -1,6 +1,6 @@
 -- Required scripts
-local model   = require("scripts.ModelParts")
-local squapi  = require("lib.SquAPI")
+local model  = require("scripts.ModelParts")
+local squapi = require("lib.SquAPI")
 
 -- Animations setup
 local anims = animations.Pokeball
