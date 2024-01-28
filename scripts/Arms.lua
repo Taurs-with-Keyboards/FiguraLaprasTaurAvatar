@@ -6,9 +6,6 @@ local pose  = require("scripts.Posing")
 config:name("LaprasTaur")
 local armMove = config:load("AvatarArmMove") or false
 
--- Variables setup
-local pose    = require("scripts.Posing")
-
 -- Left arm lerp table
 local leftArm = {
 	current    = 0,
