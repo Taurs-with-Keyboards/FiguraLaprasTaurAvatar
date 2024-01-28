@@ -23,17 +23,17 @@ end
 local t = {}
 
 -- Animation variables
-t.anim_time = 0
+t.time = 0
 
 local time = {
-	prev    = 0,
-	current = 0
+	prev = 0,
+	next = 0
 }
 
 local breatheTime = {
-	prev    = 0,
-	delta   = 0,
-	current = 0
+	prev = 0,
+	time = 0,
+	next = 0
 }
 
 local pos = {
@@ -57,12 +57,12 @@ function events.TICK()
 	local diagCancel = math.abs(lrVel) - math.abs(fbVel)
 	
 	-- Store animation variables
-	time.prev        = time.current
-	breatheTime.prev = breatheTime.current
+	time.prev        = time.next
+	breatheTime.prev = breatheTime.next
 	
 	-- Animation control
-	time.current        = time.current + math.clamp(fbVel < -0.1 and math.min(fbVel, math.abs(lrVel)) * 0.005 - 0.0005 or math.max(fbVel, math.abs(lrVel)) * 0.005 + 0.0005, -0.003, 0.003)
-	breatheTime.current = breatheTime.current + math.clamp((vel:length() * 15 + 1) * 0.05, 0, 0.4)
+	time.next        = time.next + math.clamp(fbVel < -0.1 and math.min(fbVel, math.abs(lrVel)) * 0.005 - 0.0005 or math.max(fbVel, math.abs(lrVel)) * 0.005 + 0.0005, -0.003, 0.003)
+	breatheTime.next = breatheTime.next + math.clamp((vel:length() * 15 + 1) * 0.05, 0, 0.4)
 	
 	-- Pos state table
 	local statePos = {
@@ -119,12 +119,12 @@ end
 function events.RENDER(delta, context)
 	
 	-- Render lerps
-	t.anim_time       = math.lerp(time.prev, time.current, delta)
-	breatheTime.delta = math.lerp(breatheTime.prev, breatheTime.current, delta)
-	pos.currentPos    = math.lerp(pos.current, pos.nextTick, delta)
+	t.time           = math.lerp(time.prev, time.next, delta)
+	breatheTime.time = math.lerp(breatheTime.prev, breatheTime.next, delta)
+	pos.currentPos   = math.lerp(pos.current, pos.nextTick, delta)
 	
 	-- Apply
-	local scale = math.sin(breatheTime.delta) * 0.0125 + 1.0125
+	local scale = math.sin(breatheTime.time) * 0.0125 + 1.0125
 	model.front.Front:scale(scale)
 	
 	local animPos = model.root:getAnimPos()
