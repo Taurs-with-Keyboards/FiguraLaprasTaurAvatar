@@ -1,6 +1,6 @@
 -- Required scripts
-local model   = require("scripts.ModelParts")
-local pose    = require("scripts.Posing")
+local model = require("scripts.ModelParts")
+local pose  = require("scripts.Posing")
 
 -- Config setup
 config:name("LaprasTaur")
