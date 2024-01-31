@@ -46,9 +46,8 @@ local pos = {
 function events.TICK()
 	
 	-- Player variables
-	local vel      = player:getVelocity()
-	local dir      = player:getLookDir()
-	local onGround = ground()
+	local vel = player:getVelocity()
+	local dir = player:getLookDir()
 	
 	-- Directional velocity
 	local fbVel = player:getVelocity():dot((dir.x_z):normalize())
@@ -68,7 +67,6 @@ function events.TICK()
 	local statePos = {
 		{ state = pose.climb,   pos = vec(0, 0, 25)  },
 		{ state = pose.elytra,  pos = vec(0, 0, 15)  },
-		{ state = pose.sleep,   pos = vec(0, 0, 15)  },
 		{ state = pose.spin,    pos = vec(0, 0, 16)  },
 		{ state = pose.swim,    pos = vec(0, 20, 15) },
 		{ state = pose.crawl,   pos = vec(0, 19, 24) },
@@ -145,8 +143,7 @@ local blendAnims = {
 	{ anim = anims.waterSwim,      ticks = 7 },
 	{ anim = anims.underwaterIdle, ticks = 7 },
 	{ anim = anims.underwaterSwim, ticks = 7 },
-	{ anim = anims.elytra,         ticks = 7 },
-	{ anim = anims.sleep,          ticks = 7 }
+	{ anim = anims.elytra,         ticks = 7 }
 }
 	
 for _, blend in ipairs(blendAnims) do

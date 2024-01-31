@@ -84,8 +84,11 @@ function events.RENDER(delta, context)
 	model.upper:offsetPivot(anims.crouch:isPlaying() and vec(0, 0, 5) or 0)
 	
 	-- Offset smooth torso in various parts
+	-- Note: acts strangely with `model.body` and when sleeping
 	for _, group in ipairs(model.upper:getChildren()) do
-		group:offsetRot(-calculateParentRot(group:getParent()))
+		if group ~= model.body and not pose.sleep then
+			group:offsetRot(-calculateParentRot(group:getParent()))
+		end
 	end
 	
 	-- Remove jank caused by crawling
