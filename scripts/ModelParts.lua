@@ -9,6 +9,7 @@ t.pokeball = models.Pokeball
 t.root  = t.model.Player
 t.upper = t.root.UpperBody
 t.lower = t.root.LowerBody
+t.ball  = t.pokeball.Ball
 
 -- Head parts
 t.head = t.upper.Head

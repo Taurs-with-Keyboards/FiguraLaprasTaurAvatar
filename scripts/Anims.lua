@@ -19,17 +19,7 @@ local function calculateParentRot(m)
 	
 end
 
--- Table setup
-local t = {}
-
 -- Animation variables
-t.time = 0
-
-local time = {
-	prev = 0,
-	next = 0
-}
-
 local breatheTime = {
 	prev = 0,
 	time = 0,
@@ -46,29 +36,24 @@ local pos = {
 function events.TICK()
 	
 	-- Player variables
-	local vel      = player:getVelocity()
-	local dir      = player:getLookDir()
-	local onGround = ground()
+	local vel = player:getVelocity()
 	
-	-- Directional velocity
-	local fbVel = player:getVelocity():dot((dir.x_z):normalize())
-	local lrVel = player:getVelocity():cross(dir.x_z:normalize()).y
-	local udVel = player:getVelocity().y
-	local diagCancel = math.abs(lrVel) - math.abs(fbVel)
+	-- Animation variables
+	local walking    = vel.xz:length() ~= 0
+	local inWater    = waterTicks.water < 20
+	local underwater = waterTicks.under < 20
+	local onGround   = ground()
 	
 	-- Store animation variables
-	time.prev        = time.next
 	breatheTime.prev = breatheTime.next
 	
 	-- Animation control
-	time.next        = time.next + math.clamp(fbVel < -0.1 and math.min(fbVel, math.abs(lrVel)) * 0.005 - 0.0005 or math.max(fbVel, math.abs(lrVel)) * 0.005 + 0.0005, -0.003, 0.003)
 	breatheTime.next = breatheTime.next + math.clamp((vel:length() * 15 + 1) * 0.05, 0, 0.4)
 	
 	-- Pos state table
 	local statePos = {
 		{ state = pose.climb,   pos = vec(0, 0, 25)  },
 		{ state = pose.elytra,  pos = vec(0, 0, 15)  },
-		{ state = pose.sleep,   pos = vec(0, 0, 15)  },
 		{ state = pose.spin,    pos = vec(0, 0, 16)  },
 		{ state = pose.swim,    pos = vec(0, 20, 15) },
 		{ state = pose.crawl,   pos = vec(0, 19, 24) },
@@ -87,12 +72,6 @@ function events.TICK()
 	-- Tick lerps
 	pos.current  = pos.nextTick
 	pos.nextTick = math.lerp(pos.nextTick, pos.target, 0.25)
-	
-	-- Animation variables
-	local walking    = vel.xz:length() ~= 0
-	local inWater    = waterTicks.water < 20
-	local underwater = waterTicks.under < 20
-	local onGround   = ground()
 	
 	-- Animation states
 	local groundIdle     = not walking and (not (inWater or player:getVehicle()) or onGround) and not ((pose.swim and inWater) or pose.elytra) or pose.spin or (pose.climb and vel:length() == 0)
@@ -118,14 +97,28 @@ end
 
 function events.RENDER(delta, context)
 	
+	-- Player variables
+	local vel = player:getVelocity()
+	local dir = player:getLookDir()
+	
+	-- Directional velocity
+	local fbVel = player:getVelocity():dot((dir.x_z):normalize())
+	local lrVel = player:getVelocity():cross(dir.x_z:normalize()).y
+	local udVel = player:getVelocity().y
+	
+	-- Animation speeds
+	local moveSpeed = math.clamp((fbVel < -0.1 and math.min(fbVel, math.abs(lrVel)) or math.max(fbVel, math.abs(lrVel))) * 15, -2, 2)
+	anims.groundWalk:speed(moveSpeed)
+	anims.waterSwim:speed(moveSpeed)
+	anims.underwaterSwim:speed(moveSpeed)
+	
 	-- Render lerps
-	t.time           = math.lerp(time.prev, time.next, delta)
 	breatheTime.time = math.lerp(breatheTime.prev, breatheTime.next, delta)
 	pos.currentPos   = math.lerp(pos.current, pos.nextTick, delta)
 	
 	-- Apply
 	local scale = math.sin(breatheTime.time) * 0.0125 + 1.0125
-	model.front.Front:scale(scale)
+	model.front:scale(scale)
 	
 	local animPos = model.root:getAnimPos()
 	model.root:pos(pos.currentPos + ((pose.swim or pose.climb or pose.crawl) and vec(0, animPos.z - animPos.y, animPos.y - animPos.z) or 0))
@@ -134,6 +127,20 @@ function events.RENDER(delta, context)
 	for _, parrot in pairs(model.parrots) do
 		parrot:rot(-calculateParentRot(parrot:getParent()))
 	end
+	
+	-- Scales models to fit GUIs better
+	if context == "FIGURA_GUI" or context == "MINECRAFT_GUI" or context == "PAPERDOLL" then
+		model.root:scale(0.75)
+		model.ball:scale(0.75)
+	end
+	
+end
+
+function events.POST_RENDER(delta, context)
+	
+	-- After scaling models to fit GUIs, immediately scale back
+	model.root:scale(1)
+	model.ball:scale(1)
 	
 end
 
@@ -145,8 +152,7 @@ local blendAnims = {
 	{ anim = anims.waterSwim,      ticks = 7 },
 	{ anim = anims.underwaterIdle, ticks = 7 },
 	{ anim = anims.underwaterSwim, ticks = 7 },
-	{ anim = anims.elytra,         ticks = 7 },
-	{ anim = anims.sleep,          ticks = 7 }
+	{ anim = anims.elytra,         ticks = 7 }
 }
 	
 for _, blend in ipairs(blendAnims) do
@@ -162,6 +168,3 @@ function events.RENDER(delta, context)
 		:pos(pose.crouch and vec(0, -4, 0) or nil)
 	
 end
-
--- Returns animation variables
-return t

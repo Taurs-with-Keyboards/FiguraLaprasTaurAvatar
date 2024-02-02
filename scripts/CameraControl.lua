@@ -1,6 +1,6 @@
 -- Required scripts
-local model   = require("scripts.ModelParts")
-local pose    = require("scripts.Posing")
+local model = require("scripts.ModelParts")
+local pose  = require("scripts.Posing")
 
 -- Config setup
 config:name("LaprasTaur")
@@ -52,9 +52,6 @@ function events.POST_RENDER(delta, context)
 		-- Nameplate Placement
 		nameplate.ENTITY:pivot(posOffset + vec(0, player:getBoundingBox().y + 9/16, 0))
 			:scale(model.model:getScale())
-		
-		-- Disables head if sleeping in first person
-		model.head:visible(not(pose.sleep and renderer:isFirstPerson()))
 		
 	end
 end
