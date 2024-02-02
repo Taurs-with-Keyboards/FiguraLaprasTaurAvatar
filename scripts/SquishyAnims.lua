@@ -40,6 +40,7 @@ function events.RENDER(delta, context)
 	local water    = player:isInWater()
 	local dir      = math.map(math.abs(player:getLookDir()[2]), 0, 1, 1, -1)
 	local extend   = pose.swim or pose.elytra or pose.crawl or (pose.climb and not onGround)
+	local limit    = water and 20 or 60
 	local stiff    = water and 0.001 or 0.02
 	local bounce   = water and 0.05 or 0.1
 	
@@ -70,7 +71,7 @@ function events.RENDER(delta, context)
 	
 	-- Targets
 	local laprasTarget  = (extend and 90 or 0) + math.clamp(yvel * (extend and 80 * dir or 40), -20, 20)
-	local flipperTarget = pose.climb and 60 or math.clamp(yvel * 80 * (extend and dir or 1), -60, 60)
+	local flipperTarget = pose.climb and 60 or math.clamp(yvel * 80 * (extend and dir or 1), -limit, limit)
 	
 	-- Do bounce
 	squapi.lapras:doBounce(laprasTarget,   stiff, bounce)
