@@ -1,5 +1,5 @@
 -- Required scripts
-local model = require("scripts.ModelParts")
+local parts = require("lib.GroupIndex")(models)
 
 -- Glowing outline
 renderer:outlineColor(vectors.hexToRGB("69CDEC"))
@@ -9,6 +9,81 @@ config:name("LaprasTaur")
 local vanillaSkin = config:load("AvatarVanillaSkin")
 local slim        = config:load("AvatarSlim") or false
 if vanillaSkin == nil then vanillaSkin = true end
+
+-- Set skull and portrait groups to visible (incase disabled in blockbench)
+parts.Skull   :visible(true)
+parts.Portrait:visible(true)
+
+-- All vanilla skin parts
+local skin = {
+	
+	parts.Head.Head,
+	parts.Head.Layer,
+	
+	parts.Body.Body,
+	parts.Body.Layer,
+	
+	parts.LeftArm.leftArmDefault,
+	parts.LeftArm.leftArmSlim,
+	parts.LeftArmFP.leftArmDefaultFP,
+	parts.LeftArmFP.leftArmSlimFP,
+	
+	parts.RightArm.rightArmDefault,
+	parts.RightArm.rightArmSlim,
+	parts.RightArmFP.rightArmDefaultFP,
+	parts.RightArmFP.rightArmSlimFP,
+	
+	parts.Portrait.Head,
+	parts.Portrait.Layer,
+	
+	parts.Skull.Head,
+	parts.Skull.Layer
+	
+}
+
+-- All layer parts
+local layer = {
+	
+	HAT = {
+		parts.Head.Layer
+	},
+	JACKET = {
+		parts.Body.Layer,
+		parts.Front.Layer
+	},
+	LEFT_SLEEVE = {
+		parts.leftArmDefault.Layer,
+		parts.leftArmSlim.Layer,
+		parts.leftArmDefaultFP.Layer,
+		parts.leftArmSlimFP.Layer
+	},
+	RIGHT_SLEEVE = {
+		parts.rightArmDefault.Layer,
+		parts.rightArmSlim.Layer,
+		parts.rightArmDefaultFP.Layer,
+		parts.rightArmSlimFP.Layer
+	},
+	LEFT_PANTS_LEG = {
+		parts.FrontLeftFlipper.Layer,
+		parts.FrontLeftFlipperTip.Layer,
+		parts.BackLeftFlipper.Layer,
+		parts.BackLeftFlipperTip.Layer
+	},
+	RIGHT_PANTS_LEG = {
+		parts.FrontRightFlipper.Layer,
+		parts.FrontRightFlipperTip.Layer,
+		parts.BackRightFlipper.Layer,
+		parts.BackRightFlipperTip.Layer
+	},
+	CAPE = {
+		parts.Cape
+	},
+	LOWER_BODY = {
+		parts.Main.Layer,
+		parts.Shell.Layer,
+		parts.SpikesLayer
+	},
+}
 
 -- Determine vanilla player type on init
 local vanillaAvatarType
@@ -24,32 +99,32 @@ function events.TICK()
 	-- Model shape
 	local slimShape = (vanillaSkin and vanillaAvatarType == "SLIM") or (slim and not vanillaSkin)
 	
-	model.leftArm.leftArmDefault:setVisible(not slimShape)
-	model.rightArm.rightArmDefault:setVisible(not slimShape)
-	model.leftArmFP.leftArmDefaultFP:visible(not slimShape)
-	model.rightArmFP.rightArmDefaultFP:visible(not slimShape)
+	parts.leftArmDefault:setVisible(not slimShape)
+	parts.rightArmDefault:setVisible(not slimShape)
+	parts.leftArmDefaultFP:visible(not slimShape)
+	parts.rightArmDefaultFP:visible(not slimShape)
 	
-	model.leftArm.leftArmSlim:setVisible(slimShape)
-	model.rightArm.rightArmSlim:setVisible(slimShape)
-	model.leftArmFP.leftArmSlimFP:visible(slimShape)
-	model.rightArmFP.rightArmSlimFP:visible(slimShape)
+	parts.leftArmSlim:setVisible(slimShape)
+	parts.rightArmSlim:setVisible(slimShape)
+	parts.leftArmSlimFP:visible(slimShape)
+	parts.rightArmSlimFP:visible(slimShape)
 	
 	-- Skin textures
 	local skinType = vanillaSkin and "SKIN" or "PRIMARY"
-	for _, part in ipairs(model.skin) do
+	for _, part in ipairs(skin) do
 		part:primaryTexture(skinType)
 	end
 	
 	-- Cape/Elytra texture
-	model.cape:primaryTexture(vanillaSkin and "CAPE" or nil)
-	model.elytra:primaryTexture(vanillaSkin and player:hasCape() and (player:isSkinLayerVisible("CAPE") and "CAPE" or "ELYTRA") or nil)
+	parts.Cape:primaryTexture(vanillaSkin and "CAPE" or nil)
+	parts.Elytra:primaryTexture(vanillaSkin and player:hasCape() and (player:isSkinLayerVisible("CAPE") and "CAPE" or "ELYTRA") or nil)
 		:secondaryRenderType(player:getItem(5):hasGlint() and "GLINT" or "NONE")
 	
 	-- Disables lower body if player is in spectator mode
-	model.lower:parentType(player:getGamemode() == "SPECTATOR" and "BODY" or "NONE")
+	parts.LowerBody:parentType(player:getGamemode() == "SPECTATOR" and "BODY" or "NONE")
 	
 	-- Layer toggling
-	for layerType, parts in pairs(model.layer) do
+	for layerType, parts in pairs(layer) do
 		local enabled = enabled
 		if layerType == "LOWER_BODY" then
 			enabled = player:isSkinLayerVisible("RIGHT_PANTS_LEG") or player:isSkinLayerVisible("LEFT_PANTS_LEG")

@@ -1,12 +1,19 @@
 -- Required scripts
 require("lib.GSAnimBlend")
-local model      = require("scripts.ModelParts")
+local parts      = require("lib.GroupIndex")(models)
 local waterTicks = require("scripts.WaterTicks")
 local pose       = require("scripts.Posing")
 local ground     = require("lib.GroundCheck")
 
 -- Animations setup
 local anims = animations.LaprasTaur
+
+local parrots = {
+	
+	parts.LeftParrotPivot,
+	parts.RightParrotPivot
+	
+}
 
 -- Calculate parent's rotations
 local function calculateParentRot(m)
@@ -118,20 +125,20 @@ function events.RENDER(delta, context)
 	
 	-- Apply
 	local scale = math.sin(breatheTime.time) * 0.0125 + 1.0125
-	model.front:scale(scale)
+	parts.Front:scale(scale)
 	
-	local animPos = model.root:getAnimPos()
-	model.root:pos(pos.currentPos + ((pose.swim or pose.climb or pose.crawl) and vec(0, animPos.z - animPos.y, animPos.y - animPos.z) or 0))
+	local animPos = parts.Player:getAnimPos()
+	parts.Player:pos(pos.currentPos + ((pose.swim or pose.climb or pose.crawl) and vec(0, animPos.z - animPos.y, animPos.y - animPos.z) or 0))
 	
 	-- Parrot rot offset
-	for _, parrot in pairs(model.parrots) do
+	for _, parrot in pairs(parrots) do
 		parrot:rot(-calculateParentRot(parrot:getParent()))
 	end
 	
 	-- Scales models to fit GUIs better
 	if context == "FIGURA_GUI" or context == "MINECRAFT_GUI" or context == "PAPERDOLL" then
-		model.root:scale(0.75)
-		model.ball:scale(0.75)
+		parts.Player:scale(0.75)
+		parts.Ball:scale(0.75)
 	end
 	
 end
@@ -139,8 +146,8 @@ end
 function events.POST_RENDER(delta, context)
 	
 	-- After scaling models to fit GUIs, immediately scale back
-	model.root:scale(1)
-	model.ball:scale(1)
+	parts.Player:scale(1)
+	parts.Ball:scale(1)
 	
 end
 
@@ -164,7 +171,7 @@ function events.RENDER(delta, context)
 	
 	local rot = vanilla_model.HEAD:getOriginRot()
 	rot.x = math.clamp(rot.x, -90, 30)
-	model.upper.Spyglass:rot(rot)
+	parts.Spyglass:rot(rot)
 		:pos(pose.crouch and vec(0, -4, 0) or nil)
 	
 end

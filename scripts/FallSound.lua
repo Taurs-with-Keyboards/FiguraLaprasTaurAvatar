@@ -1,5 +1,5 @@
 -- Required scripts
-local model      = require("scripts.ModelParts")
+local parts      = require("lib.GroupIndex")(models)
 local waterTicks = require("scripts.WaterTicks")
 local ground     = require("lib.GroundCheck")
 
@@ -29,7 +29,7 @@ function events.TICK()
 	
 	-- Play sound if conditions are met
 	if fallSound and wasInAir and ground() and not player:getVehicle() and not player:isInWater() then
-		if average(model.pokeball:getScale()) > 0.5 then
+		if average(parts.Pokeball:getScale()) > 0.5 then
 			sounds:playSound("cobblemon:poke_ball.hit", player:getPos(), 0.25)
 		else
 			local vel    = math.abs(-player:getVelocity().y + 1)

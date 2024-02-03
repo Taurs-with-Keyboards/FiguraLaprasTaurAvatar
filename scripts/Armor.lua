@@ -1,5 +1,5 @@
 -- Required scripts
-local model     = require("scripts.ModelParts")
+local parts     = require("lib.GroupIndex")(models)
 local kattArmor = require("lib.KattArmor")()
 
 -- Setting the leggings to layer 1
@@ -7,89 +7,89 @@ kattArmor.Armor.Leggings:setLayer(1)
 
 -- Armor parts
 kattArmor.Armor.Helmet
-	:addParts(model.head.headArmorHelmet.Helmet)
-	:addTrimParts(model.head.headArmorHelmet.Trim)
+	:addParts(parts.headArmorHelmet.Helmet)
+	:addTrimParts(parts.headArmorHelmet.Trim)
 kattArmor.Armor.Chestplate
 	:addParts(
-		model.body.bodyArmorChestplate.Chestplate,
-		model.leftArm.leftArmArmorChestplate.Chestplate,
-		model.rightArm.rightArmArmorChestplate.Chestplate,
-		model.leftArmFP.leftArmArmorChestplateFP.Chestplate,
-		model.rightArmFP.rightArmArmorChestplateFP.Chestplate,
-		model.shell.ShellArmorChestplate.Chestplate,
-		model.shell.Spikes.SpikesArmorChestplate.SpikesChestplate
+		parts.bodyArmorChestplate.Chestplate,
+		parts.leftArmArmorChestplate.Chestplate,
+		parts.rightArmArmorChestplate.Chestplate,
+		parts.leftArmArmorChestplateFP.Chestplate,
+		parts.rightArmArmorChestplateFP.Chestplate,
+		parts.ShellArmorChestplate.Chestplate,
+		parts.SpikesChestplate
 	)
 	:addTrimParts(
-		model.body.bodyArmorChestplate.Trim,
-		model.leftArm.leftArmArmorChestplate.Trim,
-		model.rightArm.rightArmArmorChestplate.Trim,
-		model.leftArmFP.leftArmArmorChestplateFP.Trim,
-		model.rightArmFP.rightArmArmorChestplateFP.Trim,
-		model.shell.ShellArmorChestplate.Trim,
-		model.shell.Spikes.SpikesArmorChestplate.SpikesTrim
+		parts.bodyArmorChestplate.Trim,
+		parts.leftArmArmorChestplate.Trim,
+		parts.rightArmArmorChestplate.Trim,
+		parts.leftArmArmorChestplateFP.Trim,
+		parts.rightArmArmorChestplateFP.Trim,
+		parts.ShellArmorChestplate.Trim,
+		parts.SpikesTrim
 	)
 kattArmor.Armor.Leggings
 	:addParts(
-		model.body.bodyArmorLeggings.Leggings,
-		model.front.FrontArmorLeggings.Leggings,
-		model.main.MainArmorLeggings.Leggings
+		parts.bodyArmorLeggings.Leggings,
+		parts.FrontArmorLeggings.Leggings,
+		parts.MainArmorLeggings.Leggings
 	)
 	:addTrimParts(
-		model.body.bodyArmorLeggings.Trim,
-		model.front.FrontArmorLeggings.Trim,
-		model.main.MainArmorLeggings.Trim
+		parts.bodyArmorLeggings.Trim,
+		parts.FrontArmorLeggings.Trim,
+		parts.MainArmorLeggings.Trim
 	)
 kattArmor.Armor.Boots
 	:addParts(
-		model.frontLeftFlipper.FrontLeftFlipperArmorBoot.Boot,
-		model.frontLeftFlipper.FrontLeftFlipperTip.FrontLeftFlipperTipArmorBoot.Boot,
-		model.frontRightFlipper.FrontRightFlipperArmorBoot.Boot,
-		model.frontRightFlipper.FrontRightFlipperTip.FrontRightFlipperTipArmorBoot.Boot,
-		model.backLeftFlipper.BackLeftFlipperArmorBoot.Boot,
-		model.backLeftFlipper.BackLeftFlipperTip.BackLeftFlipperTipArmorBoot.Boot,
-		model.backRightFlipper.BackRightFlipperArmorBoot.Boot,
-		model.backRightFlipper.BackRightFlipperTip.BackRightFlipperTipArmorBoot.Boot
+		parts.FrontLeftFlipperArmorBoot.Boot,
+		parts.FrontLeftFlipperTipArmorBoot.Boot,
+		parts.FrontRightFlipperArmorBoot.Boot,
+		parts.FrontRightFlipperTipArmorBoot.Boot,
+		parts.BackLeftFlipperArmorBoot.Boot,
+		parts.BackLeftFlipperTipArmorBoot.Boot,
+		parts.BackRightFlipperArmorBoot.Boot,
+		parts.BackRightFlipperTipArmorBoot.Boot
 	)
 	:addTrimParts(
-		model.frontLeftFlipper.FrontLeftFlipperArmorBoot.Trim,
-		model.frontLeftFlipper.FrontLeftFlipperTip.FrontLeftFlipperTipArmorBoot.Trim,
-		model.frontRightFlipper.FrontRightFlipperArmorBoot.Trim,
-		model.frontRightFlipper.FrontRightFlipperTip.FrontRightFlipperTipArmorBoot.Trim,
-		model.backLeftFlipper.BackLeftFlipperArmorBoot.Trim,
-		model.backLeftFlipper.BackLeftFlipperTip.BackLeftFlipperTipArmorBoot.Trim,
-		model.backRightFlipper.BackRightFlipperArmorBoot.Trim,
-		model.backRightFlipper.BackRightFlipperTip.BackRightFlipperTipArmorBoot.Trim
+		parts.FrontLeftFlipperArmorBoot.Trim,
+		parts.FrontLeftFlipperTipArmorBoot.Trim,
+		parts.FrontRightFlipperArmorBoot.Trim,
+		parts.FrontRightFlipperTipArmorBoot.Trim,
+		parts.BackLeftFlipperArmorBoot.Trim,
+		parts.BackLeftFlipperTipArmorBoot.Trim,
+		parts.BackRightFlipperArmorBoot.Trim,
+		parts.BackRightFlipperTipArmorBoot.Trim
 	)
 
 -- Leather armor
 kattArmor.Materials.leather
 	:setTexture(textures["textures.armor.leatherArmor"])
 	:addParts(kattArmor.Armor.Helmet,
-		model.head.headArmorHelmet.Leather
+		parts.headArmorHelmet.Leather
 	)
 	:addParts(kattArmor.Armor.Chestplate,
-		model.body.bodyArmorChestplate.Leather,
-		model.leftArm.leftArmArmorChestplate.Leather,
-		model.rightArm.rightArmArmorChestplate.Leather,
-		model.leftArmFP.leftArmArmorChestplateFP.Leather,
-		model.rightArmFP.rightArmArmorChestplateFP.Leather,
-		model.shell.ShellArmorChestplate.Leather,
-		model.shell.Spikes.SpikesArmorChestplate.SpikesLeather
+		parts.bodyArmorChestplate.Leather,
+		parts.leftArmArmorChestplate.Leather,
+		parts.rightArmArmorChestplate.Leather,
+		parts.leftArmArmorChestplateFP.Leather,
+		parts.rightArmArmorChestplateFP.Leather,
+		parts.ShellArmorChestplate.Leather,
+		parts.SpikesLeather
 	)
 	:addParts(kattArmor.Armor.Leggings,
-		model.body.bodyArmorLeggings.Leather,
-		model.front.FrontArmorLeggings.Leather,
-		model.main.MainArmorLeggings.Leather
+		parts.bodyArmorLeggings.Leather,
+		parts.FrontArmorLeggings.Leather,
+		parts.MainArmorLeggings.Leather
 	)
 	:addParts(kattArmor.Armor.Boots,
-		model.frontLeftFlipper.FrontLeftFlipperArmorBoot.Leather,
-		model.frontLeftFlipper.FrontLeftFlipperTip.FrontLeftFlipperTipArmorBoot.Leather,
-		model.frontRightFlipper.FrontRightFlipperArmorBoot.Leather,
-		model.frontRightFlipper.FrontRightFlipperTip.FrontRightFlipperTipArmorBoot.Leather,
-		model.backLeftFlipper.BackLeftFlipperArmorBoot.Leather,
-		model.backLeftFlipper.BackLeftFlipperTip.BackLeftFlipperTipArmorBoot.Leather,
-		model.backRightFlipper.BackRightFlipperArmorBoot.Leather,
-		model.backRightFlipper.BackRightFlipperTip.BackRightFlipperTipArmorBoot.Leather
+		parts.FrontLeftFlipperArmorBoot.Leather,
+		parts.FrontLeftFlipperTipArmorBoot.Leather,
+		parts.FrontRightFlipperArmorBoot.Leather,
+		parts.FrontRightFlipperTipArmorBoot.Leather,
+		parts.BackLeftFlipperArmorBoot.Leather,
+		parts.BackLeftFlipperTipArmorBoot.Leather,
+		parts.BackRightFlipperArmorBoot.Leather,
+		parts.BackRightFlipperTipArmorBoot.Leather
 	)
 
 -- Chainmail armor
@@ -116,7 +116,7 @@ kattArmor.Materials.netherite
 kattArmor.Materials.turtle
 	:setTexture(textures["textures.armor.turtleHelmet"])
 	:addParts(kattArmor.Armor.Helmet,
-		model.head.headArmorHelmet.TurtleHelmetSpikes
+		parts.TurtleHelmetSpikes
 	)
 
 -- Trims
@@ -197,25 +197,78 @@ if leggings   == nil then leggings   = true end
 if boots      == nil then boots      = true end
 if shell      == nil then shell      = true end
 
+-- All helmet parts
+local helmetGroups = {
+	
+	parts.headArmorHelmet,
+	parts.HelmetItemPivot
+	
+}
+
+-- All chestplate parts
+local chestplateGroups = {
+	
+	parts.bodyArmorChestplate,
+	parts.leftArmArmorChestplate,
+	parts.rightArmArmorChestplate,
+	parts.leftArmArmorChestplateFP,
+	parts.rightArmArmorChestplateFP
+	
+}
+
+-- All shell armor parts
+local chestplateShellGroups = {
+	
+	parts.ShellArmorChestplate,
+	parts.SpikesArmorChestplate
+	
+}
+
+-- All leggings parts
+local leggingsGroups = {
+	
+	parts.bodyArmorLeggings,
+	parts.FrontArmorLeggings,
+	parts.MainArmorLeggings
+	
+}
+
+-- All boots parts
+local bootsGroups = {
+	
+	parts.FrontLeftFlipperArmorBoot,
+	parts.FrontLeftFlipperTipArmorBoot,
+	
+	parts.FrontRightFlipperArmorBoot,
+	parts.FrontRightFlipperTipArmorBoot,
+	
+	parts.BackLeftFlipperArmorBoot,
+	parts.BackLeftFlipperTipArmorBoot,
+	
+	parts.BackRightFlipperArmorBoot,
+	parts.BackRightFlipperTipArmorBoot
+	
+}
+
 function events.TICK()
 	
-	for _, part in ipairs(model.helmetToggle) do
+	for _, part in ipairs(helmetGroups) do
 		part:visible(helmet)
 	end
 	
-	for _, part in ipairs(model.chestplateToggle) do
+	for _, part in ipairs(chestplateGroups) do
 		part:visible(chestplate)
 	end
 	
-	for _, part in ipairs(model.leggingsToggle) do
+	for _, part in ipairs(leggingsGroups) do
 		part:visible(leggings)
 	end
 	
-	for _, part in ipairs(model.bootsToggle) do
+	for _, part in ipairs(bootsGroups) do
 		part:visible(boots)
 	end
 	
-	for _, part in ipairs(model.chestplateShellToggle) do
+	for _, part in ipairs(chestplateShellGroups) do
 		part:visible(shell)
 	end
 	

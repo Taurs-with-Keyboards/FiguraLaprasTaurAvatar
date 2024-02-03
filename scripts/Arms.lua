@@ -1,5 +1,5 @@
 -- Required scripts
-local model = require("scripts.ModelParts")
+local parts = require("lib.GroupIndex")(models)
 local pose  = require("scripts.Posing")
 
 -- Config setup
@@ -73,7 +73,7 @@ function events.RENDER(delta, context)
 	-- Override arm movements
 	local idleTimer  = world.getTime(delta)
 	local idleRot    = vec(math.deg(math.sin(idleTimer * 0.067) * 0.05), 0, math.deg(math.cos(idleTimer * 0.09) * 0.05 + 0.05))
-	local bodyOffset = (vanilla_model.BODY:getOriginRot() * 0.75) + model.body:getTrueRot()
+	local bodyOffset = (vanilla_model.BODY:getOriginRot() * 0.75) + parts.Body:getTrueRot()
 	
 	-- Render lerp
 	leftArm.currentPos  = math.lerp(leftArm.current,  leftArm.nextTick,  delta)
@@ -83,15 +83,15 @@ function events.RENDER(delta, context)
 	local firstPerson = context == "FIRST_PERSON"
 	
 	-- Apply
-	model.leftArm:rot((-((vanilla_model.LEFT_ARM:getOriginRot() + 180) % 360 - 180) + -idleRot + bodyOffset) * leftArm.currentPos)
+	parts.LeftArm:rot((-((vanilla_model.LEFT_ARM:getOriginRot() + 180) % 360 - 180) + -idleRot + bodyOffset) * leftArm.currentPos)
 		:visible(not firstPerson)
 	
-	model.leftArmFP:visible(firstPerson)
+	parts.LeftArmFP:visible(firstPerson)
 	
-	model.rightArm:rot((-((vanilla_model.RIGHT_ARM:getOriginRot() + 180) % 360 - 180) + idleRot + bodyOffset) * rightArm.currentPos)
+	parts.RightArm:rot((-((vanilla_model.RIGHT_ARM:getOriginRot() + 180) % 360 - 180) + idleRot + bodyOffset) * rightArm.currentPos)
 		:visible(not firstPerson)
 	
-	model.rightArmFP:visible(firstPerson)
+	parts.RightArmFP:visible(firstPerson)
 	
 end
 

@@ -1,5 +1,5 @@
 -- Required scripts
-local model   = require("scripts.ModelParts")
+local parts   = require("lib.GroupIndex")(models)
 local carrier = require("lib.GSCarrier")
 
 -- GSCarrier rider
@@ -14,24 +14,24 @@ carrier.rider.controller.setAimEnabled(false)
 carrier.vehicle.addTag("gscarrier:taur", "gscarrier:land", "gscarrier:water")
 
 -- Seat 1
-carrier.vehicle.newSeat("Seat1", model.shell.RiderPos1, {
+carrier.vehicle.newSeat("Seat1", parts.RiderPos1, {
 	priority = 3,
 	tags = {["gscarrier:flat"] = true},
-	condition = function() if model.chest:getVisible() then return false end end
+	condition = function() if parts.Chest:getVisible() then return false end end
 })
 
 -- Seat 2
-carrier.vehicle.newSeat("Seat2", model.shell.RiderPos2, {
+carrier.vehicle.newSeat("Seat2", parts.RiderPos2, {
 	priority = 2,
 	tags = {["gscarrier:flat"] = true},
-	condition = function() if model.chest:getVisible() then return false end end
+	condition = function() if parts.Chest:getVisible() then return false end end
 })
 
 -- Seat Chest
-carrier.vehicle.newSeat("SeatChest", model.chest.RiderPosChest, {
+carrier.vehicle.newSeat("SeatChest", parts.RiderPosChest, {
 	priority = 1,
 	tags = {["gscarrier:chair"] = true},
-	condition = function() if not model.chest:getVisible() then return false end end
+	condition = function() if not parts.Chest:getVisible() then return false end end
 })
 
 function events.TICK()
@@ -42,7 +42,7 @@ function events.TICK()
 	
 	-- Vehicle renders/part toggle
 	renderer:setRenderVehicle(type ~= "minecraft:boat" and type ~= "minecraft:chest_boat")
-	model.chest:visible(type == "minecraft:chest_boat")
+	parts.Chest:visible(type == "minecraft:chest_boat")
 	
 	-- Redirect all passengers to pivots if vehicle is a boat
 	carrier.vehicle.setRedirect(type == "minecraft:boat")
