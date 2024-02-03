@@ -50,7 +50,7 @@ function events.TICK()
 	
 	-- Variables
 	vehicle  = player:getVehicle() or false
-	vType     = vehicle and vehicle:getType() or false
+	vType    = vehicle and vehicle:getType() or false
 	isRider  = vehicle and vehicle:getControllingPassenger() and vehicle:getControllingPassenger():getName() ~= player:getName()
 	hasRider = (vehicle and #vehicle:getPassengers() > 1 and not isRider) or #player:getPassengers() > 0
 	
@@ -127,8 +127,10 @@ end
 -- Pokeball toggler
 local function setPokeball(boolean)
 	
-	toggle = boolean
-	config:save("PokeballToggle", toggle)
+	if player:isLoaded() and (toggle or player:getVelocity().xz:length() == 0) then
+		toggle = boolean
+		config:save("PokeballToggle", toggle)
+	end
 	
 end
 
@@ -260,6 +262,13 @@ t.togglePage = action_wheel:newAction("Pokeball")
 	:texture(textures["textures.misc.pokeballIcon"])
 	:onToggle(pings.setPokeball)
 	:toggled(toggle)
+
+-- Update action page info
+function events.TICK()
+	
+	t.togglePage:toggled(toggle)
+	
+end
 
 -- Return action wheel page (and toggle)
 return t
