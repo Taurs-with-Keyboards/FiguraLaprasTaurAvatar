@@ -115,7 +115,7 @@ function events.RENDER(delta, context)
 	local udVel = player:getVelocity().y
 	
 	-- Animation speeds
-	local moveSpeed = math.clamp((fbVel < -0.1 and math.min(fbVel, math.abs(lrVel)) or math.max(fbVel, math.abs(lrVel))) * 15, -2, 2)
+	local moveSpeed = math.clamp(pose.climb and udVel * 15 or (fbVel < -0.1 and math.min(fbVel, math.abs(lrVel)) or math.max(fbVel, math.abs(lrVel))) * 15, -2, 2)
 	anims.groundWalk:speed(moveSpeed)
 	anims.waterSwim:speed(moveSpeed)
 	anims.underwaterSwim:speed(moveSpeed)
