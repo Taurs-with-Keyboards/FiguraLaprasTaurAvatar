@@ -8,6 +8,7 @@ local ground     = require("lib.GroundCheck")
 -- Animations setup
 local anims = animations.LaprasTaur
 
+-- Parrot pivots
 local parrots = {
 	
 	parts.LeftParrotPivot,

@@ -134,4 +134,5 @@ function events.TICK()
 	
 end
 
+-- Return action wheel pages
 return t
