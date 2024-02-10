@@ -1,8 +1,8 @@
 -- Required scripts
-local parts   = require("lib.GroupIndex")(models)
-local squapi  = require("lib.SquAPI")
-local pose    = require("scripts.Posing")
-local ground  = require("lib.GroundCheck")
+local parts  = require("lib.GroupIndex")(models)
+local squapi = require("lib.SquAPI")
+local pose   = require("scripts.Posing")
+local ground = require("lib.GroundCheck")
 
 -- Animation setup
 local anims = animations.LaprasTaur
