@@ -8,6 +8,7 @@ renderer:outlineColor(vectors.hexToRGB("69CDEC"))
 config:name("LaprasTaur")
 local vanillaSkin = config:load("AvatarVanillaSkin")
 local slim        = config:load("AvatarSlim") or false
+local shiny       = config:load("AvatarShiny") or false
 if vanillaSkin == nil then vanillaSkin = true end
 
 -- Set skull and portrait groups to visible (incase disabled in blockbench)
@@ -85,6 +86,38 @@ local layer = {
 	},
 }
 
+-- All shiny parts
+local shinyParts = {
+	
+	parts.Ears,
+	parts.Head.Horn,
+	
+	parts.EarsSkull,
+	parts.Skull.Horn,
+	
+	parts.Portrait.Horn,
+	
+	parts.Front.Front,
+	parts.Main.Main,
+	
+	parts.Shell.External,
+	parts.Shell.Internal,
+	parts.SpikesParts,
+	
+	parts.FrontLeftFlipper.Flipper,
+	parts.FrontLeftFlipperTip.Flipper,
+	parts.FrontRightFlipper.Flipper,
+	parts.FrontRightFlipperTip.Flipper,
+	parts.BackLeftFlipper.Flipper,
+	parts.BackLeftFlipperTip.Flipper,
+	parts.BackRightFlipper.Flipper,
+	parts.BackRightFlipperTip.Flipper,
+	
+	parts.Tail.Tail,
+	parts.TailTip.Tail
+	
+}
+
 -- Determine vanilla player type on init
 local vanillaAvatarType
 function events.ENTITY_INIT()
@@ -113,6 +146,12 @@ function events.TICK()
 	local skinType = vanillaSkin and "SKIN" or "PRIMARY"
 	for _, part in ipairs(skin) do
 		part:primaryTexture(skinType)
+	end
+	
+	-- Shiny textures
+	local textureType = shiny and textures["textures.lapras_shiny"] or textures["textures.lapras"]
+	for _, part in ipairs(shinyParts) do
+		part:primaryTexture("Custom", textureType)
 	end
 	
 	-- Cape/Elytra textures
@@ -154,6 +193,17 @@ local function setModelType(boolean)
 	
 end
 
+-- Shiny toggle
+local function setShiny(boolean)
+	
+	shiny = boolean
+	config:save("AvatarShiny", shiny)
+	if player:isLoaded() and shiny then
+		sounds:playSound("block.amethyst_block.chime", player:getPos(), 1)
+	end
+	
+end
+
 -- Sync variables
 local function syncPlayer(a, b)
 	
@@ -162,25 +212,25 @@ local function syncPlayer(a, b)
 	
 end
 
+-- Sync variables
+local function syncPlayer(a, b, c)
+	
+	vanillaSkin = a
+	slim        = b
+	shiny       = c
+	
+end
+
 -- Pings setup
 pings.setAvatarVanillaSkin = setVanillaSkin
 pings.setAvatarModelType   = setModelType
+pings.setAvatarShiny       = setShiny
 pings.syncPlayer           = syncPlayer
-
--- Sync on tick
-if host:isHost() then
-	function events.TICK()
-		
-		if world.getTime() % 200 == 0 then
-			pings.syncPlayer(vanillaSkin, slim)
-		end
-		
-	end
-end
 
 -- Activate actions
 setVanillaSkin(vanillaSkin)
 setModelType(slim)
+setShiny(shiny)
 
 -- Setup table
 local t = {}
@@ -202,6 +252,15 @@ t.modelPage = action_wheel:newAction("ModelShape")
 	:toggleItem('minecraft:player_head{"SkullOwner":"MHF_Alex"}')
 	:onToggle(pings.setAvatarModelType)
 	:toggled(slim)
+
+t.shinyPage = action_wheel:newAction("ModelShiny")
+	:title("§9§lToggle Shiny Textures\n\n§bSet the lower body to use shiny textures over the default textures.")
+	:hoverColor(vectors.hexToRGB("5EB7DD"))
+	:toggleColor(vectors.hexToRGB("4078B0"))
+	:item('minecraft:gunpowder')
+	:toggleItem("minecraft:glowstone_dust")
+	:onToggle(pings.setAvatarShiny)
+	:toggled(shiny)
 
 -- Return action wheel pages
 return t

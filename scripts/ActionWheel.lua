@@ -127,6 +127,7 @@ laprasPage
 			:hoverColor(vectors.hexToRGB("5EB7DD"))
 			:item("minecraft:ender_eye")
 			:onLeftClick(function() descend(eyesPage) end))
+	:action( -1, avatar.shinyPage)
 	:action( -1, backPage)
 
 -- Flop sound actions
