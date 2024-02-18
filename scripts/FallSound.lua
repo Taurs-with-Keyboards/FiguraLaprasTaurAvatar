@@ -2,6 +2,7 @@
 local parts      = require("lib.GroupIndex")(models)
 local waterTicks = require("scripts.WaterTicks")
 local ground     = require("lib.GroundCheck")
+local effects    = require("scripts.SyncedVariables")
 
 -- Config setup
 config:name("LaprasTaur")
@@ -28,7 +29,7 @@ end
 function events.TICK()
 	
 	-- Play sound if conditions are met
-	if fallSound and wasInAir and ground() and not player:getVehicle() and not player:isInWater() then
+	if fallSound and wasInAir and ground() and not player:getVehicle() and not player:isInWater() and not effects.cF then
 		if average(parts.Pokeball:getScale()) > 0.5 then
 			sounds:playSound("cobblemon:poke_ball.hit", player:getPos(), 0.25)
 		else
@@ -37,7 +38,7 @@ function events.TICK()
 			local volume = math.clamp((vel * dry) / 2, 0, 1)
 			
 			if volume ~= 0 then
-				sounds:playSound("minecraft:entity.puffer_fish.flop", player:getPos(), volume, math.map(volume, 1, 0, 0.45, 0.65))
+				sounds:playSound("minecraft:entity.puffer_fish.flop", player:getPos(), volume, math.map(volume, 1, 0, 0.35, 0.55))
 			end
 		end
 	end
