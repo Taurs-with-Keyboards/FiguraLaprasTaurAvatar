@@ -6,7 +6,7 @@ local pose       = require("scripts.Posing")
 local ground     = require("lib.GroundCheck")
 
 -- Animations setup
-local anims = animations.LaprasTaur
+local anims = animations["models.LaprasTaur"]
 
 -- Parrot pivots
 local parrots = {

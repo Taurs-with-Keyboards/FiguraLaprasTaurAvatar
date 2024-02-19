@@ -5,7 +5,7 @@ local pose   = require("scripts.Posing")
 local ground = require("lib.GroundCheck")
 
 -- Animation setup
-local anims = animations.LaprasTaur
+local anims = animations["models.LaprasTaur"]
 
 -- Calculate parent's rotations
 local function calculateParentRot(m)
