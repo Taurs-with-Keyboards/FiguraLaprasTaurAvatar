@@ -1,9 +1,9 @@
 -- Required scripts
 local parts      = require("lib.GroupIndex")(models)
-local waterTicks = require("scripts.WaterTicks")
-local ground     = require("lib.GroundCheck")
-local effects    = require("scripts.SyncedVariables")
 local average       = require("lib.Average")
+local waterTicks    = require("scripts.WaterTicks")
+local ground        = require("lib.GroundCheck")
+local effects       = require("scripts.SyncedVariables")
 
 -- Config setup
 config:name("LaprasTaur")
