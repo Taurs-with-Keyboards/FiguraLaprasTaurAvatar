@@ -3,6 +3,7 @@ local parts      = require("lib.GroupIndex")(models)
 local waterTicks = require("scripts.WaterTicks")
 local ground     = require("lib.GroundCheck")
 local effects    = require("scripts.SyncedVariables")
+local average       = require("lib.Average")
 
 -- Config setup
 config:name("LaprasTaur")
@@ -15,22 +16,11 @@ if canDry    == nil then canDry = true end
 -- Variables setup
 local wasInAir = false
 
--- Get the average of a vector
-local function average(vec)
-	
-	local sum = 0
-	for _, v in ipairs{vec:unpack()} do
-		sum = sum + v
-	end
-	return sum / #vec
-	
-end
-
 function events.TICK()
 	
 	-- Play sound if conditions are met
 	if fallSound and wasInAir and ground() and not player:getVehicle() and not player:isInWater() and not effects.cF then
-		if average(parts.Pokeball:getScale()) > 0.5 then
+		if average(pokeballParts.Pokeball:getScale():unpack()) >= 0.5 then
 			sounds:playSound("cobblemon:poke_ball.hit", player:getPos(), 0.25)
 		else
 			local vel    = math.abs(-player:getVelocity().y + 1)
