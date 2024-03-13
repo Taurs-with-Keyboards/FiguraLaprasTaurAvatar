@@ -1,6 +1,7 @@
 -- Required scripts
 local parts = require("lib.GroupIndex")(models)
 local pose  = require("scripts.Posing")
+local itemCheck    = require("lib.ItemCheck")
 local color        = require("scripts.ColorProperties")
 
 -- Config setup
@@ -134,8 +135,8 @@ local t = {}
 
 -- Action wheel
 t.movePage = action_wheel:newAction("ArmMovement")
-	:item("minecraft:red_dye")
-	:toggleItem("minecraft:rabbit_foot")
+	:item(itemCheck("red_dye"))
+	:toggleItem(itemCheck("rabbit_foot"))
 	:onToggle(pings.setAvatarArmMove)
 	:toggled(armMove)
 

@@ -2,6 +2,7 @@
 local parts   = require("lib.GroupIndex")(models)
 local effects = require("scripts.SyncedVariables")
 local origins = require("lib.OriginsAPI")
+local itemCheck    = require("lib.ItemCheck")
 local color        = require("scripts.ColorProperties")
 
 -- Config setup
@@ -178,26 +179,26 @@ local t = {}
 
 -- Action wheels
 t.togglePage = action_wheel:newAction("GlowingEyes")
-	:item("minecraft:ender_pearl")
-	:toggleItem("minecraft:ender_eye")
+	:item(itemCheck("ender_pearl"))
+	:toggleItem(itemCheck("ender_eye"))
 	:onToggle(pings.setEyesToggle)
 	:toggled(toggle)
 
 t.powerPage = action_wheel:newAction("GlowingEyesOrigins")
-	:item("minecraft:cod")
-	:toggleItem("minecraft:tropical_fish")
+	:item(itemCheck("cod"))
+	:toggleItem(itemCheck("tropical_fish"))
 	:onToggle(pings.setEyesPower)
 	:toggled(power)
 
 t.nightVisionPage = action_wheel:newAction("GlowingEyesNightVision")
-	:item("minecraft:glass_bottle")
-	:toggleItem("minecraft:potion{\"CustomPotionColor\":" .. tostring(0x96C54F) .. "}")
+	:item(itemCheck("glass_bottle"))
+	:toggleItem(itemCheck("potion{\"CustomPotionColor\":" .. tostring(0x96C54F) .. "}"))
 	:onToggle(pings.setEyesNightVision)
 	:toggled(nightVision)
 
 t.waterPage = action_wheel:newAction("GlowingEyesWater")
-	:item("minecraft:bucket")
-	:toggleItem("minecraft:water_bucket")
+	:item(itemCheck("bucket"))
+	:toggleItem(itemCheck("water_bucket"))
 	:onToggle(pings.setEyesWater)
 	:toggled(water)
 

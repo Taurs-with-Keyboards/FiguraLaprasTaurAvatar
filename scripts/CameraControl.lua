@@ -1,6 +1,7 @@
 -- Required scripts
 local parts = require("lib.GroupIndex")(models)
 local pose  = require("scripts.Posing")
+local itemCheck    = require("lib.ItemCheck")
 local color        = require("scripts.ColorProperties")
 
 -- Config setup
@@ -104,14 +105,14 @@ local t = {}
 
 -- Action wheel pages
 t.posPage = action_wheel:newAction("CameraPos")
-	:item("minecraft:skeleton_skull")
-	:toggleItem(('minecraft:player_head{"SkullOwner":"%s"}'):format(avatar:getEntityName()))
+	:item(itemCheck("skeleton_skull"))
+	:toggleItem(itemCheck("player_head{'SkullOwner':'"..avatar:getEntityName().."'}"))
 	:onToggle(pings.setCameraPos)
 	:toggled(camPos)
 
 t.eyePage = action_wheel:newAction("OffsetEye")
-	:item("minecraft:ender_pearl")
-	:toggleItem("minecraft:ender_eye")
+	:item(itemCheck("ender_pearl"))
+	:toggleItem(itemCheck("ender_eye"))
 	:onToggle(pings.setCameraEye)
 
 -- Update action page info

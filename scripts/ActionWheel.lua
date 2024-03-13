@@ -1,4 +1,5 @@
 -- Required scripts
+local itemCheck = require("lib.ItemCheck")
 local avatar    = require("scripts.Player")
 local armor     = require("scripts.Armor")
 local camera    = require("scripts.CameraControl")
@@ -39,6 +40,14 @@ local function ascend()
 	
 end
 
+		:item(itemCheck("armor_stand"))
+		:item(itemCheck("cobblemon:water_stone", "turtle_egg"))
+		:item(itemCheck("jukebox"))
+		:item(itemCheck("iron_chestplate"))
+		:item(itemCheck("redstone"))
+		:item(itemCheck("pufferfish"))
+		:item(itemCheck("magma_block"))
+		:item(itemCheck("ender_eye"))
 -- Update action page info
 function events.TICK()
 	
@@ -80,7 +89,7 @@ end
 local backPage = action_wheel:newAction()
 	:title("§c§lGo Back?")
 	:hoverColor(vectors.hexToRGB("FF5555"))
-	:item("minecraft:barrier")
+	:item(itemCheck("barrier"))
 	:onLeftClick(function() ascend() end)
 
 -- Set starting page to main page
@@ -90,17 +99,14 @@ action_wheel:setPage(mainPage)
 mainPage
 	:action( -1,
 		action_wheel:newAction()
-			:item("minecraft:armor_stand")
 			:onLeftClick(function() descend(avatarPage) end))
 	
 	:action( -1,
 		action_wheel:newAction()
-			:item("minecraft:turtle_helmet")
 			:onLeftClick(function() descend(laprasPage) end))
 	
 	:action( -1,
 		action_wheel:newAction()
-			:item("minecraft:jukebox")
 			:onLeftClick(function() descend(animsPage) end))
 	
 	:action( -1, pokeball.togglePage)
@@ -111,11 +117,9 @@ avatarPage
 	:action( -1, avatar.modelPage)
 	:action( -1,
 		action_wheel:newAction()
-			:item("minecraft:iron_chestplate")
 			:onLeftClick(function() descend(armorPage) end))
 	:action( -1,
 		action_wheel:newAction()
-			:item("minecraft:redstone")
 			:onLeftClick(function() descend(cameraPage) end))
 	:action( -1, backPage)
 
@@ -139,15 +143,12 @@ cameraPage
 laprasPage
 	:action( -1,
 		action_wheel:newAction()
-			:item("minecraft:pufferfish")
 			:onLeftClick(function() descend(fallPage) end))
 	:action( -1,
 		action_wheel:newAction()
-			:item("minecraft:magma_block")
 			:onLeftClick(function() descend(whirlpoolPage) end))
 	:action( -1,
 		action_wheel:newAction()
-			:item("minecraft:ender_eye")
 			:onLeftClick(function() descend(eyesPage) end))
 	:action( -1, backPage)
 	:action( -1, color.shinyPage)

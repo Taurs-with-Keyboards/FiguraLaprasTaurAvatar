@@ -1,6 +1,7 @@
 -- Required scripts
 local effects = require("scripts.SyncedVariables")
 local pose    = require("scripts.Posing")
+local itemCheck = require("lib.ItemCheck")
 local color     = require("scripts.ColorProperties")
 
 -- Config setup
@@ -80,14 +81,14 @@ local t = {}
 
 -- Action wheel pages
 t.bubblePage = action_wheel:newAction("Whirlpool")
-	:item("minecraft:soul_sand")
-	:toggleItem("magma_block")
+	:item(itemCheck("soul_sand"))
+	:toggleItem(itemCheck("magma_block"))
 	:onToggle(pings.setWhirlpoolBubbles)
 	:toggled(bubbles)
 
 t.dolphinsGracePage = action_wheel:newAction("WhirlpoolDolphinsGrace")
-	:item("minecraft:egg")
-	:toggleItem("minecraft:dolphin_spawn_egg")
+	:item(itemCheck("egg"))
+	:toggleItem(itemCheck("dolphin_spawn_egg"))
 	:onToggle(pings.setWhirlpoolDolphinsGrace)
 	:toggled(dolphinsGrace)
 

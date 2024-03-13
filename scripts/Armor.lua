@@ -1,6 +1,7 @@
 -- Required scripts
 local parts     = require("lib.GroupIndex")(models)
 local kattArmor = require("lib.KattArmor")()
+local itemCheck    = require("lib.ItemCheck")
 local color        = require("scripts.ColorProperties")
 
 -- Setting the leggings to layer 1
@@ -392,33 +393,33 @@ local t = {}
 
 -- Action wheel pages
 t.allPage = action_wheel:newAction("AllArmorToggle")
-	:item("minecraft:armor_stand")
-	:toggleItem("minecraft:netherite_chestplate")
+	:item(itemCheck("armor_stand"))
+	:toggleItem(itemCheck("netherite_chestplate"))
 	:onToggle(pings.setArmorAll)
 
 t.helmetPage = action_wheel:newAction("HelmetArmorToggle")
-	:item("minecraft:iron_helmet")
-	:toggleItem("minecraft:diamond_helmet")
+	:item(itemCheck("iron_helmet"))
+	:toggleItem(itemCheck("diamond_helmet"))
 	:onToggle(pings.setArmorHelmet)
 
 t.chestplatePage = action_wheel:newAction("ChestplateArmorToggle")
-	:item("minecraft:iron_chestplate")
-	:toggleItem("minecraft:diamond_chestplate")
+	:item(itemCheck("iron_chestplate"))
+	:toggleItem(itemCheck("diamond_chestplate"))
 	:onToggle(pings.setArmorChestplate)
 
 t.leggingsPage = action_wheel:newAction("LeggingsArmorToggle")
-	:item("minecraft:iron_leggings")
-	:toggleItem("minecraft:diamond_leggings")
+	:item(itemCheck("iron_leggings"))
+	:toggleItem(itemCheck("diamond_leggings"))
 	:onToggle(pings.setArmorLeggings)
 
 t.bootsPage = action_wheel:newAction("BootsArmorToggle")
-	:item("minecraft:iron_boots")
-	:toggleItem("minecraft:diamond_boots")
+	:item(itemCheck("iron_boots"))
+	:toggleItem(itemCheck("diamond_boots"))
 	:onToggle(pings.setArmorBoots)
 
 t.shellPage = action_wheel:newAction("ShellArmorToggle")
-	:item("minecraft:scute")
-	:toggleItem("minecraft:turtle_helmet")
+	:item(itemCheck("scute"))
+	:toggleItem(itemCheck("turtle_helmet"))
 	:onToggle(pings.setArmorShell)
 
 -- Update action page info

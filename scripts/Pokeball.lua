@@ -1,6 +1,7 @@
 -- Required scripts
 local parts  = require("lib.GroupIndex")(models)
 local squapi = require("lib.SquAPI")
+local itemCheck     = require("lib.ItemCheck")
 local color         = require("scripts.ColorProperties")
 
 -- Animations setup
@@ -257,7 +258,7 @@ local t = {}
 
 -- Return action wheel page
 t.togglePage = action_wheel:newAction("Pokeball")
-	:texture(textures["textures.misc.pokeballIcon"])
+	:item(itemCheck("cobblemon:dive_ball", "ender_pearl"))
 	:onToggle(pings.setPokeball)
 	:toggled(toggle)
 

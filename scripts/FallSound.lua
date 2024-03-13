@@ -2,6 +2,7 @@
 local parts      = require("lib.GroupIndex")(models)
 local average       = require("lib.Average")
 local ground        = require("lib.GroundCheck")
+local itemCheck     = require("lib.ItemCheck")
 local effects       = require("scripts.SyncedVariables")
 local color         = require("scripts.ColorProperties")
 
@@ -112,14 +113,14 @@ local t = {}
 
 -- Action wheel pages
 t.soundPage = action_wheel:newAction("FallSound")
-	:item("minecraft:sponge")
-	:toggleItem("minecraft:wet_sponge")
+	:item(itemCheck("sponge"))
+	:toggleItem(itemCheck("wet_sponge"))
 	:onToggle(pings.setFallSoundToggle)
 	:toggled(fallSound)
 
 t.dryPage = action_wheel:newAction("FallSoundDrying")
-	:item("minecraft:water_bucket")
-	:toggleItem("minecraft:leather")
+	:item(itemCheck("water_bucket"))
+	:toggleItem(itemCheck("leather"))
 	:onToggle(pings.setFallSoundDry)
 	:onScroll(setDryTimer)
 	:onRightClick(function() dryTimer = 400 config:save("FallSoundDryTimer", dryTimer) end)

@@ -1,5 +1,6 @@
 -- Required scripts
 local parts = require("lib.GroupIndex")(models)
+local itemCheck     = require("lib.ItemCheck")
 local color         = require("scripts.ColorProperties")
 
 -- Glowing outline
@@ -206,13 +207,13 @@ local t = {}
 
 -- Action wheel pages
 t.vanillaSkinPage = action_wheel:newAction("VanillaSkin")
-	:item('minecraft:player_head{"SkullOwner":"'..avatar:getEntityName()..'"}')
+	:item(itemCheck("player_head{'SkullOwner':'"..avatar:getEntityName().."'}"))
 	:onToggle(pings.setAvatarVanillaSkin)
 	:toggled(vanillaSkin)
 
 t.modelPage = action_wheel:newAction("ModelShape")
-	:item('minecraft:player_head')
-	:toggleItem('minecraft:player_head{"SkullOwner":"MHF_Alex"}')
+	:item(itemCheck("player_head"))
+	:toggleItem(itemCheck("player_head{'SkullOwner':'MHF_Alex'}"))
 	:onToggle(pings.setAvatarModelType)
 	:toggled(slim)
 
