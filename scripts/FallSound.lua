@@ -1,7 +1,6 @@
 -- Required scripts
 local parts      = require("lib.GroupIndex")(models)
 local average       = require("lib.Average")
-local waterTicks    = require("scripts.WaterTicks")
 local ground        = require("lib.GroundCheck")
 local effects       = require("scripts.SyncedVariables")
 
@@ -15,8 +14,23 @@ if canDry    == nil then canDry = true end
 
 -- Variables setup
 local wasInAir = false
+local wetTicks = 0
+
+-- Check if a splash potion is broken near the player
+function events.ON_PLAY_SOUND(id, pos, vol, pitch, loop, category, path)
+	
+	if player:isLoaded() then
+		local atPos    = pos < player:getPos() + 3 and pos > player:getPos() - 3
+		local splashID = id == "minecraft:entity.splash_potion.break" or id == "minecraft:entity.lingering_potion.break"
+		wetTicks = atPos and splashID and path and 0 or wetTicks
+	end
+	
+end
 
 function events.TICK()
+	
+	-- Manipulate tick timer
+	wetTicks = not player:isWet() and wetTicks + 1 or 0
 	
 	-- Play sound if conditions are met
 	if fallSound and wasInAir and ground() and not player:getVehicle() and not player:isInWater() and not effects.cF then
@@ -24,7 +38,7 @@ function events.TICK()
 			sounds:playSound("cobblemon:poke_ball.hit", player:getPos(), 0.25)
 		else
 			local vel    = math.abs(-player:getVelocity().y + 1)
-			local dry    = canDry and (dryTimer - waterTicks.wet) / dryTimer or 1
+			local dry    = canDry and (dryTimer - wetTicks) / dryTimer or 1
 			local volume = math.clamp((vel * dry) / 2, 0, 1)
 			
 			if volume ~= 0 then

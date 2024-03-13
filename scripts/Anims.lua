@@ -1,12 +1,15 @@
 -- Required scripts
 require("lib.GSAnimBlend")
 local parts      = require("lib.GroupIndex")(models)
-local waterTicks = require("scripts.WaterTicks")
 local pose       = require("scripts.Posing")
 local ground     = require("lib.GroundCheck")
 
 -- Animations setup
 local anims = animations["models.LaprasTaur"]
+
+-- Variables setup
+local waterTicks      = 0
+local underwaterTicks = 0
 
 -- Parrot pivots
 local parrots = {
@@ -46,10 +49,14 @@ function events.TICK()
 	-- Player variables
 	local vel = player:getVelocity()
 	
+	-- Water timers
+	waterTicks      = not player:isInWater()    and waterTicks + 1      or 0
+	underwaterTicks = not player:isUnderwater() and underwaterTicks + 1 or 0
+	
 	-- Animation variables
 	local walking    = vel.xz:length() ~= 0
-	local inWater    = waterTicks.water < 20
-	local underwater = waterTicks.under < 20
+	local inWater    = waterTicks      < 20
+	local underwater = underwaterTicks < 20
 	local onGround   = ground()
 	
 	-- Store animation variables
