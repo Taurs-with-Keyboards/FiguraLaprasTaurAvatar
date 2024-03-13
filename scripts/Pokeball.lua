@@ -1,6 +1,7 @@
 -- Required scripts
 local parts  = require("lib.GroupIndex")(models)
 local squapi = require("lib.SquAPI")
+local color         = require("scripts.ColorProperties")
 
 -- Animations setup
 local anims = animations["models.Pokeball"]
@@ -256,9 +257,6 @@ local t = {}
 
 -- Return action wheel page
 t.togglePage = action_wheel:newAction("Pokeball")
-	:title("§9§lToggle Pokeball\n\n§bAuto activates/deactivates on vehicles.")
-	:hoverColor(vectors.hexToRGB("5EB7DD"))
-	:toggleColor(vectors.hexToRGB("4078B0"))
 	:texture(textures["textures.misc.pokeballIcon"])
 	:onToggle(pings.setPokeball)
 	:toggled(toggle)
@@ -266,7 +264,11 @@ t.togglePage = action_wheel:newAction("Pokeball")
 -- Update action page info
 function events.TICK()
 	
-	t.togglePage:toggled(toggle)
+	t.togglePage
+		:title(color.primary.."Toggle Pokeball\n\n"..color.secondary.."Auto activates/deactivates on vehicles.")
+		:hoverColor(color.hover)
+		:toggleColor(color.active)
+		:toggled(toggle)
 	
 end
 

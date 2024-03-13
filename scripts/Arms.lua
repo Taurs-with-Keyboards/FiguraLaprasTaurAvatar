@@ -1,6 +1,7 @@
 -- Required scripts
 local parts = require("lib.GroupIndex")(models)
 local pose  = require("scripts.Posing")
+local color        = require("scripts.ColorProperties")
 
 -- Config setup
 config:name("LaprasTaur")
@@ -133,13 +134,20 @@ local t = {}
 
 -- Action wheel
 t.movePage = action_wheel:newAction("ArmMovement")
-	:title("§9§lArm Movement Toggle\n\n§bToggles the movement swing movement of the arms.\nActions are not effected.")
-	:hoverColor(vectors.hexToRGB("5EB7DD"))
-	:toggleColor(vectors.hexToRGB("4078B0"))
 	:item("minecraft:red_dye")
 	:toggleItem("minecraft:rabbit_foot")
 	:onToggle(pings.setAvatarArmMove)
 	:toggled(armMove)
+
+-- Update action page info
+function events.TICK()
+	
+	t.movePage
+		:title(color.primary.."Arm Movement Toggle\n\n"..color.secondary.."Toggles the movement swing movement of the arms.\nActions are not effected.")
+		:hoverColor(color.hover)
+		:toggleColor(color.active)
+	
+end
 
 -- Return action wheel pages
 return t

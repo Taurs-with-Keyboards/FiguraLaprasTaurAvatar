@@ -1,6 +1,7 @@
 -- Required scripts
 local effects = require("scripts.SyncedVariables")
 local pose    = require("scripts.Posing")
+local color     = require("scripts.ColorProperties")
 
 -- Config setup
 config:name("LaprasTaur")
@@ -79,22 +80,31 @@ local t = {}
 
 -- Action wheel pages
 t.bubblePage = action_wheel:newAction("Whirlpool")
-	:title("§9§lWhirlpool Effect Toggle\n\n§bToggles the whirlpool created while swimming.")
-	:hoverColor(vectors.hexToRGB("5EB7DD"))
-	:toggleColor(vectors.hexToRGB("4078B0"))
 	:item("minecraft:soul_sand")
 	:toggleItem("magma_block")
 	:onToggle(pings.setWhirlpoolBubbles)
 	:toggled(bubbles)
 
 t.dolphinsGracePage = action_wheel:newAction("WhirlpoolDolphinsGrace")
-	:title("§9§lDolphin's Grace Toggle\n\n§bToggles the whirlpool based on having the Dolphin's Grace Effect.")
-	:hoverColor(vectors.hexToRGB("5EB7DD"))
-	:toggleColor(vectors.hexToRGB("4078B0"))
 	:item("minecraft:egg")
 	:toggleItem("minecraft:dolphin_spawn_egg")
 	:onToggle(pings.setWhirlpoolDolphinsGrace)
 	:toggled(dolphinsGrace)
+
+-- Update action page info
+function events.TICK()
+	
+	t.bubblePage
+		:title(color.primary.."Whirlpool Effect Toggle\n\n"..color.secondary.."Toggles the whirlpool created while swimming.")
+		:hoverColor(color.hover)
+		:toggleColor(color.active)
+	
+	t.dolphinsGracePage
+		:title(color.primary.."Dolphin's Grace Toggle\n\n"..color.secondary.."Toggles the whirlpool based on having the Dolphin's Grace Effect.")
+		:hoverColor(color.hover)
+		:toggleColor(color.active)
+	
+end
 
 -- Return action wheel pages
 return t

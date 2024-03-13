@@ -3,6 +3,7 @@ local parts      = require("lib.GroupIndex")(models)
 local average       = require("lib.Average")
 local ground        = require("lib.GroundCheck")
 local effects       = require("scripts.SyncedVariables")
+local color         = require("scripts.ColorProperties")
 
 -- Config setup
 config:name("LaprasTaur")
@@ -111,17 +112,12 @@ local t = {}
 
 -- Action wheel pages
 t.soundPage = action_wheel:newAction("FallSound")
-	:title("§9§lToggle Falling Sound\n\n§bToggles floping sound effects when landing on the ground.\nWhen inside your pokeball, a different sound plays.")
-	:hoverColor(vectors.hexToRGB("5EB7DD"))
-	:toggleColor(vectors.hexToRGB("4078B0"))
 	:item("minecraft:sponge")
 	:toggleItem("minecraft:wet_sponge")
 	:onToggle(pings.setFallSoundToggle)
 	:toggled(fallSound)
 
 t.dryPage = action_wheel:newAction("FallSoundDrying")
-	:hoverColor(vectors.hexToRGB("5EB7DD"))
-	:toggleColor(vectors.hexToRGB("4078B0"))
 	:item("minecraft:water_bucket")
 	:toggleItem("minecraft:leather")
 	:onToggle(pings.setFallSoundDry)
@@ -129,13 +125,20 @@ t.dryPage = action_wheel:newAction("FallSoundDrying")
 	:onRightClick(function() dryTimer = 400 config:save("FallSoundDryTimer", dryTimer) end)
 	:toggled(canDry)
 
--- Update dry page info
+-- Update action page info
 function events.TICK()
 	
+	t.soundPage
+		:title(color.primary.."Toggle Falling Sound\n\n"..color.secondary.."Toggles floping sound effects when landing on the ground.\nWhen inside your pokeball, a different sound plays.")
+		:hoverColor(color.hover)
+		:toggleColor(color.active)
+	
 	t.dryPage
-		:title("§9§lToggle Drying/Timer\n\n§3Current drying timer: "..
-		(canDry and ("§b§l"..(dryTimer / 20).." §3Seconds") or "§bNone")..
-		"\n\n§bToggles the gradual drying of your tail until your legs form again.\n\nScrolling up adds time, Scrolling down subtracts time.\nRight click resets timer to 20 seconds.")
+		:title(color.primary.."Toggle Drying/Timer\n\n"..color.secondary.."Toggles the ability to dry, and how long it takes to dry off.\n\n"
+		.."§lCurrent drying timer: §a"..(canDry and ((dryTimer / 20).." Seconds") or "None")
+		..color.secondary.."\n\nScrolling up adds time, Scrolling down subtracts time.\nRight click resets timer to 20 seconds.")
+		:hoverColor(color.hover)
+		:toggleColor(color.active)
 	
 end
 

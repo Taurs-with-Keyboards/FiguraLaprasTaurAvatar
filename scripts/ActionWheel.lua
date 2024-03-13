@@ -2,6 +2,7 @@
 local avatar    = require("scripts.Player")
 local armor     = require("scripts.Armor")
 local camera    = require("scripts.CameraControl")
+local color     = require("scripts.ColorProperties")
 local fall      = require("scripts.FallSound")
 local whirlpool = require("scripts.WhirlpoolEffect")
 local eyes      = require("scripts.GlowingEyes")
@@ -38,6 +39,43 @@ local function ascend()
 	
 end
 
+-- Update action page info
+function events.TICK()
+	
+	pageActions.avatar
+		:title(color.primary.."Avatar Settings")
+		:hoverColor(color.hover)
+	
+	pageActions.pokemon
+		:title(color.primary.."Pokemon Settings")
+		:hoverColor(color.hover)
+	
+	pageActions.anims
+		:title(color.primary.."Animations")
+		:hoverColor(color.hover)
+	
+	pageActions.armor
+		:title(color.primary.."Armor Settings")
+		:hoverColor(color.hover)
+	
+	pageActions.camera
+		:title(color.primary.."Camera Settings")
+		:hoverColor(color.hover)
+	
+	pageActions.fall
+		:title(color.primary.."Fall Sound Settings")
+		:hoverColor(color.hover)
+	
+	pageActions.whirlpool
+		:title(color.primary.."Whirlpool Settings")
+		:hoverColor(color.hover)
+	
+	pageActions.eyes
+		:title(color.primary.."Glowing Eyes Settings")
+		:hoverColor(color.hover)
+	
+end
+
 -- Action back to previous page
 local backPage = action_wheel:newAction()
 	:title("§c§lGo Back?")
@@ -52,22 +90,16 @@ action_wheel:setPage(mainPage)
 mainPage
 	:action( -1,
 		action_wheel:newAction()
-			:title("§9§lAvatar Settings")
-			:hoverColor(vectors.hexToRGB("5EB7DD"))
 			:item("minecraft:armor_stand")
 			:onLeftClick(function() descend(avatarPage) end))
 	
 	:action( -1,
 		action_wheel:newAction()
-			:title("§9§lLapras Settings")
-			:hoverColor(vectors.hexToRGB("5EB7DD"))
 			:item("minecraft:turtle_helmet")
 			:onLeftClick(function() descend(laprasPage) end))
 	
 	:action( -1,
 		action_wheel:newAction()
-			:title("§9§lAnimations")
-			:hoverColor(vectors.hexToRGB("5EB7DD"))
 			:item("minecraft:jukebox")
 			:onLeftClick(function() descend(animsPage) end))
 	
@@ -79,14 +111,10 @@ avatarPage
 	:action( -1, avatar.modelPage)
 	:action( -1,
 		action_wheel:newAction()
-			:title("§9§lArmor Settings")
-			:hoverColor(vectors.hexToRGB("5EB7DD"))
 			:item("minecraft:iron_chestplate")
 			:onLeftClick(function() descend(armorPage) end))
 	:action( -1,
 		action_wheel:newAction()
-			:title("§9§lCamera Settings")
-			:hoverColor(vectors.hexToRGB("5EB7DD"))
 			:item("minecraft:redstone")
 			:onLeftClick(function() descend(cameraPage) end))
 	:action( -1, backPage)
@@ -111,24 +139,18 @@ cameraPage
 laprasPage
 	:action( -1,
 		action_wheel:newAction()
-			:title("§9§lFall Sound Settings")
-			:hoverColor(vectors.hexToRGB("5EB7DD"))
 			:item("minecraft:pufferfish")
 			:onLeftClick(function() descend(fallPage) end))
 	:action( -1,
 		action_wheel:newAction()
-			:title("§9§lWhirlpool Settings")
-			:hoverColor(vectors.hexToRGB("5EB7DD"))
 			:item("minecraft:magma_block")
 			:onLeftClick(function() descend(whirlpoolPage) end))
 	:action( -1,
 		action_wheel:newAction()
-			:title("§9§lGlowing Eyes Settings")
-			:hoverColor(vectors.hexToRGB("5EB7DD"))
 			:item("minecraft:ender_eye")
 			:onLeftClick(function() descend(eyesPage) end))
-	:action( -1, avatar.shinyPage)
 	:action( -1, backPage)
+	:action( -1, color.shinyPage)
 
 -- Flop sound actions
 fallPage
