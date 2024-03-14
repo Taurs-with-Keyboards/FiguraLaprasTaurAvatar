@@ -261,7 +261,6 @@ local t = {}
 t.togglePage = action_wheel:newAction()
 	:item(itemCheck("cobblemon:dive_ball", "ender_pearl"))
 	:onToggle(pings.setPokeball)
-	:toggled(toggle)
 
 -- Update action page info
 function events.TICK()

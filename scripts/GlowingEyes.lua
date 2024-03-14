@@ -182,7 +182,6 @@ t.togglePage = action_wheel:newAction()
 	:item(itemCheck("ender_pearl"))
 	:toggleItem(itemCheck("ender_eye"))
 	:onToggle(pings.setEyesToggle)
-	:toggled(toggle)
 
 t.powerPage = action_wheel:newAction()
 	:item(itemCheck("cod"))
