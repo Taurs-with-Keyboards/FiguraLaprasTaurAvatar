@@ -1,6 +1,6 @@
 -- Required scripts
-local parts = require("lib.GroupIndex")(models)
 local pose  = require("scripts.Posing")
+local pokemonParts = require("lib.GroupIndex")(models.models.LaprasTaur)
 local itemCheck    = require("lib.ItemCheck")
 local color        = require("scripts.ColorProperties")
 
@@ -75,7 +75,7 @@ function events.RENDER(delta, context)
 	-- Override arm movements
 	local idleTimer  = world.getTime(delta)
 	local idleRot    = vec(math.deg(math.sin(idleTimer * 0.067) * 0.05), 0, math.deg(math.cos(idleTimer * 0.09) * 0.05 + 0.05))
-	local bodyOffset = (vanilla_model.BODY:getOriginRot() * 0.75) + parts.Body:getTrueRot()
+	local bodyOffset = (vanilla_model.BODY:getOriginRot() * 0.75) + pokemonParts.Body:getTrueRot()
 	
 	-- Render lerp
 	leftArm.currentPos  = math.lerp(leftArm.current,  leftArm.nextTick,  delta)
@@ -85,15 +85,15 @@ function events.RENDER(delta, context)
 	local firstPerson = context == "FIRST_PERSON"
 	
 	-- Apply
-	parts.LeftArm:rot((-((vanilla_model.LEFT_ARM:getOriginRot() + 180) % 360 - 180) + -idleRot + bodyOffset) * leftArm.currentPos)
+	pokemonParts.LeftArm:rot((-((vanilla_model.LEFT_ARM:getOriginRot() + 180) % 360 - 180) + -idleRot + bodyOffset) * leftArm.currentPos)
 		:visible(not firstPerson)
 	
-	parts.LeftArmFP:visible(firstPerson)
+	pokemonParts.LeftArmFP:visible(firstPerson)
 	
-	parts.RightArm:rot((-((vanilla_model.RIGHT_ARM:getOriginRot() + 180) % 360 - 180) + idleRot + bodyOffset) * rightArm.currentPos)
+	pokemonParts.RightArm:rot((-((vanilla_model.RIGHT_ARM:getOriginRot() + 180) % 360 - 180) + idleRot + bodyOffset) * rightArm.currentPos)
 		:visible(not firstPerson)
 	
-	parts.RightArmFP:visible(firstPerson)
+	pokemonParts.RightArmFP:visible(firstPerson)
 	
 end
 

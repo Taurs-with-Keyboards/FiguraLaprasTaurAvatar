@@ -1,6 +1,7 @@
 -- Required scripts
-local parts  = require("lib.GroupIndex")(models)
-local squapi = require("lib.SquAPI")
+local pokemonParts  = require("lib.GroupIndex")(models.models.LaprasTaur)
+local pokeballParts = require("lib.GroupIndex")(models.models.Pokeball)
+local squapi        = require("lib.SquAPI")
 local itemCheck     = require("lib.ItemCheck")
 local color         = require("scripts.ColorProperties")
 
@@ -111,12 +112,12 @@ function events.RENDER(delta, context)
 	local firstPerson = context == "FIRST_PERSON"
 	local menus       = context == "PAPERDOLL" or context == "MINECRAFT_GUI" or context == "FIGURA_GUI"
 	
-	parts.LaprasTaur
+	pokemonParts.LaprasTaur
 		:pos(pos.currentPos)
 		:scale(scale.currentPos)
 		:color(not firstPerson and vec(1, scale.currentPos, scale.currentPos) or 1)
 	
-	parts.Pokeball
+	pokeballParts.Pokeball
 		:pos(pos.currentPos)
 		:rot(menus and 0 or vec(0, player:getBodyYaw(delta) + staticYaw, 0))
 		:scale(math.map(scale.currentPos, 0, 1, vType == "minecraft:player" and 0.5 or 1, 0))
@@ -242,7 +243,7 @@ squapi.pokeball = squapi.bounceObject:new()
 
 function events.RENDER(delta, context)
 	
-	parts.Ball:offsetRot(squapi.pokeball.pos)
+	pokeballParts.Ball:offsetRot(squapi.pokeball.pos)
 	
 	local target = vec(leanBack - leanForward, 0, leanLeft - leanRight)
 	

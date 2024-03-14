@@ -1,7 +1,7 @@
 -- Required scripts
-local parts   = require("lib.GroupIndex")(models)
 local effects = require("scripts.SyncedVariables")
 local origins = require("lib.OriginsAPI")
+local pokemonParts = require("lib.GroupIndex")(models.models.LaprasTaur)
 local itemCheck    = require("lib.ItemCheck")
 local color        = require("scripts.ColorProperties")
 
@@ -75,7 +75,7 @@ function events.RENDER(delta, context)
 	eyes.currentPos = math.lerp(eyes.current, eyes.nextTick, delta)
 	
 	-- Apply
-	parts.Head.Eyes
+	pokemonParts.Head.Eyes
 		:secondaryColor(eyes.currentPos)
 		:secondaryRenderType(context == "RENDER" and "EMISSIVE" or "EYES")
 	

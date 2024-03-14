@@ -1,8 +1,8 @@
 -- Required scripts
 require("lib.GSAnimBlend")
-local parts      = require("lib.GroupIndex")(models)
 local pose       = require("scripts.Posing")
 local ground     = require("lib.GroundCheck")
+local pokemonParts = require("lib.GroupIndex")(models.models.LaprasTaur)
 
 -- Animations setup
 local anims = animations["models.LaprasTaur"]
@@ -14,8 +14,8 @@ local underwaterTicks = 0
 -- Parrot pivots
 local parrots = {
 	
-	parts.LeftParrotPivot,
-	parts.RightParrotPivot
+	pokemonParts.LeftParrotPivot,
+	pokemonParts.RightParrotPivot
 	
 }
 
@@ -165,7 +165,7 @@ function events.RENDER(delta, context)
 	
 	local rot = vanilla_model.HEAD:getOriginRot()
 	rot.x = math.clamp(rot.x, -90, 30)
-	parts.Spyglass:rot(rot)
+	pokemonParts.Spyglass:rot(rot)
 		:pos(pose.crouch and vec(0, -4, 0) or nil)
 	
 end

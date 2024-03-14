@@ -1,5 +1,6 @@
 -- Required scripts
-local parts = require("lib.GroupIndex")(models)
+local pokemonParts  = require("lib.GroupIndex")(models.models.LaprasTaur)
+local pokeballParts = require("lib.GroupIndex")(models.models.Pokeball)
 local itemCheck     = require("lib.ItemCheck")
 local color         = require("scripts.ColorProperties")
 
@@ -13,33 +14,33 @@ local slim        = config:load("AvatarSlim") or false
 if vanillaSkin == nil then vanillaSkin = true end
 
 -- Set skull and portrait groups to visible (incase disabled in blockbench)
-parts.Skull   :visible(true)
-parts.Portrait:visible(true)
+pokemonParts.Skull   :visible(true)
+pokemonParts.Portrait:visible(true)
 
 -- All vanilla skin parts
 local skin = {
 	
-	parts.Head.Head,
-	parts.Head.Layer,
+	pokemonParts.Head.Head,
+	pokemonParts.Head.Layer,
 	
-	parts.Body.Body,
-	parts.Body.Layer,
+	pokemonParts.Body.Body,
+	pokemonParts.Body.Layer,
 	
-	parts.leftArmDefault,
-	parts.leftArmSlim,
-	parts.leftArmDefaultFP,
-	parts.leftArmSlimFP,
+	pokemonParts.leftArmDefault,
+	pokemonParts.leftArmSlim,
+	pokemonParts.leftArmDefaultFP,
+	pokemonParts.leftArmSlimFP,
 	
-	parts.rightArmDefault,
-	parts.rightArmSlim,
-	parts.rightArmDefaultFP,
-	parts.rightArmSlimFP,
+	pokemonParts.rightArmDefault,
+	pokemonParts.rightArmSlim,
+	pokemonParts.rightArmDefaultFP,
+	pokemonParts.rightArmSlimFP,
 	
-	parts.Portrait.Head,
-	parts.Portrait.Layer,
+	pokemonParts.Portrait.Head,
+	pokemonParts.Portrait.Layer,
 	
-	parts.Skull.Head,
-	parts.Skull.Layer
+	pokemonParts.Skull.Head,
+	pokemonParts.Skull.Layer
 	
 }
 
@@ -47,43 +48,43 @@ local skin = {
 local layer = {
 	
 	HAT = {
-		parts.Head.Layer
+		pokemonParts.Head.Layer
 	},
 	JACKET = {
-		parts.Body.Layer,
-		parts.Front.Layer
+		pokemonParts.Body.Layer,
+		pokemonParts.Neck.Layer
 	},
 	LEFT_SLEEVE = {
-		parts.leftArmDefault.Layer,
-		parts.leftArmSlim.Layer,
-		parts.leftArmDefaultFP.Layer,
-		parts.leftArmSlimFP.Layer
+		pokemonParts.leftArmDefault.Layer,
+		pokemonParts.leftArmSlim.Layer,
+		pokemonParts.leftArmDefaultFP.Layer,
+		pokemonParts.leftArmSlimFP.Layer
 	},
 	RIGHT_SLEEVE = {
-		parts.rightArmDefault.Layer,
-		parts.rightArmSlim.Layer,
-		parts.rightArmDefaultFP.Layer,
-		parts.rightArmSlimFP.Layer
+		pokemonParts.rightArmDefault.Layer,
+		pokemonParts.rightArmSlim.Layer,
+		pokemonParts.rightArmDefaultFP.Layer,
+		pokemonParts.rightArmSlimFP.Layer
 	},
 	LEFT_PANTS_LEG = {
-		parts.FrontLeftFlipper.Layer,
-		parts.FrontLeftFlipperTip.Layer,
-		parts.BackLeftFlipper.Layer,
-		parts.BackLeftFlipperTip.Layer
+		pokemonParts.FrontLeftFlipper.Layer,
+		pokemonParts.FrontLeftFlipperTip.Layer,
+		pokemonParts.BackLeftFlipper.Layer,
+		pokemonParts.BackLeftFlipperTip.Layer
 	},
 	RIGHT_PANTS_LEG = {
-		parts.FrontRightFlipper.Layer,
-		parts.FrontRightFlipperTip.Layer,
-		parts.BackRightFlipper.Layer,
-		parts.BackRightFlipperTip.Layer
+		pokemonParts.FrontRightFlipper.Layer,
+		pokemonParts.FrontRightFlipperTip.Layer,
+		pokemonParts.BackRightFlipper.Layer,
+		pokemonParts.BackRightFlipperTip.Layer
 	},
 	CAPE = {
-		parts.Cape
+		pokemonParts.Cape
 	},
 	LOWER_BODY = {
-		parts.Main.Layer,
-		parts.Shell.Layer,
-		parts.SpikesLayer
+		pokemonParts.Main.Layer,
+		pokemonParts.Shell.Layer,
+		pokemonParts.SpikesLayer
 	},
 }
 
@@ -101,15 +102,15 @@ function events.TICK()
 	-- Model shape
 	local slimShape = (vanillaSkin and vanillaAvatarType == "SLIM") or (slim and not vanillaSkin)
 	
-	parts.leftArmDefault:visible(not slimShape)
-	parts.rightArmDefault:visible(not slimShape)
-	parts.leftArmDefaultFP:visible(not slimShape)
-	parts.rightArmDefaultFP:visible(not slimShape)
+	pokemonParts.leftArmDefault:visible(not slimShape)
+	pokemonParts.rightArmDefault:visible(not slimShape)
+	pokemonParts.leftArmDefaultFP:visible(not slimShape)
+	pokemonParts.rightArmDefaultFP:visible(not slimShape)
 	
-	parts.leftArmSlim:visible(slimShape)
-	parts.rightArmSlim:visible(slimShape)
-	parts.leftArmSlimFP:visible(slimShape)
-	parts.rightArmSlimFP:visible(slimShape)
+	pokemonParts.leftArmSlim:visible(slimShape)
+	pokemonParts.rightArmSlim:visible(slimShape)
+	pokemonParts.leftArmSlimFP:visible(slimShape)
+	pokemonParts.rightArmSlimFP:visible(slimShape)
 	
 	-- Skin textures
 	local skinType = vanillaSkin and "SKIN" or "PRIMARY"
@@ -123,7 +124,7 @@ function events.TICK()
 		:secondaryRenderType(player:getItem(5):hasGlint() and "GLINT" or "NONE")
 	
 	-- Disables lower body if player is in spectator mode
-	parts.LowerBody:parentType(player:getGamemode() == "SPECTATOR" and "BODY" or "NONE")
+	pokemonParts.LowerBody:parentType(player:getGamemode() == "SPECTATOR" and "BODY" or "NONE")
 	
 	-- Layer toggling
 	for layerType, parts in pairs(layer) do
@@ -144,8 +145,8 @@ function events.RENDER(delta, context)
 	
 	-- Scales models to fit GUIs better
 	if context == "FIGURA_GUI" or context == "MINECRAFT_GUI" or context == "PAPERDOLL" then
-		parts.Player:scale(0.75)
-		parts.Ball:scale(0.75)
+		pokemonParts.Player:scale(0.75)
+		pokeballParts.Ball:scale(0.75)
 	end
 	
 end
@@ -153,8 +154,8 @@ end
 function events.POST_RENDER(delta, context)
 	
 	-- After scaling models to fit GUIs, immediately scale back
-	parts.Player:scale(1)
-	parts.Ball:scale(1)
+	pokemonParts.Player:scale(1)
+	pokeballParts.Ball:scale(1)
 	
 end
 

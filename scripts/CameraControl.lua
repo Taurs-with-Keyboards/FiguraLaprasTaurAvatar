@@ -1,6 +1,6 @@
 -- Required scripts
-local parts = require("lib.GroupIndex")(models)
 local pose  = require("scripts.Posing")
+local pokemonParts = require("lib.GroupIndex")(models.models.LaprasTaur)
 local itemCheck    = require("lib.ItemCheck")
 local color        = require("scripts.ColorProperties")
 
@@ -24,7 +24,7 @@ function events.RENDER(delta, context)
 		
 		-- Pos checking
 		local playerPos = player:getPos(delta)
-		trueHeadPos     = parts.Head:partToWorldMatrix():apply()
+		trueHeadPos     = pokemonParts.Head:partToWorldMatrix():apply()
 		
 		-- Pehkui scaling
 		local nbt   = player:getNbt()
@@ -53,7 +53,7 @@ function events.RENDER(delta, context)
 		
 		-- Nameplate Placement
 		nameplate.ENTITY:pivot(posOffset + vec(0, player:getBoundingBox().y + 9/16, 0))
-			:scale(parts.LaprasTaur:getScale())
+			:scale(pokemonParts.LaprasTaur:getScale())
 		
 	end
 end
