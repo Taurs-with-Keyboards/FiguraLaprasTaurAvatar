@@ -118,10 +118,8 @@ function events.TICK()
 		part:primaryTexture(skinType)
 	end
 	
-	-- Cape/Elytra textures
-	parts.Cape:primaryTexture(vanillaSkin and "CAPE" or "PRIMARY")
-	parts.Elytra:primaryTexture(vanillaSkin and player:hasCape() and (player:isSkinLayerVisible("CAPE") and "CAPE" or "ELYTRA") or "PRIMARY")
-		:secondaryRenderType(player:getItem(5):hasGlint() and "GLINT" or "NONE")
+	-- Cape textures
+	pokemonParts.Cape:primaryTexture(vanillaSkin and "CAPE" or "PRIMARY")
 	
 	-- Disables lower body if player is in spectator mode
 	pokemonParts.LowerBody:parentType(player:getGamemode() == "SPECTATOR" and "BODY" or "NONE")
