@@ -1,7 +1,7 @@
 -- Required scripts
-local effects = require("scripts.SyncedVariables")
-local pose    = require("scripts.Posing")
 local itemCheck = require("lib.ItemCheck")
+local effects   = require("scripts.SyncedVariables")
+local pose      = require("scripts.Posing")
 local color     = require("scripts.ColorProperties")
 
 -- Config setup

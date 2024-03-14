@@ -1,8 +1,8 @@
 -- Required scripts
-local effects = require("scripts.SyncedVariables")
-local origins = require("lib.OriginsAPI")
 local pokemonParts = require("lib.GroupIndex")(models.models.LaprasTaur)
+local origins      = require("lib.OriginsAPI")
 local itemCheck    = require("lib.ItemCheck")
+local effects      = require("scripts.SyncedVariables")
 local color        = require("scripts.ColorProperties")
 
 -- Config setup

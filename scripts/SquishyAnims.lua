@@ -1,8 +1,8 @@
 -- Required scripts
-local pose   = require("scripts.Posing")
-local ground = require("lib.GroundCheck")
 local pokemonParts = require("lib.GroupIndex")(models.models.LaprasTaur)
 local squapi       = require("lib.SquAPI")
+local ground       = require("lib.GroundCheck")
+local pose         = require("scripts.Posing")
 
 -- Animation setup
 local anims = animations["models.LaprasTaur"]

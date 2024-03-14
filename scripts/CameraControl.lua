@@ -1,7 +1,7 @@
 -- Required scripts
-local pose  = require("scripts.Posing")
 local pokemonParts = require("lib.GroupIndex")(models.models.LaprasTaur)
 local itemCheck    = require("lib.ItemCheck")
+local pose         = require("scripts.Posing")
 local color        = require("scripts.ColorProperties")
 
 -- Config setup

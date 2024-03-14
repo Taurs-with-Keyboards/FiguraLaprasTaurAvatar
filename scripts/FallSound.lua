@@ -1,7 +1,7 @@
 -- Required scripts
-local average       = require("lib.Average")
 local pokeballParts = require("lib.GroupIndex")(models.models.Pokeball)
 local ground        = require("lib.GroundCheck")
+local average       = require("lib.Average")
 local itemCheck     = require("lib.ItemCheck")
 local effects       = require("scripts.SyncedVariables")
 local color         = require("scripts.ColorProperties")
