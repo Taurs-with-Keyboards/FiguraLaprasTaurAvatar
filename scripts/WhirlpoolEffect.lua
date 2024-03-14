@@ -18,7 +18,7 @@ function events.TICK()
 	if pose.swim and bubbles and player:isInWater() then
 		local worldMatrix = models:partToWorldMatrix()
 		for i = 1, numBubbles do
-			particles:newParticle("minecraft:bubble",
+			particles:newParticle("bubble",
 				(worldMatrix * matrices.rotation4(0, world.getTime() * 10 - 360/numBubbles * i)):apply(25, 25)
 			)
 		end
@@ -32,7 +32,7 @@ local function setBubbles(boolean)
 	bubbles = boolean
 	config:save("WhirlpoolBubbles", bubbles)
 	if host:isHost() and player:isLoaded() and bubbles then
-		sounds:playSound("minecraft:block.bubble_column.upwards_inside", player:getPos(), 0.35)
+		sounds:playSound("block.bubble_column.upwards_inside", player:getPos(), 0.35)
 	end
 	
 end
@@ -43,7 +43,7 @@ local function setDolphinsGrace(boolean)
 	dolphinsGrace = boolean
 	config:save("WhirlpoolDolphinsGrace", dolphinsGrace)
 	if host:isHost() and player:isLoaded() and dolphinsGrace then
-		sounds:playSound("minecraft:entity.dolphin.ambient", player:getPos(), 0.35)
+		sounds:playSound("entity.dolphin.ambient", player:getPos(), 0.35)
 	end
 	
 end

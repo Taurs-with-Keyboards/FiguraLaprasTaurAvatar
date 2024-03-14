@@ -44,7 +44,7 @@ function events.TICK()
 			local volume = math.clamp((vel * dry) / 2, 0, 1)
 			
 			if volume ~= 0 then
-				sounds:playSound("minecraft:entity.puffer_fish.flop", player:getPos(), volume, math.map(volume, 1, 0, 0.35, 0.55))
+				sounds:playSound("entity.puffer_fish.flop", player:getPos(), volume, math.map(volume, 1, 0, 0.35, 0.55))
 			end
 		end
 	end
@@ -58,7 +58,7 @@ local function setToggle(boolean)
 	fallSound = boolean
 	config:save("FallSoundToggle", fallSound)
 	if host:isHost() and player:isLoaded() and fallSound then
-		sounds:playSound("minecraft:entity.puffer_fish.flop", player:getPos(), 0.35, 0.6)
+		sounds:playSound("entity.puffer_fish.flop", player:getPos(), 0.35, 0.6)
 	end
 	
 end

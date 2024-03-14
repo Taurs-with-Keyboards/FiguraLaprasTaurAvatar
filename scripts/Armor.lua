@@ -290,7 +290,7 @@ local function setAll(boolean)
 	config:save("ArmorBoots", boots)
 	config:save("ArmorShell", shell)
 	if player:isLoaded() then
-		sounds:playSound("minecraft:item.armor.equip_generic", player:getPos(), 0.5)
+		sounds:playSound("item.armor.equip_generic", player:getPos(), 0.5)
 	end
 	
 end
@@ -301,7 +301,7 @@ local function setHelmet(boolean)
 	helmet = boolean
 	config:save("ArmorHelmet", helmet)
 	if player:isLoaded() then
-		sounds:playSound("minecraft:item.armor.equip_generic", player:getPos(), 0.5)
+		sounds:playSound("item.armor.equip_generic", player:getPos(), 0.5)
 	end
 	
 end
@@ -312,7 +312,7 @@ local function setChestplate(boolean)
 	chestplate = boolean
 	config:save("ArmorChestplate", chestplate)
 	if player:isLoaded() then
-		sounds:playSound("minecraft:item.armor.equip_generic", player:getPos(), 0.5)
+		sounds:playSound("item.armor.equip_generic", player:getPos(), 0.5)
 	end
 	
 end
@@ -323,7 +323,7 @@ local function setLeggings(boolean)
 	leggings = boolean
 	config:save("ArmorLeggings", leggings)
 	if player:isLoaded() then
-		sounds:playSound("minecraft:item.armor.equip_generic", player:getPos(), 0.5)
+		sounds:playSound("item.armor.equip_generic", player:getPos(), 0.5)
 	end
 	
 end
@@ -334,7 +334,7 @@ local function setBoots(boolean)
 	boots = boolean
 	config:save("ArmorBoots", boots)
 	if player:isLoaded() then
-		sounds:playSound("minecraft:item.armor.equip_generic", player:getPos(), 0.5)
+		sounds:playSound("item.armor.equip_generic", player:getPos(), 0.5)
 	end
 	
 end
@@ -345,7 +345,7 @@ local function setShell(boolean)
 	shell = boolean
 	config:save("ArmorShell", shell)
 	if player:isLoaded() then
-		sounds:playSound("minecraft:item.armor.equip_generic", player:getPos(), 0.5)
+		sounds:playSound("item.armor.equip_generic", player:getPos(), 0.5)
 	end
 	
 end

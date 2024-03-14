@@ -98,7 +98,7 @@ local function setPower(boolean)
 	power = boolean
 	config:save("EyesPower", power)
 	if host:isHost() and player:isLoaded() and power then
-		sounds:playSound("minecraft:entity.puffer_fish.flop", player:getPos(), 0.35)
+		sounds:playSound("entity.puffer_fish.flop", player:getPos(), 0.35)
 	end
 	
 end
@@ -120,7 +120,7 @@ local function setWater(boolean)
 	water = boolean
 	config:save("EyesWater", water)
 	if host:isHost() and player:isLoaded() and water then
-		sounds:playSound("minecraft:ambient.underwater.enter", player:getPos(), 0.35)
+		sounds:playSound("ambient.underwater.enter", player:getPos(), 0.35)
 	end
 	
 end
