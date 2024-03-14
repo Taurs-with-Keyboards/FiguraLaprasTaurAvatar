@@ -112,13 +112,13 @@ setDry(canDry)
 local t = {}
 
 -- Action wheel pages
-t.soundPage = action_wheel:newAction("FallSound")
+t.soundPage = action_wheel:newAction()
 	:item(itemCheck("sponge"))
 	:toggleItem(itemCheck("wet_sponge"))
 	:onToggle(pings.setFallSoundToggle)
 	:toggled(fallSound)
 
-t.dryPage = action_wheel:newAction("FallSoundDrying")
+t.dryPage = action_wheel:newAction()
 	:item(itemCheck("water_bucket"))
 	:toggleItem(itemCheck("leather"))
 	:onToggle(pings.setFallSoundDry)

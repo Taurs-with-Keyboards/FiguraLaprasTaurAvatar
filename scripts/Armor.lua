@@ -392,32 +392,32 @@ setShell(shell)
 local t = {}
 
 -- Action wheel pages
-t.allPage = action_wheel:newAction("AllArmorToggle")
+t.allPage = action_wheel:newAction()
 	:item(itemCheck("armor_stand"))
 	:toggleItem(itemCheck("netherite_chestplate"))
 	:onToggle(pings.setArmorAll)
 
-t.helmetPage = action_wheel:newAction("HelmetArmorToggle")
+t.helmetPage = action_wheel:newAction()
 	:item(itemCheck("iron_helmet"))
 	:toggleItem(itemCheck("diamond_helmet"))
 	:onToggle(pings.setArmorHelmet)
 
-t.chestplatePage = action_wheel:newAction("ChestplateArmorToggle")
+t.chestplatePage = action_wheel:newAction()
 	:item(itemCheck("iron_chestplate"))
 	:toggleItem(itemCheck("diamond_chestplate"))
 	:onToggle(pings.setArmorChestplate)
 
-t.leggingsPage = action_wheel:newAction("LeggingsArmorToggle")
+t.leggingsPage = action_wheel:newAction()
 	:item(itemCheck("iron_leggings"))
 	:toggleItem(itemCheck("diamond_leggings"))
 	:onToggle(pings.setArmorLeggings)
 
-t.bootsPage = action_wheel:newAction("BootsArmorToggle")
+t.bootsPage = action_wheel:newAction()
 	:item(itemCheck("iron_boots"))
 	:toggleItem(itemCheck("diamond_boots"))
 	:onToggle(pings.setArmorBoots)
 
-t.shellPage = action_wheel:newAction("ShellArmorToggle")
+t.shellPage = action_wheel:newAction()
 	:item(itemCheck("scute"))
 	:toggleItem(itemCheck("turtle_helmet"))
 	:onToggle(pings.setArmorShell)

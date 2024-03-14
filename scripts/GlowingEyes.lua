@@ -177,26 +177,26 @@ setWater(water)
 -- Table setup
 local t = {}
 
--- Action wheels
-t.togglePage = action_wheel:newAction("GlowingEyes")
+-- Action wheel pages
+t.togglePage = action_wheel:newAction()
 	:item(itemCheck("ender_pearl"))
 	:toggleItem(itemCheck("ender_eye"))
 	:onToggle(pings.setEyesToggle)
 	:toggled(toggle)
 
-t.powerPage = action_wheel:newAction("GlowingEyesOrigins")
+t.powerPage = action_wheel:newAction()
 	:item(itemCheck("cod"))
 	:toggleItem(itemCheck("tropical_fish"))
 	:onToggle(pings.setEyesPower)
 	:toggled(power)
 
-t.nightVisionPage = action_wheel:newAction("GlowingEyesNightVision")
+t.nightVisionPage = action_wheel:newAction()
 	:item(itemCheck("glass_bottle"))
 	:toggleItem(itemCheck("potion{\"CustomPotionColor\":" .. tostring(0x96C54F) .. "}"))
 	:onToggle(pings.setEyesNightVision)
 	:toggled(nightVision)
 
-t.waterPage = action_wheel:newAction("GlowingEyesWater")
+t.waterPage = action_wheel:newAction()
 	:item(itemCheck("bucket"))
 	:toggleItem(itemCheck("water_bucket"))
 	:onToggle(pings.setEyesWater)

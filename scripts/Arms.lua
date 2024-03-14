@@ -133,8 +133,8 @@ setArmMove(armMove)
 -- Table setup
 local t = {}
 
--- Action wheel
-t.movePage = action_wheel:newAction("ArmMovement")
+-- Action wheel pages
+t.movePage = action_wheel:newAction()
 	:item(itemCheck("red_dye"))
 	:toggleItem(itemCheck("rabbit_foot"))
 	:onToggle(pings.setAvatarArmMove)

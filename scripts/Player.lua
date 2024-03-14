@@ -206,12 +206,12 @@ setModelType(slim)
 local t = {}
 
 -- Action wheel pages
-t.vanillaSkinPage = action_wheel:newAction("VanillaSkin")
+t.vanillaSkinPage = action_wheel:newAction()
 	:item(itemCheck("player_head{'SkullOwner':'"..avatar:getEntityName().."'}"))
 	:onToggle(pings.setAvatarVanillaSkin)
 	:toggled(vanillaSkin)
 
-t.modelPage = action_wheel:newAction("ModelShape")
+t.modelPage = action_wheel:newAction()
 	:item(itemCheck("player_head"))
 	:toggleItem(itemCheck("player_head{'SkullOwner':'MHF_Alex'}"))
 	:onToggle(pings.setAvatarModelType)

@@ -80,13 +80,13 @@ setDolphinsGrace(dolphinsGrace)
 local t = {}
 
 -- Action wheel pages
-t.bubblePage = action_wheel:newAction("Whirlpool")
+t.bubblePage = action_wheel:newAction()
 	:item(itemCheck("soul_sand"))
 	:toggleItem(itemCheck("magma_block"))
 	:onToggle(pings.setWhirlpoolBubbles)
 	:toggled(bubbles)
 
-t.dolphinsGracePage = action_wheel:newAction("WhirlpoolDolphinsGrace")
+t.dolphinsGracePage = action_wheel:newAction()
 	:item(itemCheck("egg"))
 	:toggleItem(itemCheck("dolphin_spawn_egg"))
 	:onToggle(pings.setWhirlpoolDolphinsGrace)

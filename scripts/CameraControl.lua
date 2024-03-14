@@ -104,13 +104,13 @@ setPos(camPos)
 local t = {}
 
 -- Action wheel pages
-t.posPage = action_wheel:newAction("CameraPos")
+t.posPage = action_wheel:newAction()
 	:item(itemCheck("skeleton_skull"))
 	:toggleItem(itemCheck("player_head{'SkullOwner':'"..avatar:getEntityName().."'}"))
 	:onToggle(pings.setCameraPos)
 	:toggled(camPos)
 
-t.eyePage = action_wheel:newAction("OffsetEye")
+t.eyePage = action_wheel:newAction()
 	:item(itemCheck("ender_pearl"))
 	:toggleItem(itemCheck("ender_eye"))
 	:onToggle(pings.setCameraEye)

@@ -257,7 +257,7 @@ setPokeball(toggle)
 local t = {}
 
 -- Return action wheel page
-t.togglePage = action_wheel:newAction("Pokeball")
+t.togglePage = action_wheel:newAction()
 	:item(itemCheck("cobblemon:dive_ball", "ender_pearl"))
 	:onToggle(pings.setPokeball)
 	:toggled(toggle)
