@@ -30,13 +30,6 @@ local function calculateParentRot(m)
 	
 end
 
--- Animation variables
-local breatheTime = {
-	prev = 0,
-	time = 0,
-	next = 0
-}
-
 local pos = {
 	current    = 0,
 	nextTick   = 0,
@@ -58,12 +51,6 @@ function events.TICK()
 	local inWater    = waterTicks      < 20
 	local underwater = underwaterTicks < 20
 	local onGround   = ground()
-	
-	-- Store animation variables
-	breatheTime.prev = breatheTime.next
-	
-	-- Animation control
-	breatheTime.next = breatheTime.next + math.clamp((vel:length() * 15 + 1) * 0.05, 0, 0.4)
 	
 	-- Pos state table
 	local statePos = {
@@ -97,6 +84,7 @@ function events.TICK()
 	local underwaterSwim = vel:length() ~= 0 and underwater and (not onGround or pose.swim) and not pose.elytra
 	local elytra         = pose.elytra
 	local sleep          = pose.sleep
+	local breathe        = true
 	
 	-- Animations
 	anims.groundIdle:playing(groundIdle)
@@ -107,6 +95,7 @@ function events.TICK()
 	anims.underwaterSwim:playing(underwaterSwim)
 	anims.elytra:playing(elytra)
 	anims.sleep:playing(sleep)
+	anims.breathe:playing(breathe)
 	
 end
 
@@ -126,17 +115,14 @@ function events.RENDER(delta, context)
 	anims.groundWalk:speed(moveSpeed)
 	anims.waterSwim:speed(moveSpeed)
 	anims.underwaterSwim:speed(moveSpeed)
+	anims.breathe:speed(math.min(vel:length() * 15 + 1, 8))
 	
-	-- Render lerps
-	breatheTime.time = math.lerp(breatheTime.prev, breatheTime.next, delta)
-	pos.currentPos   = math.lerp(pos.current, pos.nextTick, delta)
+	-- Render lerp
+	pos.currentPos = math.lerp(pos.current, pos.nextTick, delta)
 	
 	-- Apply
-	local scale = math.sin(breatheTime.time) * 0.0125 + 1.0125
-	parts.Front:scale(scale)
-	
-	local animPos = parts.Player:getAnimPos()
-	parts.Player:pos(pos.currentPos + ((pose.swim or pose.climb or pose.crawl) and vec(0, animPos.z - animPos.y, animPos.y - animPos.z) or 0))
+	local animPos = pokemonParts.Player:getAnimPos()
+	pokemonParts.Player:pos(pos.currentPos + ((pose.swim or pose.climb or pose.crawl) and vec(0, animPos.z - animPos.y, animPos.y - animPos.z) or 0))
 	
 	-- Parrot rot offset
 	for _, parrot in pairs(parrots) do
