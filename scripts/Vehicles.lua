@@ -34,6 +34,11 @@ carrier.vehicle.newSeat("SeatChest", pokemonParts.RiderPosChest, {
 	condition = function() if not pokemonParts.Chest:getVisible() then return false end end
 })
 
+-- Chest Block
+local chest = pokemonParts.Chest:newBlock("Chest")
+	:block("chest")
+	:pos(-8, 0, -8)
+
 function events.TICK()
 	
 	-- Variables
