@@ -160,7 +160,7 @@ pages.camera
 	:action( -1, camera.eyePage)
 	:action( -1, backAction)
 
--- Lapras actions
+-- Pokemon actions
 pages.pokemon
 	:action( -1, color.shinyPage)
 	:action( -1, pageActions.fall)
