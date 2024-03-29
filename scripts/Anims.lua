@@ -2,7 +2,9 @@
 require("lib.GSAnimBlend")
 local pokemonParts = require("lib.GroupIndex")(models.models.LaprasTaur)
 local ground       = require("lib.GroundCheck")
+local itemCheck    = require("lib.ItemCheck")
 local pose         = require("scripts.Posing")
+local color        = require("scripts.ColorProperties")
 
 -- Animations setup
 local anims = animations["models.LaprasTaur"]
@@ -163,6 +165,8 @@ function events.RENDER(delta, context)
 	anims.waterSwim:speed(moveSpeed)
 	anims.underwaterSwim:speed(moveSpeed)
 	anims.breathe:speed(math.min(vel:length() * 15 + 1, 8))
+	anims.frontFlip:speed(waterSpeed)
+	anims.backFlip:speed(waterSpeed)
 	
 	-- Simulate rotations when vanilla rotations are disabled
 	-- Aka player rotations
