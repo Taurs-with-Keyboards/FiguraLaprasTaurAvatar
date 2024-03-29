@@ -43,13 +43,6 @@ local function calculateParentRot(m)
 	
 end
 
-local pos = {
-	current    = 0,
-	nextTick   = 0,
-	target     = 0,
-	currentPos = 0
-}
-
 function events.TICK()
 	
 	-- Player variables
@@ -64,29 +57,6 @@ function events.TICK()
 	local inWater    = waterTicks      < 20
 	local underwater = underwaterTicks < 20
 	local onGround   = ground()
-	
-	-- Pos state table
-	local statePos = {
-		{ state = pose.climb,   pos = vec(0, 0, 25)  },
-		{ state = pose.elytra,  pos = vec(0, 0, 15)  },
-		{ state = pose.spin,    pos = vec(0, 0, 16)  },
-		{ state = pose.swim,    pos = vec(0, 20, 15) },
-		{ state = pose.crawl,   pos = vec(0, 19, 24) },
-	}
-	
-	-- Base position check
-	for _, case in ipairs(statePos) do
-		if case.state then
-			pos.target = case.pos
-			break
-		else
-			pos.target = 0
-		end
-	end
-	
-	-- Tick lerps
-	pos.current  = pos.nextTick
-	pos.nextTick = math.lerp(pos.nextTick, pos.target, 0.25)
 	
 	-- Animation states
 	local groundIdle     = not walking and (not (inWater or player:getVehicle()) or onGround) and not ((pose.swim and inWater) or pose.elytra) or pose.spin or (pose.climb and vel:length() == 0)
@@ -194,12 +164,6 @@ function events.RENDER(delta, context)
 	anims.underwaterSwim:speed(moveSpeed)
 	anims.breathe:speed(math.min(vel:length() * 15 + 1, 8))
 	
-	-- Render lerp
-	pos.currentPos = math.lerp(pos.current, pos.nextTick, delta)
-	
-	-- Apply
-	local animPos = pokemonParts.Player:getAnimPos()
-	pokemonParts.Player:pos(pos.currentPos + ((pose.swim or pose.climb or pose.crawl) and vec(0, animPos.z - animPos.y, animPos.y - animPos.z) or 0))
 	-- Simulate rotations when vanilla rotations are disabled
 	-- Aka player rotations
 	if not renderer:getRootRotationAllowed() then
