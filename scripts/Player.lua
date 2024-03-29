@@ -84,7 +84,15 @@ local layer = {
 	LOWER_BODY = {
 		pokemonParts.Main.Layer,
 		pokemonParts.Shell.Layer,
-		pokemonParts.SpikesLayer
+		pokemonParts.SpikeMF.Layer,
+		pokemonParts.SpikeMM.Layer,
+		pokemonParts.SpikeMB.Layer,
+		pokemonParts.SpikeLS.Layer,
+		pokemonParts.SpikeLF.Layer,
+		pokemonParts.SpikeLB.Layer,
+		pokemonParts.SpikeRS.Layer,
+		pokemonParts.SpikeRF.Layer,
+		pokemonParts.SpikeRB.Layer
 	},
 }
 

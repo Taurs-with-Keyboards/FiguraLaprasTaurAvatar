@@ -188,5 +188,9 @@ pages.eyes
 
 -- Animation actions
 pages.anims
+	:action( -1, anims.stretchPage)
+	:action( -1, anims.laughPage)
+	:action( -1, anims.frontFlipPage)
+	:action( -1, anims.backFlipPage)
 	:action( -1, arms.movePage)
 	:action( -1, backAction)

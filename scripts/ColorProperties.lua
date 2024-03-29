@@ -22,7 +22,15 @@ local shinyParts = {
 	
 	pokemonParts.Shell.External,
 	pokemonParts.Shell.Internal,
-	pokemonParts.SpikesParts,
+	pokemonParts.SpikeMF.Spike,
+	pokemonParts.SpikeMM.Spike,
+	pokemonParts.SpikeMB.Spike,
+	pokemonParts.SpikeLS.Spike,
+	pokemonParts.SpikeLF.Spike,
+	pokemonParts.SpikeLB.Spike,
+	pokemonParts.SpikeRS.Spike,
+	pokemonParts.SpikeRF.Spike,
+	pokemonParts.SpikeRB.Spike,
 	
 	pokemonParts.FrontLeftFlipper.Flipper,
 	pokemonParts.FrontLeftFlipperTip.Flipper,

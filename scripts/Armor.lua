@@ -19,7 +19,15 @@ kattArmor.Armor.Chestplate
 		pokemonParts.leftArmArmorChestplateFP.Chestplate,
 		pokemonParts.rightArmArmorChestplateFP.Chestplate,
 		pokemonParts.ShellArmorChestplate.Chestplate,
-		pokemonParts.SpikesChestplate
+		pokemonParts.SpikeMFArmorChestplate.Chestplate,
+		pokemonParts.SpikeMMArmorChestplate.Chestplate,
+		pokemonParts.SpikeMBArmorChestplate.Chestplate,
+		pokemonParts.SpikeLSArmorChestplate.Chestplate,
+		pokemonParts.SpikeLFArmorChestplate.Chestplate,
+		pokemonParts.SpikeLBArmorChestplate.Chestplate,
+		pokemonParts.SpikeRSArmorChestplate.Chestplate,
+		pokemonParts.SpikeRFArmorChestplate.Chestplate,
+		pokemonParts.SpikeRBArmorChestplate.Chestplate
 	)
 	:addTrimParts(
 		pokemonParts.bodyArmorChestplate.Trim,
@@ -28,7 +36,15 @@ kattArmor.Armor.Chestplate
 		pokemonParts.leftArmArmorChestplateFP.Trim,
 		pokemonParts.rightArmArmorChestplateFP.Trim,
 		pokemonParts.ShellArmorChestplate.Trim,
-		pokemonParts.SpikesTrim
+		pokemonParts.SpikeMFArmorChestplate.Trim,
+		pokemonParts.SpikeMMArmorChestplate.Trim,
+		pokemonParts.SpikeMBArmorChestplate.Trim,
+		pokemonParts.SpikeLSArmorChestplate.Trim,
+		pokemonParts.SpikeLFArmorChestplate.Trim,
+		pokemonParts.SpikeLBArmorChestplate.Trim,
+		pokemonParts.SpikeRSArmorChestplate.Trim,
+		pokemonParts.SpikeRFArmorChestplate.Trim,
+		pokemonParts.SpikeRBArmorChestplate.Trim
 	)
 kattArmor.Armor.Leggings
 	:addParts(
@@ -76,7 +92,15 @@ kattArmor.Materials.leather
 		pokemonParts.leftArmArmorChestplateFP.Leather,
 		pokemonParts.rightArmArmorChestplateFP.Leather,
 		pokemonParts.ShellArmorChestplate.Leather,
-		pokemonParts.SpikesLeather
+		pokemonParts.SpikeMFArmorChestplate.Leather,
+		pokemonParts.SpikeMMArmorChestplate.Leather,
+		pokemonParts.SpikeMBArmorChestplate.Leather,
+		pokemonParts.SpikeLSArmorChestplate.Leather,
+		pokemonParts.SpikeLFArmorChestplate.Leather,
+		pokemonParts.SpikeLBArmorChestplate.Leather,
+		pokemonParts.SpikeRSArmorChestplate.Leather,
+		pokemonParts.SpikeRFArmorChestplate.Leather,
+		pokemonParts.SpikeRBArmorChestplate.Leather
 	)
 	:addParts(kattArmor.Armor.Leggings,
 		pokemonParts.bodyArmorLeggings.Leather,
@@ -118,7 +142,7 @@ kattArmor.Materials.netherite
 kattArmor.Materials.turtle
 	:setTexture(textures["textures.armor.turtleHelmet"])
 	:addParts(kattArmor.Armor.Helmet,
-		pokemonParts.TurtleHelmetSpikes
+		pokemonParts.TurtleHelmet
 	)
 
 -- Trims
@@ -222,7 +246,15 @@ local chestplateGroups = {
 local chestplateShellGroups = {
 	
 	pokemonParts.ShellArmorChestplate,
-	pokemonParts.SpikesArmorChestplate
+	pokemonParts.SpikeMFArmorChestplate,
+	pokemonParts.SpikeMMArmorChestplate,
+	pokemonParts.SpikeMBArmorChestplate,
+	pokemonParts.SpikeLSArmorChestplate,
+	pokemonParts.SpikeLFArmorChestplate,
+	pokemonParts.SpikeLBArmorChestplate,
+	pokemonParts.SpikeRSArmorChestplate,
+	pokemonParts.SpikeRFArmorChestplate,
+	pokemonParts.SpikeRBArmorChestplate
 	
 }
 
@@ -230,7 +262,7 @@ local chestplateShellGroups = {
 local leggingsGroups = {
 	
 	pokemonParts.bodyArmorLeggings,
-	pokemonParts.FrontArmorLeggings,
+	pokemonParts.NeckArmorLeggings,
 	pokemonParts.MainArmorLeggings
 	
 }
