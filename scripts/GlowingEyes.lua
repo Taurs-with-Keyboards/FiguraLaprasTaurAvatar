@@ -1,7 +1,9 @@
 -- Required scripts
-local model   = require("scripts.ModelParts")
-local effects = require("scripts.SyncedVariables")
-local origins = require("lib.OriginsAPI")
+local pokemonParts = require("lib.GroupIndex")(models.models.LaprasTaur)
+local origins      = require("lib.OriginsAPI")
+local itemCheck    = require("lib.ItemCheck")
+local effects      = require("scripts.SyncedVariables")
+local color        = require("scripts.ColorProperties")
 
 -- Config setup
 config:name("LaprasTaur")
@@ -73,8 +75,9 @@ function events.RENDER(delta, context)
 	eyes.currentPos = math.lerp(eyes.current, eyes.nextTick, delta)
 	
 	-- Apply
-	model.eyes:secondaryColor(eyes.currentPos)
-	model.eyes:secondaryRenderType(context == "RENDER" and "EMISSIVE" or "EYES")
+	pokemonParts.Head.Eyes
+		:secondaryColor(eyes.currentPos)
+		:secondaryRenderType(context == "RENDER" and "EMISSIVE" or "EYES")
 	
 end
 
@@ -95,7 +98,7 @@ local function setPower(boolean)
 	power = boolean
 	config:save("EyesPower", power)
 	if host:isHost() and player:isLoaded() and power then
-		sounds:playSound("minecraft:entity.puffer_fish.flop", player:getPos(), 0.35)
+		sounds:playSound("entity.puffer_fish.flop", player:getPos(), 0.35)
 	end
 	
 end
@@ -117,7 +120,7 @@ local function setWater(boolean)
 	water = boolean
 	config:save("EyesWater", water)
 	if host:isHost() and player:isLoaded() and water then
-		sounds:playSound("minecraft:ambient.underwater.enter", player:getPos(), 0.35)
+		sounds:playSound("ambient.underwater.enter", player:getPos(), 0.35)
 	end
 	
 end
@@ -174,47 +177,53 @@ setWater(water)
 -- Table setup
 local t = {}
 
--- Action wheels
-t.togglePage = action_wheel:newAction("GlowingEyes")
-	:title("§9§lToggle Glowing Eyes\n\n§bToggles the glowing of the eyes.")
-	:hoverColor(vectors.hexToRGB("5EB7DD"))
-	:toggleColor(vectors.hexToRGB("4078B0"))
-	:item("minecraft:ender_pearl")
-	:toggleItem("minecraft:ender_eye")
+-- Action wheel pages
+t.togglePage = action_wheel:newAction()
+	:item(itemCheck("ender_pearl"))
+	:toggleItem(itemCheck("ender_eye"))
 	:onToggle(pings.setEyesToggle)
-	:toggled(toggle)
 
-t.powerPage = action_wheel:newAction("GlowingEyesOrigins")
-	:title("§9§lOrigins Power Toggle\n\n§bToggles the glowing based on Origin's underwater sight power.\nThe eyes will only glow when this power is active.")
-	:hoverColor(vectors.hexToRGB("5EB7DD"))
-	:toggleColor(vectors.hexToRGB("4078B0"))
-	:item("minecraft:cod")
-	:toggleItem("minecraft:tropical_fish")
+t.powerPage = action_wheel:newAction()
+	:item(itemCheck("cod"))
+	:toggleItem(itemCheck("tropical_fish"))
 	:onToggle(pings.setEyesPower)
 	:toggled(power)
 
-t.nightVisionPage = action_wheel:newAction("GlowingEyesNightVision")
-	:title("§9§lNight Vision Toggle\n\n§bToggles the glowing based on having the Night Vision effect.\nThis setting will §b§lOVERRIDE §bthe other subsettings.")
-	:hoverColor(vectors.hexToRGB("5EB7DD"))
-	:toggleColor(vectors.hexToRGB("4078B0"))
-	:item("minecraft:glass_bottle")
-	:toggleItem("minecraft:potion{\"CustomPotionColor\":" .. tostring(0x96C54F) .. "}")
+t.nightVisionPage = action_wheel:newAction()
+	:item(itemCheck("glass_bottle"))
+	:toggleItem(itemCheck("potion{\"CustomPotionColor\":" .. tostring(0x96C54F) .. "}"))
 	:onToggle(pings.setEyesNightVision)
 	:toggled(nightVision)
 
-t.waterPage = action_wheel:newAction("GlowingEyesWater")
-	:title("§9§lWater Sensitivity Toggle\n\n§bToggles the glowing sensitivity to water.\nThe eyes will only glow when underwater.")
-	:hoverColor(vectors.hexToRGB("5EB7DD"))
-	:toggleColor(vectors.hexToRGB("4078B0"))
-	:item("minecraft:bucket")
-	:toggleItem("minecraft:water_bucket")
+t.waterPage = action_wheel:newAction()
+	:item(itemCheck("bucket"))
+	:toggleItem(itemCheck("water_bucket"))
 	:onToggle(pings.setEyesWater)
 	:toggled(water)
 
 -- Update action page info
 function events.TICK()
 	
-	t.togglePage:toggled(toggle)
+	t.togglePage
+		:title(color.primary.."Toggle Glowing Eyes\n\n"..color.secondary.."Toggles the glowing of the eyes.")
+		:hoverColor(color.hover)
+		:toggleColor(color.active)
+		:toggled(toggle)
+	
+	t.powerPage
+		:title(color.primary.."Origins Power Toggle\n\n"..color.secondary.."Toggles the glowing based on Origin's underwater sight power.\nThe eyes will only glow when this power is active.")
+		:hoverColor(color.hover)
+		:toggleColor(color.active)
+	
+	t.nightVisionPage
+		:title(color.primary.."Night Vision Toggle\n\n"..color.secondary.."Toggles the glowing based on having the Night Vision effect.\nThis setting will §lOVERRIDE "..color.secondary.."the other subsettings.")
+		:hoverColor(color.hover)
+		:toggleColor(color.active)
+	
+	t.waterPage
+		:title(color.primary.."Water Sensitivity Toggle\n\n"..color.secondary.."Toggles the glowing sensitivity to water.\nThe eyes will only glow when underwater.")
+		:hoverColor(color.hover)
+		:toggleColor(color.active)
 	
 end
 

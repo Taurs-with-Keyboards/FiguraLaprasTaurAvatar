@@ -1,6 +1,11 @@
 -- Required scripts
-local model = require("scripts.ModelParts")
-local pose  = require("scripts.Posing")
+local pokemonParts = require("lib.GroupIndex")(models.models.LaprasTaur)
+local itemCheck    = require("lib.ItemCheck")
+local pose         = require("scripts.Posing")
+local color        = require("scripts.ColorProperties")
+
+-- Animation setup
+local anims = animations["models.LaprasTaur"]
 
 -- Config setup
 config:name("LaprasTaur")
@@ -54,7 +59,7 @@ function events.TICK()
 	local crossR      = rightItem.tag and rightItem.tag["Charged"] == 1
 	
 	-- Movement overrides
-	local shouldMove = pose.swim or pose.elytra or pose.crawl or pose.climb
+	local shouldMove = (pose.swim and not (anims.frontFlip:isPlaying() or anims.backFlip:isPlaying())) or pose.elytra or pose.crawl or pose.climb
 	
 	-- Targets
 	leftArm.target  = (armMove or shouldMove or leftSwing or ((crossL or crossR) or (using and usingL ~= "NONE"))) and 0 or 1
@@ -73,7 +78,7 @@ function events.RENDER(delta, context)
 	-- Override arm movements
 	local idleTimer  = world.getTime(delta)
 	local idleRot    = vec(math.deg(math.sin(idleTimer * 0.067) * 0.05), 0, math.deg(math.cos(idleTimer * 0.09) * 0.05 + 0.05))
-	local bodyOffset = (vanilla_model.BODY:getOriginRot() * 0.75) + model.body:getTrueRot()
+	local bodyOffset = (vanilla_model.BODY:getOriginRot() * 0.75) + pokemonParts.Body:getTrueRot()
 	
 	-- Render lerp
 	leftArm.currentPos  = math.lerp(leftArm.current,  leftArm.nextTick,  delta)
@@ -83,15 +88,15 @@ function events.RENDER(delta, context)
 	local firstPerson = context == "FIRST_PERSON"
 	
 	-- Apply
-	model.leftArm:rot((-((vanilla_model.LEFT_ARM:getOriginRot() + 180) % 360 - 180) + -idleRot + bodyOffset) * leftArm.currentPos)
+	pokemonParts.LeftArm:rot((-((vanilla_model.LEFT_ARM:getOriginRot() + 180) % 360 - 180) + -idleRot + bodyOffset) * leftArm.currentPos)
 		:visible(not firstPerson)
 	
-	model.leftArmFP:visible(firstPerson)
+	pokemonParts.LeftArmFP:visible(firstPerson)
 	
-	model.rightArm:rot((-((vanilla_model.RIGHT_ARM:getOriginRot() + 180) % 360 - 180) + idleRot + bodyOffset) * rightArm.currentPos)
+	pokemonParts.RightArm:rot((-((vanilla_model.RIGHT_ARM:getOriginRot() + 180) % 360 - 180) + idleRot + bodyOffset) * rightArm.currentPos)
 		:visible(not firstPerson)
 	
-	model.rightArmFP:visible(firstPerson)
+	pokemonParts.RightArmFP:visible(firstPerson)
 	
 end
 
@@ -131,15 +136,22 @@ setArmMove(armMove)
 -- Table setup
 local t = {}
 
--- Action wheel
-t.movePage = action_wheel:newAction("ArmMovement")
-	:title("§9§lArm Movement Toggle\n\n§bToggles the movement swing movement of the arms.\nActions are not effected.")
-	:hoverColor(vectors.hexToRGB("5EB7DD"))
-	:toggleColor(vectors.hexToRGB("4078B0"))
-	:item("minecraft:red_dye")
-	:toggleItem("minecraft:rabbit_foot")
+-- Action wheel pages
+t.movePage = action_wheel:newAction()
+	:item(itemCheck("red_dye"))
+	:toggleItem(itemCheck("rabbit_foot"))
 	:onToggle(pings.setAvatarArmMove)
 	:toggled(armMove)
+
+-- Update action page info
+function events.TICK()
+	
+	t.movePage
+		:title(color.primary.."Arm Movement Toggle\n\n"..color.secondary.."Toggles the movement swing movement of the arms.\nActions are not effected.")
+		:hoverColor(color.hover)
+		:toggleColor(color.active)
+	
+end
 
 -- Return action wheel pages
 return t

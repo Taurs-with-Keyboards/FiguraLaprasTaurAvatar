@@ -1,9 +1,12 @@
 -- Required scripts
-local model  = require("scripts.ModelParts")
-local squapi = require("lib.SquAPI")
+local pokemonParts  = require("lib.GroupIndex")(models.models.LaprasTaur)
+local pokeballParts = require("lib.GroupIndex")(models.models.Pokeball)
+local squapi        = require("lib.SquAPI")
+local itemCheck     = require("lib.ItemCheck")
+local color         = require("scripts.ColorProperties")
 
 -- Animations setup
-local anims = animations.Pokeball
+local anims = animations["models.Pokeball"]
 
 -- Config setup
 config:name("LaprasTaur")
@@ -26,14 +29,6 @@ local scale = {
 	currentPos = 0
 }
 
--- Lerp pos table
-local pos = {
-	current    = 0,
-	nextTick   = 0,
-	target     = 0,
-	currentPos = 0
-}
-
 -- Set lerp start on init
 function events.ENTITY_INIT()
 	
@@ -50,7 +45,7 @@ function events.TICK()
 	
 	-- Variables
 	vehicle  = player:getVehicle() or false
-	vType     = vehicle and vehicle:getType() or false
+	vType    = vehicle and vehicle:getType() or false
 	isRider  = vehicle and vehicle:getControllingPassenger() and vehicle:getControllingPassenger():getName() ~= player:getName()
 	hasRider = (vehicle and #vehicle:getPassengers() > 1 and not isRider) or #player:getPassengers() > 0
 	
@@ -75,10 +70,6 @@ function events.TICK()
 		anims.close:playing(isInBall)
 	end
 	
-	-- Pos lerp
-	pos.current  = pos.nextTick
-	pos.nextTick = math.lerp(pos.nextTick, pos.target, 0.25)
-	
 	-- Scaling lerp
 	scale.current  = scale.nextTick
 	scale.nextTick = math.lerp(scale.nextTick, scale.target, 0.2)
@@ -91,17 +82,6 @@ end
 -- Rendering stuff
 function events.RENDER(delta, context)
 	
-	-- Base position check
-	if vehicle and (vType ~= "minecraft:boat" and vType ~= "minecraft:chest_boat") or isRider then
-		local hitbox = player:getBoundingBox()
-		pos.target = vec(0, hitbox.y * 6, -hitbox.z * 16 + 8)
-	else
-		pos.target = 0
-	end
-	
-	-- Pos lerp
-	pos.currentPos = math.lerp(pos.current, pos.nextTick, delta)
-	
 	-- Scaling target and lerp
 	scale.target     = isInBall and 0 or 1
 	scale.currentPos = math.lerp(scale.current, scale.nextTick, delta)
@@ -109,15 +89,13 @@ function events.RENDER(delta, context)
 	local firstPerson = context == "FIRST_PERSON"
 	local menus       = context == "PAPERDOLL" or context == "MINECRAFT_GUI" or context == "FIGURA_GUI"
 	
-	model.model
-		:pos(pos.currentPos)
+	pokemonParts.LaprasTaur
 		:scale(scale.currentPos)
 		:color(not firstPerson and vec(1, scale.currentPos, scale.currentPos) or 1)
 	
-	model.pokeball
-		:pos(pos.currentPos)
+	pokeballParts.Pokeball
 		:rot(menus and 0 or vec(0, player:getBodyYaw(delta) + staticYaw, 0))
-		:scale(math.map(scale.currentPos, 0, 1, 1, 0))
+		:scale(math.map(scale.currentPos, 0, 1, vType == "minecraft:player" and 0.5 or 1, 0))
 		:visible(menus or not renderer:isFirstPerson())
 	
 	renderer:shadowRadius(math.map(scale.currentPos, 0, 1, 0.2, 1.25))
@@ -127,8 +105,10 @@ end
 -- Pokeball toggler
 local function setPokeball(boolean)
 	
-	toggle = boolean
-	config:save("PokeballToggle", toggle)
+	if player:isLoaded() and (toggle or player:getVelocity().xz:length() == 0) then
+		toggle = boolean
+		config:save("PokeballToggle", toggle)
+	end
 	
 end
 
@@ -238,7 +218,7 @@ squapi.pokeball = squapi.bounceObject:new()
 
 function events.RENDER(delta, context)
 	
-	model.pokeball:offsetRot(squapi.pokeball.pos)
+	pokeballParts.Ball:offsetRot(squapi.pokeball.pos)
 	
 	local target = vec(leanBack - leanForward, 0, leanLeft - leanRight)
 	
@@ -253,13 +233,20 @@ setPokeball(toggle)
 local t = {}
 
 -- Return action wheel page
-t.togglePage = action_wheel:newAction("Pokeball")
-	:title("§9§lToggle Pokeball\n\n§bAuto activates/deactivates on vehicles.")
-	:hoverColor(vectors.hexToRGB("5EB7DD"))
-	:toggleColor(vectors.hexToRGB("4078B0"))
-	:texture(textures["textures.misc.pokeballIcon"])
+t.togglePage = action_wheel:newAction()
+	:item(itemCheck("cobblemon:dive_ball", "ender_pearl"))
 	:onToggle(pings.setPokeball)
-	:toggled(toggle)
+
+-- Update action page info
+function events.TICK()
+	
+	t.togglePage
+		:title(color.primary.."Toggle Pokeball\n\n"..color.secondary.."Auto activates/deactivates on vehicles.")
+		:hoverColor(color.hover)
+		:toggleColor(color.active)
+		:toggled(toggle)
+	
+end
 
 -- Return action wheel page (and toggle)
 return t

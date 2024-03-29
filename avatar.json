@@ -3,6 +3,7 @@
 	"description": "\"Is said to have a gentle heart.\"",
 	"authors": [
 		"\nPsycho Breadstick (QA, Origin)\n",
+		"Snqwblind (Custom Animations)\n",
 		"Katt (Updated scripts, APIs)\n",
 		"Grandpa Scout (APIs)\n",
 		"Jimmy (QA, Animation code)\n",
@@ -13,6 +14,5 @@
 		"The Pokemon Company (Lapras design)\n",
 		"Total (Avatar Maker)\n"
 	],
-	"version": "0.1.2",
-	"color": "69CDEC"
+	"version": "0.1.4"
 }

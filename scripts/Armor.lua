@@ -1,95 +1,121 @@
 -- Required scripts
-local model     = require("scripts.ModelParts")
-local kattArmor = require("lib.KattArmor")()
+local pokemonParts = require("lib.GroupIndex")(models.models.LaprasTaur)
+local kattArmor    = require("lib.KattArmor")()
+local itemCheck    = require("lib.ItemCheck")
+local color        = require("scripts.ColorProperties")
 
 -- Setting the leggings to layer 1
 kattArmor.Armor.Leggings:setLayer(1)
 
 -- Armor parts
 kattArmor.Armor.Helmet
-	:addParts(model.head.headArmorHelmet.Helmet)
-	:addTrimParts(model.head.headArmorHelmet.Trim)
+	:addParts(pokemonParts.headArmorHelmet.Helmet)
+	:addTrimParts(pokemonParts.headArmorHelmet.Trim)
 kattArmor.Armor.Chestplate
 	:addParts(
-		model.body.bodyArmorChestplate.Chestplate,
-		model.leftArm.leftArmArmorChestplate.Chestplate,
-		model.rightArm.rightArmArmorChestplate.Chestplate,
-		model.leftArmFP.leftArmArmorChestplateFP.Chestplate,
-		model.rightArmFP.rightArmArmorChestplateFP.Chestplate,
-		model.shell.ShellArmorChestplate.Chestplate,
-		model.shell.Spikes.SpikesArmorChestplate.SpikesChestplate
+		pokemonParts.bodyArmorChestplate.Chestplate,
+		pokemonParts.leftArmArmorChestplate.Chestplate,
+		pokemonParts.rightArmArmorChestplate.Chestplate,
+		pokemonParts.leftArmArmorChestplateFP.Chestplate,
+		pokemonParts.rightArmArmorChestplateFP.Chestplate,
+		pokemonParts.ShellArmorChestplate.Chestplate,
+		pokemonParts.SpikeMFArmorChestplate.Chestplate,
+		pokemonParts.SpikeMMArmorChestplate.Chestplate,
+		pokemonParts.SpikeMBArmorChestplate.Chestplate,
+		pokemonParts.SpikeLSArmorChestplate.Chestplate,
+		pokemonParts.SpikeLFArmorChestplate.Chestplate,
+		pokemonParts.SpikeLBArmorChestplate.Chestplate,
+		pokemonParts.SpikeRSArmorChestplate.Chestplate,
+		pokemonParts.SpikeRFArmorChestplate.Chestplate,
+		pokemonParts.SpikeRBArmorChestplate.Chestplate
 	)
 	:addTrimParts(
-		model.body.bodyArmorChestplate.Trim,
-		model.leftArm.leftArmArmorChestplate.Trim,
-		model.rightArm.rightArmArmorChestplate.Trim,
-		model.leftArmFP.leftArmArmorChestplateFP.Trim,
-		model.rightArmFP.rightArmArmorChestplateFP.Trim,
-		model.shell.ShellArmorChestplate.Trim,
-		model.shell.Spikes.SpikesArmorChestplate.SpikesTrim
+		pokemonParts.bodyArmorChestplate.Trim,
+		pokemonParts.leftArmArmorChestplate.Trim,
+		pokemonParts.rightArmArmorChestplate.Trim,
+		pokemonParts.leftArmArmorChestplateFP.Trim,
+		pokemonParts.rightArmArmorChestplateFP.Trim,
+		pokemonParts.ShellArmorChestplate.Trim,
+		pokemonParts.SpikeMFArmorChestplate.Trim,
+		pokemonParts.SpikeMMArmorChestplate.Trim,
+		pokemonParts.SpikeMBArmorChestplate.Trim,
+		pokemonParts.SpikeLSArmorChestplate.Trim,
+		pokemonParts.SpikeLFArmorChestplate.Trim,
+		pokemonParts.SpikeLBArmorChestplate.Trim,
+		pokemonParts.SpikeRSArmorChestplate.Trim,
+		pokemonParts.SpikeRFArmorChestplate.Trim,
+		pokemonParts.SpikeRBArmorChestplate.Trim
 	)
 kattArmor.Armor.Leggings
 	:addParts(
-		model.body.bodyArmorLeggings.Leggings,
-		model.front.FrontArmorLeggings.Leggings,
-		model.main.MainArmorLeggings.Leggings
+		pokemonParts.bodyArmorLeggings.Leggings,
+		pokemonParts.NeckArmorLeggings.Leggings,
+		pokemonParts.MainArmorLeggings.Leggings
 	)
 	:addTrimParts(
-		model.body.bodyArmorLeggings.Trim,
-		model.front.FrontArmorLeggings.Trim,
-		model.main.MainArmorLeggings.Trim
+		pokemonParts.bodyArmorLeggings.Trim,
+		pokemonParts.NeckArmorLeggings.Trim,
+		pokemonParts.MainArmorLeggings.Trim
 	)
 kattArmor.Armor.Boots
 	:addParts(
-		model.frontLeftFlipper.FrontLeftFlipperArmorBoot.Boot,
-		model.frontLeftFlipper.FrontLeftFlipperTip.FrontLeftFlipperTipArmorBoot.Boot,
-		model.frontRightFlipper.FrontRightFlipperArmorBoot.Boot,
-		model.frontRightFlipper.FrontRightFlipperTip.FrontRightFlipperTipArmorBoot.Boot,
-		model.backLeftFlipper.BackLeftFlipperArmorBoot.Boot,
-		model.backLeftFlipper.BackLeftFlipperTip.BackLeftFlipperTipArmorBoot.Boot,
-		model.backRightFlipper.BackRightFlipperArmorBoot.Boot,
-		model.backRightFlipper.BackRightFlipperTip.BackRightFlipperTipArmorBoot.Boot
+		pokemonParts.FrontLeftFlipperArmorBoot.Boot,
+		pokemonParts.FrontLeftFlipperTipArmorBoot.Boot,
+		pokemonParts.FrontRightFlipperArmorBoot.Boot,
+		pokemonParts.FrontRightFlipperTipArmorBoot.Boot,
+		pokemonParts.BackLeftFlipperArmorBoot.Boot,
+		pokemonParts.BackLeftFlipperTipArmorBoot.Boot,
+		pokemonParts.BackRightFlipperArmorBoot.Boot,
+		pokemonParts.BackRightFlipperTipArmorBoot.Boot
 	)
 	:addTrimParts(
-		model.frontLeftFlipper.FrontLeftFlipperArmorBoot.Trim,
-		model.frontLeftFlipper.FrontLeftFlipperTip.FrontLeftFlipperTipArmorBoot.Trim,
-		model.frontRightFlipper.FrontRightFlipperArmorBoot.Trim,
-		model.frontRightFlipper.FrontRightFlipperTip.FrontRightFlipperTipArmorBoot.Trim,
-		model.backLeftFlipper.BackLeftFlipperArmorBoot.Trim,
-		model.backLeftFlipper.BackLeftFlipperTip.BackLeftFlipperTipArmorBoot.Trim,
-		model.backRightFlipper.BackRightFlipperArmorBoot.Trim,
-		model.backRightFlipper.BackRightFlipperTip.BackRightFlipperTipArmorBoot.Trim
+		pokemonParts.FrontLeftFlipperArmorBoot.Trim,
+		pokemonParts.FrontLeftFlipperTipArmorBoot.Trim,
+		pokemonParts.FrontRightFlipperArmorBoot.Trim,
+		pokemonParts.FrontRightFlipperTipArmorBoot.Trim,
+		pokemonParts.BackLeftFlipperArmorBoot.Trim,
+		pokemonParts.BackLeftFlipperTipArmorBoot.Trim,
+		pokemonParts.BackRightFlipperArmorBoot.Trim,
+		pokemonParts.BackRightFlipperTipArmorBoot.Trim
 	)
 
 -- Leather armor
 kattArmor.Materials.leather
 	:setTexture(textures["textures.armor.leatherArmor"])
 	:addParts(kattArmor.Armor.Helmet,
-		model.head.headArmorHelmet.Leather
+		pokemonParts.headArmorHelmet.Leather
 	)
 	:addParts(kattArmor.Armor.Chestplate,
-		model.body.bodyArmorChestplate.Leather,
-		model.leftArm.leftArmArmorChestplate.Leather,
-		model.rightArm.rightArmArmorChestplate.Leather,
-		model.leftArmFP.leftArmArmorChestplateFP.Leather,
-		model.rightArmFP.rightArmArmorChestplateFP.Leather,
-		model.shell.ShellArmorChestplate.Leather,
-		model.shell.Spikes.SpikesArmorChestplate.SpikesLeather
+		pokemonParts.bodyArmorChestplate.Leather,
+		pokemonParts.leftArmArmorChestplate.Leather,
+		pokemonParts.rightArmArmorChestplate.Leather,
+		pokemonParts.leftArmArmorChestplateFP.Leather,
+		pokemonParts.rightArmArmorChestplateFP.Leather,
+		pokemonParts.ShellArmorChestplate.Leather,
+		pokemonParts.SpikeMFArmorChestplate.Leather,
+		pokemonParts.SpikeMMArmorChestplate.Leather,
+		pokemonParts.SpikeMBArmorChestplate.Leather,
+		pokemonParts.SpikeLSArmorChestplate.Leather,
+		pokemonParts.SpikeLFArmorChestplate.Leather,
+		pokemonParts.SpikeLBArmorChestplate.Leather,
+		pokemonParts.SpikeRSArmorChestplate.Leather,
+		pokemonParts.SpikeRFArmorChestplate.Leather,
+		pokemonParts.SpikeRBArmorChestplate.Leather
 	)
 	:addParts(kattArmor.Armor.Leggings,
-		model.body.bodyArmorLeggings.Leather,
-		model.front.FrontArmorLeggings.Leather,
-		model.main.MainArmorLeggings.Leather
+		pokemonParts.bodyArmorLeggings.Leather,
+		pokemonParts.NeckArmorLeggings.Leather,
+		pokemonParts.MainArmorLeggings.Leather
 	)
 	:addParts(kattArmor.Armor.Boots,
-		model.frontLeftFlipper.FrontLeftFlipperArmorBoot.Leather,
-		model.frontLeftFlipper.FrontLeftFlipperTip.FrontLeftFlipperTipArmorBoot.Leather,
-		model.frontRightFlipper.FrontRightFlipperArmorBoot.Leather,
-		model.frontRightFlipper.FrontRightFlipperTip.FrontRightFlipperTipArmorBoot.Leather,
-		model.backLeftFlipper.BackLeftFlipperArmorBoot.Leather,
-		model.backLeftFlipper.BackLeftFlipperTip.BackLeftFlipperTipArmorBoot.Leather,
-		model.backRightFlipper.BackRightFlipperArmorBoot.Leather,
-		model.backRightFlipper.BackRightFlipperTip.BackRightFlipperTipArmorBoot.Leather
+		pokemonParts.FrontLeftFlipperArmorBoot.Leather,
+		pokemonParts.FrontLeftFlipperTipArmorBoot.Leather,
+		pokemonParts.FrontRightFlipperArmorBoot.Leather,
+		pokemonParts.FrontRightFlipperTipArmorBoot.Leather,
+		pokemonParts.BackLeftFlipperArmorBoot.Leather,
+		pokemonParts.BackLeftFlipperTipArmorBoot.Leather,
+		pokemonParts.BackRightFlipperArmorBoot.Leather,
+		pokemonParts.BackRightFlipperTipArmorBoot.Leather
 	)
 
 -- Chainmail armor
@@ -116,7 +142,7 @@ kattArmor.Materials.netherite
 kattArmor.Materials.turtle
 	:setTexture(textures["textures.armor.turtleHelmet"])
 	:addParts(kattArmor.Armor.Helmet,
-		model.head.headArmorHelmet.TurtleHelmetSpikes
+		pokemonParts.TurtleHelmet
 	)
 
 -- Trims
@@ -197,25 +223,86 @@ if leggings   == nil then leggings   = true end
 if boots      == nil then boots      = true end
 if shell      == nil then shell      = true end
 
+-- All helmet parts
+local helmetGroups = {
+	
+	pokemonParts.headArmorHelmet,
+	pokemonParts.HelmetItemPivot
+	
+}
+
+-- All chestplate parts
+local chestplateGroups = {
+	
+	pokemonParts.bodyArmorChestplate,
+	pokemonParts.leftArmArmorChestplate,
+	pokemonParts.rightArmArmorChestplate,
+	pokemonParts.leftArmArmorChestplateFP,
+	pokemonParts.rightArmArmorChestplateFP
+	
+}
+
+-- All shell armor parts
+local chestplateShellGroups = {
+	
+	pokemonParts.ShellArmorChestplate,
+	pokemonParts.SpikeMFArmorChestplate,
+	pokemonParts.SpikeMMArmorChestplate,
+	pokemonParts.SpikeMBArmorChestplate,
+	pokemonParts.SpikeLSArmorChestplate,
+	pokemonParts.SpikeLFArmorChestplate,
+	pokemonParts.SpikeLBArmorChestplate,
+	pokemonParts.SpikeRSArmorChestplate,
+	pokemonParts.SpikeRFArmorChestplate,
+	pokemonParts.SpikeRBArmorChestplate
+	
+}
+
+-- All leggings parts
+local leggingsGroups = {
+	
+	pokemonParts.bodyArmorLeggings,
+	pokemonParts.NeckArmorLeggings,
+	pokemonParts.MainArmorLeggings
+	
+}
+
+-- All boots parts
+local bootsGroups = {
+	
+	pokemonParts.FrontLeftFlipperArmorBoot,
+	pokemonParts.FrontLeftFlipperTipArmorBoot,
+	
+	pokemonParts.FrontRightFlipperArmorBoot,
+	pokemonParts.FrontRightFlipperTipArmorBoot,
+	
+	pokemonParts.BackLeftFlipperArmorBoot,
+	pokemonParts.BackLeftFlipperTipArmorBoot,
+	
+	pokemonParts.BackRightFlipperArmorBoot,
+	pokemonParts.BackRightFlipperTipArmorBoot
+	
+}
+
 function events.TICK()
 	
-	for _, part in ipairs(model.helmetToggle) do
+	for _, part in ipairs(helmetGroups) do
 		part:visible(helmet)
 	end
 	
-	for _, part in ipairs(model.chestplateToggle) do
+	for _, part in ipairs(chestplateGroups) do
 		part:visible(chestplate)
 	end
 	
-	for _, part in ipairs(model.leggingsToggle) do
+	for _, part in ipairs(leggingsGroups) do
 		part:visible(leggings)
 	end
 	
-	for _, part in ipairs(model.bootsToggle) do
+	for _, part in ipairs(bootsGroups) do
 		part:visible(boots)
 	end
 	
-	for _, part in ipairs(model.chestplateShellToggle) do
+	for _, part in ipairs(chestplateShellGroups) do
 		part:visible(shell)
 	end
 	
@@ -235,7 +322,7 @@ local function setAll(boolean)
 	config:save("ArmorBoots", boots)
 	config:save("ArmorShell", shell)
 	if player:isLoaded() then
-		sounds:playSound("minecraft:item.armor.equip_generic", player:getPos(), 0.5)
+		sounds:playSound("item.armor.equip_generic", player:getPos(), 0.5)
 	end
 	
 end
@@ -246,7 +333,7 @@ local function setHelmet(boolean)
 	helmet = boolean
 	config:save("ArmorHelmet", helmet)
 	if player:isLoaded() then
-		sounds:playSound("minecraft:item.armor.equip_generic", player:getPos(), 0.5)
+		sounds:playSound("item.armor.equip_generic", player:getPos(), 0.5)
 	end
 	
 end
@@ -257,7 +344,7 @@ local function setChestplate(boolean)
 	chestplate = boolean
 	config:save("ArmorChestplate", chestplate)
 	if player:isLoaded() then
-		sounds:playSound("minecraft:item.armor.equip_generic", player:getPos(), 0.5)
+		sounds:playSound("item.armor.equip_generic", player:getPos(), 0.5)
 	end
 	
 end
@@ -268,7 +355,7 @@ local function setLeggings(boolean)
 	leggings = boolean
 	config:save("ArmorLeggings", leggings)
 	if player:isLoaded() then
-		sounds:playSound("minecraft:item.armor.equip_generic", player:getPos(), 0.5)
+		sounds:playSound("item.armor.equip_generic", player:getPos(), 0.5)
 	end
 	
 end
@@ -279,7 +366,7 @@ local function setBoots(boolean)
 	boots = boolean
 	config:save("ArmorBoots", boots)
 	if player:isLoaded() then
-		sounds:playSound("minecraft:item.armor.equip_generic", player:getPos(), 0.5)
+		sounds:playSound("item.armor.equip_generic", player:getPos(), 0.5)
 	end
 	
 end
@@ -290,7 +377,7 @@ local function setShell(boolean)
 	shell = boolean
 	config:save("ArmorShell", shell)
 	if player:isLoaded() then
-		sounds:playSound("minecraft:item.armor.equip_generic", player:getPos(), 0.5)
+		sounds:playSound("item.armor.equip_generic", player:getPos(), 0.5)
 	end
 	
 end
@@ -337,63 +424,74 @@ setShell(shell)
 local t = {}
 
 -- Action wheel pages
-t.allPage = action_wheel:newAction("AllArmorToggle")
-	:title("§9§lToggle All Armor\n\n§bToggles visibility of all armor parts.")
-	:hoverColor(vectors.hexToRGB("5EB7DD"))
-	:toggleColor(vectors.hexToRGB("4078B0"))
-	:item("minecraft:armor_stand")
-	:toggleItem("minecraft:netherite_chestplate")
+t.allPage = action_wheel:newAction()
+	:item(itemCheck("armor_stand"))
+	:toggleItem(itemCheck("netherite_chestplate"))
 	:onToggle(pings.setArmorAll)
 
-t.helmetPage = action_wheel:newAction("HelmetArmorToggle")
-	:title("§9§lToggle Helmet\n\n§bToggles visibility of helmet parts.")
-	:hoverColor(vectors.hexToRGB("5EB7DD"))
-	:toggleColor(vectors.hexToRGB("4078B0"))
-	:item("minecraft:iron_helmet")
-	:toggleItem("minecraft:diamond_helmet")
+t.helmetPage = action_wheel:newAction()
+	:item(itemCheck("iron_helmet"))
+	:toggleItem(itemCheck("diamond_helmet"))
 	:onToggle(pings.setArmorHelmet)
 
-t.chestplatePage = action_wheel:newAction("ChestplateArmorToggle")
-	:title("§9§lToggle Chestplate\n\n§bToggles visibility of chestplate parts.")
-	:hoverColor(vectors.hexToRGB("5EB7DD"))
-	:toggleColor(vectors.hexToRGB("4078B0"))
-	:item("minecraft:iron_chestplate")
-	:toggleItem("minecraft:diamond_chestplate")
+t.chestplatePage = action_wheel:newAction()
+	:item(itemCheck("iron_chestplate"))
+	:toggleItem(itemCheck("diamond_chestplate"))
 	:onToggle(pings.setArmorChestplate)
 
-t.leggingsPage = action_wheel:newAction("LeggingsArmorToggle")
-	:title("§9§lToggle Leggings\n\n§bToggles visibility of leggings parts.")
-	:hoverColor(vectors.hexToRGB("5EB7DD"))
-	:toggleColor(vectors.hexToRGB("4078B0"))
-	:item("minecraft:iron_leggings")
-	:toggleItem("minecraft:diamond_leggings")
+t.leggingsPage = action_wheel:newAction()
+	:item(itemCheck("iron_leggings"))
+	:toggleItem(itemCheck("diamond_leggings"))
 	:onToggle(pings.setArmorLeggings)
 
-t.bootsPage = action_wheel:newAction("BootsArmorToggle")
-	:title("§9§lToggle Boots\n\n§bToggles visibility of boots.")
-	:hoverColor(vectors.hexToRGB("5EB7DD"))
-	:toggleColor(vectors.hexToRGB("4078B0"))
-	:item("minecraft:iron_boots")
-	:toggleItem("minecraft:diamond_boots")
+t.bootsPage = action_wheel:newAction()
+	:item(itemCheck("iron_boots"))
+	:toggleItem(itemCheck("diamond_boots"))
 	:onToggle(pings.setArmorBoots)
 
-t.shellPage = action_wheel:newAction("ShellArmorToggle")
-	:title("§9§lToggle Shell Armor\n\n§bToggles visibility of armor on shell.")
-	:hoverColor(vectors.hexToRGB("5EB7DD"))
-	:toggleColor(vectors.hexToRGB("4078B0"))
-	:item("minecraft:scute")
-	:toggleItem("minecraft:turtle_helmet")
+t.shellPage = action_wheel:newAction()
+	:item(itemCheck("scute"))
+	:toggleItem(itemCheck("turtle_helmet"))
 	:onToggle(pings.setArmorShell)
 
 -- Update action page info
 function events.TICK()
 	
-	t.allPage       :toggled(helmet and chestplate and leggings and boots and shell)
-	t.helmetPage    :toggled(helmet)
-	t.chestplatePage:toggled(chestplate)
-	t.leggingsPage  :toggled(leggings)
-	t.bootsPage     :toggled(boots)
-	t.shellPage     :toggled(shell)
+	t.allPage
+		:title(color.primary.."Toggle All Armor\n\n"..color.secondary.."Toggles visibility of all armor parts.")
+		:hoverColor(color.hover)
+		:toggleColor(color.active)
+		:toggled(helmet and chestplate and leggings and boots and shell)
+	
+	t.helmetPage
+		:title(color.primary.."Toggle Helmet\n\n"..color.secondary.."Toggles visibility of helmet parts.")
+		:hoverColor(color.hover)
+		:toggleColor(color.active)
+		:toggled(helmet)
+	
+	t.chestplatePage
+		:title(color.primary.."Toggle Chestplate\n\n"..color.secondary.."Toggles visibility of chestplate parts.")
+		:hoverColor(color.hover)
+		:toggleColor(color.active)
+		:toggled(chestplate)
+	
+	t.leggingsPage
+		:title(color.primary.."Toggle Leggings\n\n"..color.secondary.."Toggles visibility of leggings parts.")
+		:hoverColor(color.hover)
+		:toggleColor(color.active)
+		:toggled(leggings)
+	
+	t.bootsPage
+		:title(color.primary.."Toggle Boots\n\n"..color.secondary.."Toggles visibility of boots.")
+		:hoverColor(color.hover)
+		:toggleColor(color.active)
+		:toggled(boots)
+	
+	t.shellPage
+		:title(color.primary.."Toggle Shell Armor\n\n"..color.secondary.."Toggles visibility of armor on shell.")
+		:hoverColor(color.hover)
+		:toggleColor(color.active)
+		:toggled(shell)
 	
 end
 
