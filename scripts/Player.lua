@@ -121,9 +121,6 @@ function events.TICK()
 	-- Cape textures
 	pokemonParts.Cape:primaryTexture(vanillaSkin and "CAPE" or "PRIMARY")
 	
-	-- Disables lower body if player is in spectator mode
-	pokemonParts.LowerBody:parentType(player:getGamemode() == "SPECTATOR" and "BODY" or "NONE")
-	
 	-- Layer toggling
 	for layerType, parts in pairs(layer) do
 		local enabled = enabled
