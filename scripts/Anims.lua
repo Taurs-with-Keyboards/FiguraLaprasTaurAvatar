@@ -208,23 +208,23 @@ end
 
 -- GS Blending Setup
 local blendAnims = {
-	{ anim = anims.groundIdle,     ticks = 7  },
-	{ anim = anims.groundWalk,     ticks = 7  },
-	{ anim = anims.waterIdle,      ticks = 7  },
-	{ anim = anims.waterSwim,      ticks = 7  },
-	{ anim = anims.underwaterIdle, ticks = 7  },
-	{ anim = anims.underwaterSwim, ticks = 7  },
-	{ anim = anims.extend,         ticks = 14 },
-	{ anim = anims.climb,          ticks = 7  },
-	{ anim = anims.elytra,         ticks = 7  },
-	{ anim = anims.stretch,        ticks = 7  },
-	{ anim = anims.laugh,          ticks = 7  },
-	{ anim = anims.napDown,        ticks = 7  },
-	{ anim = anims.napUp,          ticks = 7  }
+	{ anim = anims.groundIdle,     ticks = {7,7}   },
+	{ anim = anims.groundWalk,     ticks = {7,7}   },
+	{ anim = anims.waterIdle,      ticks = {7,7}   },
+	{ anim = anims.waterSwim,      ticks = {7,7}   },
+	{ anim = anims.underwaterIdle, ticks = {7,7}   },
+	{ anim = anims.underwaterSwim, ticks = {7,7}   },
+	{ anim = anims.extend,         ticks = {14,14} },
+	{ anim = anims.climb,          ticks = {7,7}   },
+	{ anim = anims.elytra,         ticks = {7,7}   },
+	{ anim = anims.stretch,        ticks = {7,7}   },
+	{ anim = anims.laugh,          ticks = {7,7}   },
+	{ anim = anims.napDown,        ticks = {7,7}   },
+	{ anim = anims.napUp,          ticks = {7,7}   }
 }
 	
 for _, blend in ipairs(blendAnims) do
-	blend.anim:blendTime(blend.ticks):onBlend("easeOutQuad")
+	blend.anim:blendTime(table.unpack(blend.ticks)):onBlend("easeOutQuad")
 end
 
 -- Fixing spyglass jank
