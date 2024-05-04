@@ -18,7 +18,6 @@ local function calculateParentRot(m)
 	
 end
 
-
 -- Squishy smooth Head + Neck
 squapi.smoothHeadNeck(
 	pokemonParts.UpperBody,
@@ -27,7 +26,6 @@ squapi.smoothHeadNeck(
 	0.4,
 	false
 )
-
 
 -- Squishy crounch
 squapi.crouch(anims.crouch)
