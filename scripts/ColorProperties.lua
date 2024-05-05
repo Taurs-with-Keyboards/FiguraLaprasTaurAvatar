@@ -53,7 +53,7 @@ function events.TICK()
 	
 	-- Set colors
 	t.hover     = vectors.hexToRGB(shiny and "9775CE" or "5EB7DD")
-	t.active    = vectors.hexToRGB(shiny and "704391" or "4078B0")
+	t.active    = vectors.hexToRGB(shiny and "F3C9B9" or "EFDBBC")
 	t.primary   = "#"..(shiny and "9775CE" or "5EB7DD")
 	t.secondary = "#"..(shiny and "F3C9B9" or "EFDBBC")
 	
