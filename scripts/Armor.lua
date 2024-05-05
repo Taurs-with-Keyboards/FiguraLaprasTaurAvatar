@@ -458,37 +458,61 @@ t.shellPage = action_wheel:newAction()
 function events.TICK()
 	
 	t.allPage
-		:title(color.primary.."Toggle All Armor\n\n"..color.secondary.."Toggles visibility of all armor parts.")
+		:title(toJson
+			{"",
+			{text = "Toggle All Armor\n\n", bold = true, color = color.primary},
+			{text = "Toggles visibility of all armor parts.", color = color.secondary}}
+		)
 		:hoverColor(color.hover)
 		:toggleColor(color.active)
 		:toggled(helmet and chestplate and leggings and boots and shell)
 	
 	t.helmetPage
-		:title(color.primary.."Toggle Helmet\n\n"..color.secondary.."Toggles visibility of helmet parts.")
+		:title(toJson
+			{"",
+			{text = "Toggle Helmet\n\n", bold = true, color = color.primary},
+			{text = "Toggles visibility of helmet parts.", color = color.secondary}}
+		)
 		:hoverColor(color.hover)
 		:toggleColor(color.active)
 		:toggled(helmet)
 	
 	t.chestplatePage
-		:title(color.primary.."Toggle Chestplate\n\n"..color.secondary.."Toggles visibility of chestplate parts.")
+		:title(toJson
+			{"",
+			{text = "Toggle Chestplate\n\n", bold = true, color = color.primary},
+			{text = "Toggles visibility of chestplate parts.", color = color.secondary}}
+		)
 		:hoverColor(color.hover)
 		:toggleColor(color.active)
 		:toggled(chestplate)
 	
 	t.leggingsPage
-		:title(color.primary.."Toggle Leggings\n\n"..color.secondary.."Toggles visibility of leggings parts.")
+		:title(toJson
+			{"",
+			{text = "Toggle Leggings\n\n", bold = true, color = color.primary},
+			{text = "Toggles visibility of leggings parts.", color = color.secondary}}
+		)
 		:hoverColor(color.hover)
 		:toggleColor(color.active)
 		:toggled(leggings)
 	
 	t.bootsPage
-		:title(color.primary.."Toggle Boots\n\n"..color.secondary.."Toggles visibility of boots.")
+		:title(toJson
+			{"",
+			{text = "Toggle Boots\n\n", bold = true, color = color.primary},
+			{text = "Toggles visibility of boots.", color = color.secondary}}
+		)
 		:hoverColor(color.hover)
 		:toggleColor(color.active)
 		:toggled(boots)
 	
 	t.shellPage
-		:title(color.primary.."Toggle Shell Armor\n\n"..color.secondary.."Toggles visibility of armor on shell.")
+		:title(toJson
+			{"",
+			{text = "Toggle Shell Armor\n\n", bold = true, color = color.primary},
+			{text = "Toggles visibility of armor on shell.", color = color.secondary}}
+		)
 		:hoverColor(color.hover)
 		:toggleColor(color.active)
 		:toggled(shell)

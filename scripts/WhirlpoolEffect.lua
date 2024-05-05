@@ -96,12 +96,20 @@ t.dolphinsGracePage = action_wheel:newAction()
 function events.TICK()
 	
 	t.bubblePage
-		:title(color.primary.."Whirlpool Effect Toggle\n\n"..color.secondary.."Toggles the whirlpool created while swimming.")
+		:title(toJson
+			{"",
+			{text = "Whirlpool Effect Toggle\n\n", bold = true, color = color.primary},
+			{text = "Toggles the whirlpool created while swimming.", color = color.secondary}}
+		)
 		:hoverColor(color.hover)
 		:toggleColor(color.active)
 	
 	t.dolphinsGracePage
-		:title(color.primary.."Dolphin's Grace Toggle\n\n"..color.secondary.."Toggles the whirlpool based on having the Dolphin's Grace Effect.")
+		:title(toJson
+			{"",
+			{text = "Dolphin's Grace Toggle\n\n", bold = true, color = color.primary},
+			{text = "Toggles the whirlpool based on having the Dolphin's Grace Effect.", color = color.secondary}}
+		)
 		:hoverColor(color.hover)
 		:toggleColor(color.active)
 	
