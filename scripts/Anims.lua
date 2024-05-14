@@ -332,13 +332,10 @@ t.laughPage = action_wheel:newAction()
 	:item(itemCheck("cookie"))
 	:onLeftClick(pings.animPlayLaugh)
 
-t.frontFlipPage = action_wheel:newAction()
+t.flipPage = action_wheel:newAction()
 	:item(itemCheck("music_disc_wait"))
 	:onLeftClick(pings.animPlayFrontFlip)
-
-t.backFlipPage = action_wheel:newAction()
-	:item(itemCheck("music_disc_blocks"))
-	:onLeftClick(pings.animPlayBackFlip)
+	:onRightClick(pings.animPlayBackFlip)
 
 -- Update action page info
 function events.TICK()
@@ -355,15 +352,11 @@ function events.TICK()
 		)
 		:hoverColor(color.hover)
 	
-	t.frontFlipPage
+	t.flipPage
 		:title(toJson
-			{text = "Play Front Flip animation", bold = true, color = color.primary}
-		)
-		:hoverColor(color.hover)
-	
-	t.backFlipPage
-		:title(toJson
-			{text = "Play Back Flip animation", bold = true, color = color.primary}
+			{"",
+			{text = "Play Flip animation\n\n", bold = true, color = color.primary},
+			{text = "Left click to Frontflip, right click to Backflip.\nMust not be on the ground.", color = color.secondary}}
 		)
 		:hoverColor(color.hover)
 	
