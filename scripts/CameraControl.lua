@@ -113,6 +113,9 @@ function events.RENDER(delta, context)
 		renderer:offsetCameraRot(pose.sleep and renderer:isFirstPerson() and vec(0, 180, 0) or 0)
 		
 	end
+	
+	head:visible(context ~= "OTHER")
+	
 end
 
 -- Camera pos toggle
