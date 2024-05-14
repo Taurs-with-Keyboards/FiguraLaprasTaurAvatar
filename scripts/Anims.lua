@@ -67,7 +67,7 @@ function events.TICK()
 	local waterSwim      =     walking and ((inWater or player:getVehicle()) and not onGround) and not pose.elytra and not underwater
 	local underwaterIdle = vel:length() == 0 and underwater and (not onGround or pose.swim) and not pose.elytra
 	local underwaterSwim = vel:length() ~= 0 and underwater and (not onGround or pose.swim) and not pose.elytra
-	local extend         = pose.swim or pose.elytra
+	local extend         = pose.swim or pose.elytra or pose.spin
 	local climb          = pose.climb and not onGround
 	local elytra         = pose.elytra
 	local sleep          = pose.sleep
@@ -93,7 +93,7 @@ function events.TICK()
 	anims.breathe:playing(breathe)
 	
 	-- Allow root rotations
-	local vanillaRot = not (anims.extend:isPlaying() or sleep)
+	local vanillaRot = not (anims.extend:isPlaying() and not pose.spin or sleep)
 	renderer:rootRotationAllowed(vanillaRot)
 	
 	-- Sleep animations
@@ -180,7 +180,9 @@ function events.RENDER(delta, context)
 			local sleepRot = dirRot[block.properties["facing"]]
 			
 			-- Apply
-			models:rot(0, sleepRot, 0)
+			models
+				:rot(0, sleepRot, 0)
+				:pos(0)
 			
 		else
 			
@@ -188,14 +190,24 @@ function events.RENDER(delta, context)
 			local yaw = ((player:getBodyYaw(delta) + 180) % 360 - 180)
 			
 			-- Apply
-			models:rot(math.lerp(0, -rot.x, extendRot.currentPos), -yaw + 180, 0)
+			models
+				:rot(math.lerp(0, -rot.x, extendRot.currentPos), -yaw + 180, 0)
+				:pos(0)
 			
 		end
+		
+	elseif pose.spin then
+		
+		models
+			:rot(90, 0, 0)
+			:pos(0, 0, -8)
 		
 	else
 		
 		-- Reset rotation
-		models:rot(0)
+		models
+			:rot(0)
+			:pos(0)
 		
 	end
 	
