@@ -10,6 +10,7 @@ This Figura avatar is a template designed around turning the user into a Lapras-
 - Jimmy (QA, Animation code)
 - Squishy (APIs)
 - 4P5 (APIs, Better Action Wheel)
+- PoolloverNathan (JSONs)
 - Dragonearuss (Support)
 - The Cobblemon Team (Original models, animations, textures, icons, and sounds)
 - The Pokemon Company (Lapras design)
