@@ -67,7 +67,7 @@ function events.TICK()
 	local waterSwim      =     walking and ((inWater or player:getVehicle()) and not onGround) and not pose.elytra and not underwater
 	local underwaterIdle = vel:length() == 0 and underwater and (not onGround or pose.swim) and not pose.elytra
 	local underwaterSwim = vel:length() ~= 0 and underwater and (not onGround or pose.swim) and not pose.elytra
-	local extend         = pose.swim or pose.elytra
+	local extend         = pose.swim or pose.elytra or pose.spin
 	local climb          = pose.climb and not onGround
 	local elytra         = pose.elytra
 	local sleep          = pose.sleep
@@ -93,7 +93,7 @@ function events.TICK()
 	anims.breathe:playing(breathe)
 	
 	-- Allow root rotations
-	local vanillaRot = not (anims.extend:isPlaying() or sleep)
+	local vanillaRot = not (anims.extend:isPlaying() and not pose.spin or sleep)
 	renderer:rootRotationAllowed(vanillaRot)
 	
 	-- Sleep animations
@@ -180,7 +180,9 @@ function events.RENDER(delta, context)
 			local sleepRot = dirRot[block.properties["facing"]]
 			
 			-- Apply
-			models:rot(0, sleepRot, 0)
+			models
+				:rot(0, sleepRot, 0)
+				:pos(0)
 			
 		else
 			
@@ -188,14 +190,24 @@ function events.RENDER(delta, context)
 			local yaw = ((player:getBodyYaw(delta) + 180) % 360 - 180)
 			
 			-- Apply
-			models:rot(math.lerp(0, -rot.x, extendRot.currentPos), -yaw + 180, 0)
+			models
+				:rot(math.lerp(0, -rot.x, extendRot.currentPos), -yaw + 180, 0)
+				:pos(0)
 			
 		end
+		
+	elseif pose.spin then
+		
+		models
+			:rot(90, 0, 0)
+			:pos(0, 0, -8)
 		
 	else
 		
 		-- Reset rotation
-		models:rot(0)
+		models
+			:rot(0)
+			:pos(0)
 		
 	end
 	
@@ -208,23 +220,23 @@ end
 
 -- GS Blending Setup
 local blendAnims = {
-	{ anim = anims.groundIdle,     ticks = 7  },
-	{ anim = anims.groundWalk,     ticks = 7  },
-	{ anim = anims.waterIdle,      ticks = 7  },
-	{ anim = anims.waterSwim,      ticks = 7  },
-	{ anim = anims.underwaterIdle, ticks = 7  },
-	{ anim = anims.underwaterSwim, ticks = 7  },
-	{ anim = anims.extend,         ticks = 14 },
-	{ anim = anims.climb,          ticks = 7  },
-	{ anim = anims.elytra,         ticks = 7  },
-	{ anim = anims.stretch,        ticks = 7  },
-	{ anim = anims.laugh,          ticks = 7  },
-	{ anim = anims.napDown,        ticks = 7  },
-	{ anim = anims.napUp,          ticks = 7  }
+	{ anim = anims.groundIdle,     ticks = {7,7}   },
+	{ anim = anims.groundWalk,     ticks = {7,7}   },
+	{ anim = anims.waterIdle,      ticks = {7,7}   },
+	{ anim = anims.waterSwim,      ticks = {7,7}   },
+	{ anim = anims.underwaterIdle, ticks = {7,7}   },
+	{ anim = anims.underwaterSwim, ticks = {7,7}   },
+	{ anim = anims.extend,         ticks = {14,14} },
+	{ anim = anims.climb,          ticks = {7,7}   },
+	{ anim = anims.elytra,         ticks = {7,7}   },
+	{ anim = anims.stretch,        ticks = {7,7}   },
+	{ anim = anims.laugh,          ticks = {7,7}   },
+	{ anim = anims.napDown,        ticks = {7,7}   },
+	{ anim = anims.napUp,          ticks = {7,7}   }
 }
 	
 for _, blend in ipairs(blendAnims) do
-	blend.anim:blendTime(blend.ticks):onBlend("easeOutQuad")
+	blend.anim:blendTime(table.unpack(blend.ticks)):onBlend("easeOutQuad")
 end
 
 -- Fixing spyglass jank
@@ -332,31 +344,32 @@ t.laughPage = action_wheel:newAction()
 	:item(itemCheck("cookie"))
 	:onLeftClick(pings.animPlayLaugh)
 
-t.frontFlipPage = action_wheel:newAction()
+t.flipPage = action_wheel:newAction()
 	:item(itemCheck("music_disc_wait"))
 	:onLeftClick(pings.animPlayFrontFlip)
-
-t.backFlipPage = action_wheel:newAction()
-	:item(itemCheck("music_disc_blocks"))
-	:onLeftClick(pings.animPlayBackFlip)
+	:onRightClick(pings.animPlayBackFlip)
 
 -- Update action page info
 function events.TICK()
 	
 	t.stretchPage
-		:title(color.primary.."Play Stretch animation")
+		:title(toJson
+			{text = "Play Stretch animation", bold = true, color = color.primary}
+		)
 		:hoverColor(color.hover)
 	
 	t.laughPage
-		:title(color.primary.."Play Laugh animation")
+		:title(toJson
+			{text = "Play Laugh animation", bold = true, color = color.primary}
+		)
 		:hoverColor(color.hover)
 	
-	t.frontFlipPage
-		:title(color.primary.."Play Front Flip animation")
-		:hoverColor(color.hover)
-	
-	t.backFlipPage
-		:title(color.primary.."Play Back Flip animation")
+	t.flipPage
+		:title(toJson
+			{"",
+			{text = "Play Flip animation\n\n", bold = true, color = color.primary},
+			{text = "Left click to Frontflip, right click to Backflip.\nMust not be on the ground.", color = color.secondary}}
+		)
 		:hoverColor(color.hover)
 	
 end

@@ -205,23 +205,43 @@ t.waterPage = action_wheel:newAction()
 function events.TICK()
 	
 	t.togglePage
-		:title(color.primary.."Toggle Glowing Eyes\n\n"..color.secondary.."Toggles the glowing of the eyes.")
+		:title(toJson
+			{"",
+			{text = "Toggle Glowing Eyes\n\n", bold = true, color = color.primary},
+			{text = "Toggles the glowing of the eyes.\n\n", color = color.secondary},
+			{text = "WARNING: ", bold = true, color = "dark_red"},
+			{text = "This feature has a tendency to not work correctly.\nDue to the rendering properties of emissives, the eyes may not glow.\nIf it does not work, please reload the avatar. Rinse and Repeat.\nThis is the only fix, I have tried everything.\n\n- Total", color = "red"}}
+		)
 		:hoverColor(color.hover)
 		:toggleColor(color.active)
 		:toggled(toggle)
 	
 	t.powerPage
-		:title(color.primary.."Origins Power Toggle\n\n"..color.secondary.."Toggles the glowing based on Origin's underwater sight power.\nThe eyes will only glow when this power is active.")
+		:title(toJson
+			{"",
+			{text = "Origins Power Toggle\n\n", bold = true, color = color.primary},
+			{text = "Toggles the glowing based on Origin's underwater sight power.\nThe eyes will only glow when this power is active.", color = color.secondary}}
+		)
 		:hoverColor(color.hover)
 		:toggleColor(color.active)
 	
 	t.nightVisionPage
-		:title(color.primary.."Night Vision Toggle\n\n"..color.secondary.."Toggles the glowing based on having the Night Vision effect.\nThis setting will §lOVERRIDE "..color.secondary.."the other subsettings.")
+		:title(toJson
+			{"",
+			{text = "Night Vision Toggle\n\n", bold = true, color = color.primary},
+			{text = "Toggles the glowing based on having the Night Vision effect.\nThis setting will ", color = color.secondary},
+			{text = "OVERRIDE ", bold = true, color = color.secondary},
+			{text = "the other subsettings.", color = color.secondary}}
+		)
 		:hoverColor(color.hover)
 		:toggleColor(color.active)
 	
 	t.waterPage
-		:title(color.primary.."Water Sensitivity Toggle\n\n"..color.secondary.."Toggles the glowing sensitivity to water.\nThe eyes will only glow when underwater.")
+		:title(toJson
+			{"",
+			{text = "Water Sensitivity Toggle\n\n", bold = true, color = color.primary},
+			{text = "Toggles the glowing sensitivity to water.\nThe eyes will only glow when underwater.", color = color.secondary}}
+		)
 		:hoverColor(color.hover)
 		:toggleColor(color.active)
 	

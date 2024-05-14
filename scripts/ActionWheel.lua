@@ -85,42 +85,60 @@ local pageActions = {
 function events.TICK()
 	
 	pageActions.avatar
-		:title(color.primary.."Avatar Settings")
+		:title(toJson
+			{text = "Avatar Settings", bold = true, color = color.primary}
+		)
 		:hoverColor(color.hover)
 	
 	pageActions.pokemon
-		:title(color.primary.."Pokemon Settings")
+		:title(toJson
+			{text = "Pokemon Settings", bold = true, color = color.primary}
+		)
 		:hoverColor(color.hover)
 	
 	pageActions.anims
-		:title(color.primary.."Animations")
+		:title(toJson
+			{text = "Animations", bold = true, color = color.primary}
+		)
 		:hoverColor(color.hover)
 	
 	pageActions.armor
-		:title(color.primary.."Armor Settings")
+		:title(toJson
+			{text = "Armor Settings", bold = true, color = color.primary}
+		)
 		:hoverColor(color.hover)
 	
 	pageActions.camera
-		:title(color.primary.."Camera Settings")
+		:title(toJson
+			{text = "Camera Settings", bold = true, color = color.primary}
+		)
 		:hoverColor(color.hover)
 	
 	pageActions.fall
-		:title(color.primary.."Fall Sound Settings")
+		:title(toJson
+			{text = "Fall Sound Settings", bold = true, color = color.primary}
+		)
 		:hoverColor(color.hover)
 	
 	pageActions.whirlpool
-		:title(color.primary.."Whirlpool Settings")
+		:title(toJson
+			{text = "Whirlpool Settings", bold = true, color = color.primary}
+		)
 		:hoverColor(color.hover)
 	
 	pageActions.eyes
-		:title(color.primary.."Glowing Eyes Settings")
+		:title(toJson
+			{text = "Glowing Eyes Settings", bold = true, color = color.primary}
+		)
 		:hoverColor(color.hover)
 	
 end
 
 -- Action back to previous page
 local backAction = action_wheel:newAction()
-	:title("§c§lGo Back?")
+	:title(toJson
+		{text = "Go Back?", bold = true, color = "red"}
+	)
 	:hoverColor(vectors.hexToRGB("FF5555"))
 	:item(itemCheck("barrier"))
 	:onLeftClick(function() ascend() end)
@@ -160,6 +178,7 @@ pages.camera
 	:action( -1, camera.eyePage)
 	:action( -1, backAction)
 
+-- Pokemon actions
 pages.pokemon
 	:action( -1, color.shinyPage)
 	:action( -1, pageActions.fall)
@@ -190,7 +209,6 @@ pages.eyes
 pages.anims
 	:action( -1, anims.stretchPage)
 	:action( -1, anims.laughPage)
-	:action( -1, anims.frontFlipPage)
-	:action( -1, anims.backFlipPage)
+	:action( -1, anims.flipPage)
 	:action( -1, arms.movePage)
 	:action( -1, backAction)
