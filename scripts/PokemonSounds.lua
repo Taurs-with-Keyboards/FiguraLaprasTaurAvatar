@@ -4,7 +4,7 @@ local average       = require("lib.Average")
 
 -- Keybind config
 config:name("LaprasTaur")
-local bind = config:load("PokemonCryKeybind") or "key.keyboard.c"
+local bind = config:load("PokemonCryKeybind") or "key.keyboard.keypad.7"
 
 function events.TICK()
 	
