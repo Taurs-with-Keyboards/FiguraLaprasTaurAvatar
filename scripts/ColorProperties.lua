@@ -58,7 +58,7 @@ function events.TICK()
 	t.secondary = "#"..(shiny and "F3C9B9" or "EFDBBC")
 	
 	-- Shiny textures
-	local textureType = shiny and textures["textures.lapras_shiny"] or textures["textures.lapras"]
+	local textureType = shiny and (textures["textures.lapras_shiny"] or textures["models.LaprasTaur.lapras_shiny"]) or (textures["textures.lapras"] or textures["models.LaprasTaur.lapras"])
 	for _, part in ipairs(shinyParts) do
 		part:primaryTexture("Custom", textureType)
 	end
