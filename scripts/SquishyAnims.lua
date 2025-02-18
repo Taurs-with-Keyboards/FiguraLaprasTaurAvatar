@@ -27,9 +27,6 @@ squapi.smoothHeadNeck(
 	false
 )
 
--- Squishy crounch
-squapi.crouch(anims.crouch)
-
 -- Ear animations
 squapi.ear(
 	pokemonParts.LeftEar,
@@ -135,9 +132,6 @@ function events.RENDER(delta, context)
 	
 	-- Render lerp
 	offset.currentPos = math.lerp(offset.current, offset.nextTick, delta)
-	
-	-- Set upper pivot to proper pos when crouching
-	pokemonParts.UpperBody:offsetPivot(anims.crouch:isPlaying() and -pokemonParts.UpperBody:getAnimPos() or 0)
 	
 	-- Offset smooth torso itself
 	pokemonParts.Neck:offsetRot(math.lerp(pokemonParts.Neck:getOffsetRot(), 0, offset.currentPos))

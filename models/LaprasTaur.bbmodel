@@ -36554,61 +36554,6 @@
 			}
 		},
 		{
-			"uuid": "42b462a9-84cd-7ffd-f9aa-00b631820d9e",
-			"name": "crouch",
-			"loop": "loop",
-			"override": false,
-			"length": 0,
-			"snapping": 24,
-			"selected": false,
-			"anim_time_update": "",
-			"blend_weight": "",
-			"start_delay": "",
-			"loop_delay": "",
-			"animators": {
-				"bca9777c-17aa-21f6-e00f-69572bbfb627": {
-					"name": "Player",
-					"type": "bone",
-					"keyframes": [
-						{
-							"channel": "position",
-							"data_points": [
-								{
-									"x": "0",
-									"y": "2",
-									"z": "0"
-								}
-							],
-							"uuid": "7ff7b8ef-2463-868c-ff10-d79fbf6bc922",
-							"time": 0,
-							"color": -1,
-							"interpolation": "linear"
-						}
-					]
-				},
-				"24ba5e67-cfd8-ec37-65ba-bb7905aeea2a": {
-					"name": "UpperBody",
-					"type": "bone",
-					"keyframes": [
-						{
-							"channel": "position",
-							"data_points": [
-								{
-									"x": "0",
-									"y": "0",
-									"z": "-5"
-								}
-							],
-							"uuid": "15fdd1eb-414b-c364-8029-1cac51ce1388",
-							"time": 0,
-							"color": -1,
-							"interpolation": "linear"
-						}
-					]
-				}
-			}
-		},
-		{
 			"uuid": "8b45aa28-4045-7f76-c169-29ebfbdf6e7b",
 			"name": "stretch",
 			"loop": "once",
