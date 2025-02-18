@@ -30770,7 +30770,6 @@
 			"to": [0.5, 41.5, -11.5],
 			"autouv": 0,
 			"color": 0,
-			"rotation": [0, 0, 0],
 			"origin": [0, 0, 0],
 			"faces": {
 				"north": {
