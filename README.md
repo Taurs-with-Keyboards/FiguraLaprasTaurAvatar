@@ -16,6 +16,9 @@ This Figura avatar is a template designed around turning the user into a Lapras-
 - The Pokemon Company (Lapras design)
 - Total (Avatar Maker)
 
+### Origin Datapack:
+- [Laprastaur Origin](https://github.com/PsychoBreadstick/Laprastaur-Origin) (Created by Psycho Breadstick)
+
 ## Features
 Section under construction
 
