@@ -1,6 +1,6 @@
 -- Required scripts
 local pokemonParts = require("lib.GroupIndex")(models.LaprasTaur)
-local squapi       = require("lib.SquAPI")
+local squapi       = require("lib.SquAPIOld")
 local ground       = require("lib.GroundCheck")
 local pose         = require("scripts.Posing")
 
