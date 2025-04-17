@@ -241,6 +241,7 @@ local blendAnims = {
 	{ anim = anims.napUp,          ticks = {7,7}   }
 }
 	
+-- Apply GS Blending
 for _, blend in ipairs(blendAnims) do
 	if blend.anim ~= nil then
 		blend.anim:blendTime(table.unpack(blend.ticks)):blendCurve("easeOutQuad")
