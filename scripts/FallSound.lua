@@ -130,23 +130,27 @@ t.dryPage = action_wheel:newAction()
 function events.TICK()
 	
 	t.soundPage
-		:title(toJson
-			{"",
-			{text = "Toggle Falling Sound\n\n", bold = true, color = color.primary},
-			{text = "Toggles floping sound effects when landing on the ground.\nWhen inside your pokeball, a different sound plays.", color = color.secondary}}
-		)
+		:title(toJson(
+			{
+				"",
+				{text = "Toggle Falling Sound\n\n", bold = true, color = color.primary},
+				{text = "Toggles floping sound effects when landing on the ground.\nWhen inside your pokeball, a different sound plays.", color = color.secondary}
+			}
+		))
 		:hoverColor(color.hover)
 		:toggleColor(color.active)
 	
 	t.dryPage
-		:title(toJson
-			{"",
-			{text = "Toggle Drying/Timer\n\n", bold = true, color = color.primary},
-			{text = "Toggles the ability to dry, and how long it takes to dry off.\n\n", color = color.secondary},
-			{text = "Current drying timer: ", bold = true, color = color.secondary},
-			{text = (canDry and ((dryTimer / 20).." Seconds") or "None").."\n\n"},
-			{text = "Scroll to adjust the timer.\nRight click resets timer to 20 seconds.", color = color.secondary}}
-		)
+		:title(toJson(
+			{
+				"",
+				{text = "Toggle Drying/Timer\n\n", bold = true, color = color.primary},
+				{text = "Toggles the ability to dry, and how long it takes to dry off.\n\n", color = color.secondary},
+				{text = "Current drying timer: ", bold = true, color = color.secondary},
+				{text = (canDry and ((dryTimer / 20).." Seconds") or "None").."\n\n"},
+				{text = "Scroll to adjust the timer.\nRight click resets timer to 20 seconds.", color = color.secondary}
+			}
+		))
 		:hoverColor(color.hover)
 		:toggleColor(color.active)
 	

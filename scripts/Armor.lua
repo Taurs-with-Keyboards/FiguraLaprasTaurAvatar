@@ -466,61 +466,73 @@ t.shellPage = action_wheel:newAction()
 function events.TICK()
 	
 	t.allPage
-		:title(toJson
-			{"",
-			{text = "Toggle All Armor\n\n", bold = true, color = color.primary},
-			{text = "Toggles visibility of all armor parts.", color = color.secondary}}
-		)
+		:title(toJson(
+			{
+				"",
+				{text = "Toggle All Armor\n\n", bold = true, color = color.primary},
+				{text = "Toggles visibility of all armor parts.", color = color.secondary}
+			}
+		))
 		:hoverColor(color.hover)
 		:toggleColor(color.active)
 		:toggled(helmet and chestplate and leggings and boots and shell)
 	
 	t.helmetPage
-		:title(toJson
-			{"",
-			{text = "Toggle Helmet\n\n", bold = true, color = color.primary},
-			{text = "Toggles visibility of helmet parts.", color = color.secondary}}
-		)
+		:title(toJson(
+			{
+				"",
+				{text = "Toggle Helmet\n\n", bold = true, color = color.primary},
+				{text = "Toggles visibility of helmet parts.", color = color.secondary}
+			}
+		))
 		:hoverColor(color.hover)
 		:toggleColor(color.active)
 		:toggled(helmet)
 	
 	t.chestplatePage
-		:title(toJson
-			{"",
-			{text = "Toggle Chestplate\n\n", bold = true, color = color.primary},
-			{text = "Toggles visibility of chestplate parts.", color = color.secondary}}
-		)
+		:title(toJson(
+			{
+				"",
+				{text = "Toggle Chestplate\n\n", bold = true, color = color.primary},
+				{text = "Toggles visibility of chestplate parts.", color = color.secondary}
+			}
+		))
 		:hoverColor(color.hover)
 		:toggleColor(color.active)
 		:toggled(chestplate)
 	
 	t.leggingsPage
-		:title(toJson
-			{"",
-			{text = "Toggle Leggings\n\n", bold = true, color = color.primary},
-			{text = "Toggles visibility of leggings parts.", color = color.secondary}}
-		)
+		:title(toJson(
+			{
+				"",
+				{text = "Toggle Leggings\n\n", bold = true, color = color.primary},
+				{text = "Toggles visibility of leggings parts.", color = color.secondary}
+			}
+		))
 		:hoverColor(color.hover)
 		:toggleColor(color.active)
 		:toggled(leggings)
 	
 	t.bootsPage
-		:title(toJson
-			{"",
-			{text = "Toggle Boots\n\n", bold = true, color = color.primary},
-			{text = "Toggles visibility of boots.", color = color.secondary}}
-		)
+		:title(toJson(
+			{
+				"",
+				{text = "Toggle Boots\n\n", bold = true, color = color.primary},
+				{text = "Toggles visibility of boots.", color = color.secondary}
+			}
+		))
 		:hoverColor(color.hover)
 		:toggleColor(color.active)
 		:toggled(boots)
 	
 	t.shellPage
-		:title(toJson
-			{"",
-			{text = "Toggle Shell Armor\n\n", bold = true, color = color.primary},
-			{text = "Toggles visibility of armor on shell.", color = color.secondary}}
-		)
+		:title(toJson(
+			{
+				"",
+				{text = "Toggle Shell Armor\n\n", bold = true, color = color.primary},
+				{text = "Toggles visibility of armor on shell.", color = color.secondary}
+			}
+		))
 		:hoverColor(color.hover)
 		:toggleColor(color.active)
 		:toggled(shell)

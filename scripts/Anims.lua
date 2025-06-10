@@ -361,23 +361,25 @@ t.flipPage = action_wheel:newAction()
 function events.TICK()
 	
 	t.stretchPage
-		:title(toJson
+		:title(toJson(
 			{text = "Play Stretch animation", bold = true, color = color.primary}
-		)
+		))
 		:hoverColor(color.hover)
 	
 	t.laughPage
-		:title(toJson
+		:title(toJson(
 			{text = "Play Laugh animation", bold = true, color = color.primary}
-		)
+		))
 		:hoverColor(color.hover)
 	
 	t.flipPage
-		:title(toJson
-			{"",
-			{text = "Play Flip animation\n\n", bold = true, color = color.primary},
-			{text = "Left click to Frontflip, right click to Backflip.\nMust not be on the ground.", color = color.secondary}}
-		)
+		:title(toJson(
+			{
+				"",
+				{text = "Play Flip animation\n\n", bold = true, color = color.primary},
+				{text = "Left click to Frontflip, right click to Backflip.\nMust not be on the ground.", color = color.secondary}
+			}
+		))
 		:hoverColor(color.hover)
 	
 end

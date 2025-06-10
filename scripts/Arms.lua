@@ -148,11 +148,13 @@ t.movePage = action_wheel:newAction()
 function events.TICK()
 	
 	t.movePage
-		:title(toJson
-			{"",
-			{text = "Arm Movement Toggle\n\n", bold = true, color = color.primary},
-			{text = "Toggles the movement swing movement of the arms.\nActions are not effected.", color = color.secondary}}
-		)
+		:title(toJson(
+			{
+				"",
+				{text = "Arm Movement Toggle\n\n", bold = true, color = color.primary},
+				{text = "Toggles the movement swing movement of the arms.\nActions are not effected.", color = color.secondary}
+			}
+		))
 		:hoverColor(color.hover)
 		:toggleColor(color.active)
 	
