@@ -1,5 +1,5 @@
 -- Required scripts
-local pokemonParts = require("lib.GroupIndex")(models.models.LaprasTaur)
+local pokemonParts = require("lib.GroupIndex")(models.LaprasTaur)
 local carrier      = require("lib.GSCarrier")
 
 -- GSCarrier rider

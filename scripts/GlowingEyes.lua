@@ -1,5 +1,5 @@
 -- Required scripts
-local pokemonParts = require("lib.GroupIndex")(models.models.LaprasTaur)
+local pokemonParts = require("lib.GroupIndex")(models.LaprasTaur)
 local origins      = require("lib.OriginsAPI")
 local itemCheck    = require("lib.ItemCheck")
 local effects      = require("scripts.SyncedVariables")

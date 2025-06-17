@@ -1,13 +1,13 @@
 -- Required scripts
 require("lib.GSAnimBlend")
-local pokemonParts = require("lib.GroupIndex")(models.models.LaprasTaur)
+local pokemonParts = require("lib.GroupIndex")(models.LaprasTaur)
 local ground       = require("lib.GroundCheck")
 local itemCheck    = require("lib.ItemCheck")
 local pose         = require("scripts.Posing")
 local color        = require("scripts.ColorProperties")
 
 -- Animations setup
-local anims = animations["models.LaprasTaur"]
+local anims = animations.LaprasTaur
 anims.napHold:priority(1)
 
 -- Config setup

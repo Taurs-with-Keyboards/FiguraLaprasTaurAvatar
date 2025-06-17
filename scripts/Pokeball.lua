@@ -1,12 +1,12 @@
 -- Required scripts
-local pokemonParts  = require("lib.GroupIndex")(models.models.LaprasTaur)
-local pokeballParts = require("lib.GroupIndex")(models.models.Pokeball)
+local pokemonParts  = require("lib.GroupIndex")(models.LaprasTaur)
+local pokeballParts = require("lib.GroupIndex")(models.Pokeball)
 local squapi        = require("lib.SquAPI")
 local itemCheck     = require("lib.ItemCheck")
 local color         = require("scripts.ColorProperties")
 
 -- Animations setup
-local anims = animations["models.Pokeball"]
+local anims = animations.Pokeball
 
 -- Config setup
 config:name("LaprasTaur")

@@ -1,11 +1,11 @@
 -- Required scripts
-local pokemonParts = require("lib.GroupIndex")(models.models.LaprasTaur)
+local pokemonParts = require("lib.GroupIndex")(models.LaprasTaur)
 local squapi       = require("lib.SquAPI")
 local ground       = require("lib.GroundCheck")
 local pose         = require("scripts.Posing")
 
 -- Animation setup
-local anims = animations["models.LaprasTaur"]
+local anims = animations.LaprasTaur
 
 -- Calculate parent's rotations
 local function calculateParentRot(m)
