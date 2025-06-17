@@ -1,15 +1,44 @@
--- Required scripts
+-- Disables code if not avatar host
+if not host:isHost() then return end
+
+-- Required script
 local itemCheck = require("lib.ItemCheck")
-local avatar    = require("scripts.Player")
-local armor     = require("scripts.Armor")
-local camera    = require("scripts.CameraControl")
-local color     = require("scripts.ColorProperties")
-local fall      = require("scripts.FallSound")
-local whirlpool = require("scripts.WhirlpoolEffect")
-local eyes      = require("scripts.GlowingEyes")
-local anims     = require("scripts.Anims")
-local arms      = require("scripts.Arms")
-local pokeball  = require("scripts.Pokeball")
+
+local s, avatar = pcall(require, "scripts.Player")
+if not s then avatar = {} end
+
+local s, armor = pcall(require, "scripts.Armor")
+if not s then armor = {} end
+
+local s, camera = pcall(require, "scripts.CameraControl")
+if not s then camera = {} end
+
+local s, whirlpool = pcall(require, "scripts.WhirlpoolEffect")
+if not s then whirlpool = {} end
+
+local s, fall = pcall(require, "scripts.FallSound")
+if not s then fall = {} end
+
+local s, anims = pcall(require, "scripts.Anims")
+if not s then anims = {} end
+
+local s, squapi = pcall(require, "scripts.SquishyAnims")
+if not s then squapi = {} end
+
+local s, pokeball = pcall(require, "scripts.Pokeball")
+if not s then pokeball = {} end
+
+local s, shiny = pcall(require, "scripts.Shiny")
+if not s then shiny = {} end
+
+local s, eyes = pcall(require, "scripts.GlowingEyes")
+if not s then eyes = {} end
+
+local s, arms = pcall(require, "scripts.Arms")
+if not s then arms = {} end
+
+local s, c = pcall(require, "scripts.ColorProperties")
+if not s then c = {} end
 
 -- Logs pages for navigation
 local navigation = {}
@@ -32,28 +61,28 @@ end
 -- Page setups
 local pages = {
 	
-	main      = action_wheel:newPage(),
-	avatar    = action_wheel:newPage(),
-	armor     = action_wheel:newPage(),
-	camera    = action_wheel:newPage(),
-	pokemon   = action_wheel:newPage(),
-	fall      = action_wheel:newPage(),
-	whirlpool = action_wheel:newPage(),
-	eyes      = action_wheel:newPage(),
-	anims     = action_wheel:newPage()
+	main      = action_wheel:newPage("Main"),
+	avatar    = action_wheel:newPage("Avatar"),
+	armor     = action_wheel:newPage("Armor"),
+	camera    = action_wheel:newPage("Camera"),
+	lapras    = action_wheel:newPage("Lapras"),
+	fall      = action_wheel:newPage("FallSound"),
+	whirlpool = action_wheel:newPage("Whirlpool"),
+	eyes      = action_wheel:newPage("Eyes"),
+	anims     = action_wheel:newPage("Anims")
 	
 }
 
 -- Page actions
-local pageActions = {
+local pageActs = {
 	
 	avatar = action_wheel:newAction()
 		:item(itemCheck("armor_stand"))
 		:onLeftClick(function() descend(pages.avatar) end),
 	
-	pokemon = action_wheel:newAction()
+	lapras = action_wheel:newAction()
 		:item(itemCheck("cobblemon:water_stone", "turtle_egg"))
-		:onLeftClick(function() descend(pages.pokemon) end),
+		:onLeftClick(function() descend(pages.lapras) end),
 	
 	anims = action_wheel:newAction()
 		:item(itemCheck("jukebox"))
@@ -81,61 +110,60 @@ local pageActions = {
 	
 }
 
--- Update action page info
-function events.TICK()
+-- Update actions
+function events.RENDER(delta, context)
 	
-	pageActions.avatar
-		:title(toJson(
-			{text = "Avatar Settings", bold = true, color = color.primary}
-		))
-		:hoverColor(color.hover)
-	
-	pageActions.pokemon
-		:title(toJson(
-			{text = "Pokemon Settings", bold = true, color = color.primary}
-		))
-		:hoverColor(color.hover)
-	
-	pageActions.anims
-		:title(toJson(
-			{text = "Animations", bold = true, color = color.primary}
-		))
-		:hoverColor(color.hover)
-	
-	pageActions.armor
-		:title(toJson(
-			{text = "Armor Settings", bold = true, color = color.primary}
-		))
-		:hoverColor(color.hover)
-	
-	pageActions.camera
-		:title(toJson(
-			{text = "Camera Settings", bold = true, color = color.primary}
-		))
-		:hoverColor(color.hover)
-	
-	pageActions.fall
-		:title(toJson(
-			{text = "Fall Sound Settings", bold = true, color = color.primary}
-		))
-		:hoverColor(color.hover)
-	
-	pageActions.whirlpool
-		:title(toJson(
-			{text = "Whirlpool Settings", bold = true, color = color.primary}
-		))
-		:hoverColor(color.hover)
-	
-	pageActions.eyes
-		:title(toJson(
-			{text = "Glowing Eyes Settings", bold = true, color = color.primary}
-		))
-		:hoverColor(color.hover)
+	if action_wheel:isEnabled() then
+		pageActs.avatar
+			:title(toJson(
+				{text = "Avatar Settings", bold = true, color = c.primary}
+			))
+		
+		pageActs.lapras
+			:title(toJson(
+				{text = "Lapras Settings", bold = true, color = c.primary}
+			))
+		
+		pageActs.anims
+			:title(toJson(
+				{text = "Animations", bold = true, color = c.primary}
+			))
+		
+		pageActs.armor
+			:title(toJson(
+				{text = "Armor Settings", bold = true, color = c.primary}
+			))
+		
+		pageActs.camera
+			:title(toJson(
+				{text = "Camera Settings", bold = true, color = c.primary}
+			))
+		
+		pageActs.fall
+			:title(toJson(
+				{text = "Fall Sound Settings", bold = true, color = c.primary}
+			))
+		
+		pageActs.whirlpool
+			:title(toJson(
+				{text = "Whirlpool Settings", bold = true, color = c.primary}
+			))
+		
+		pageActs.eyes
+			:title(toJson(
+				{text = "Glowing Eyes Settings", bold = true, color = c.primary}
+			))
+		
+		for _, act in pairs(pageActs) do
+			act:hoverColor(c.hover)
+		end
+		
+	end
 	
 end
 
 -- Action back to previous page
-local backAction = action_wheel:newAction()
+local backAct = action_wheel:newAction()
 	:title(toJson(
 		{text = "Go Back?", bold = true, color = "red"}
 	))
@@ -148,19 +176,18 @@ action_wheel:setPage(pages.main)
 
 -- Main actions
 pages.main
-	:action( -1, pageActions.avatar)
-	:action( -1, pageActions.pokemon)
-	:action( -1, pageActions.eyes)
-	:action( -1, pageActions.anims)
-	:action( -1, pokeball.togglePage)
+	:action( -1, pageActs.avatar)
+	:action( -1, pageActs.lapras)
+	:action( -1, pageActs.eyes)
+	:action( -1, pageActs.anims)
 
 -- Avatar actions
 pages.avatar
 	:action( -1, avatar.vanillaSkinPage)
 	:action( -1, avatar.modelPage)
-	:action( -1, pageActions.armor)
-	:action( -1, pageActions.camera)
-	:action( -1, backAction)
+	:action( -1, pageActs.armor)
+	:action( -1, pageActs.camera)
+	:action( -1, backAct)
 
 -- Armor actions
 pages.armor
@@ -170,32 +197,33 @@ pages.armor
 	:action( -1, armor.bootsPage)
 	:action( -1, armor.shellPage)
 	:action( -1, armor.allPage)
-	:action( -1, backAction)
+	:action( -1, backAct)
 
 -- Camera actions
 pages.camera
 	:action( -1, camera.posPage)
 	:action( -1, camera.eyePage)
-	:action( -1, backAction)
+	:action( -1, backAct)
 
--- Pokemon actions
-pages.pokemon
-	:action( -1, color.shinyPage)
-	:action( -1, pageActions.fall)
-	:action( -1, pageActions.whirlpool)
-	:action( -1, backAction)
+-- Lapras actions
+pages.lapras
+	:action( -1, pokeball.togglePage)
+	:action( -1, c.shinyPage)
+	:action( -1, pageActs.fall)
+	:action( -1, pageActs.whirlpool)
+	:action( -1, backAct)
 
 -- Flop sound actions
 pages.fall
 	:action( -1, fall.soundPage)
 	:action( -1, fall.dryPage)
-	:action( -1, backAction)
+	:action( -1, backAct)
 
 -- Whirlpool actions
 pages.whirlpool
 	:action( -1, whirlpool.bubblePage)
 	:action( -1, whirlpool.dolphinsGracePage)
-	:action( -1, backAction)
+	:action( -1, backAct)
 
 -- Eye glow actions
 pages.eyes
@@ -203,7 +231,7 @@ pages.eyes
 	:action( -1, eyes.powerPage)
 	:action( -1, eyes.nightVisionPage)
 	:action( -1, eyes.waterPage)
-	:action( -1, backAction)
+	:action( -1, backAct)
 
 -- Animation actions
 pages.anims
@@ -211,4 +239,4 @@ pages.anims
 	:action( -1, anims.laughPage)
 	:action( -1, anims.flipPage)
 	:action( -1, arms.movePage)
-	:action( -1, backAction)
+	:action( -1, backAct)
