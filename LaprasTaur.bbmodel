@@ -542,7 +542,7 @@
 			"uuid": "b6d30d2f-613e-dcee-93b6-628332277082"
 		},
 		{
-			"name": "Main",
+			"name": "Main_Shiny",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -586,7 +586,7 @@
 			"uuid": "c136fae5-5391-c75d-b39f-867b89395649"
 		},
 		{
-			"name": "Spike",
+			"name": "Spike_Shiny",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -629,7 +629,7 @@
 			"uuid": "a71dbf62-e580-4fb2-b7cf-896e6ded73d3"
 		},
 		{
-			"name": "Spike",
+			"name": "Spike_Shiny",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -672,7 +672,7 @@
 			"uuid": "46be90c8-352e-1b30-395d-990972c3d989"
 		},
 		{
-			"name": "Spike",
+			"name": "Spike_Shiny",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -715,7 +715,7 @@
 			"uuid": "51b34163-8a1f-1df5-43ad-52dcf1ea73b8"
 		},
 		{
-			"name": "Spike",
+			"name": "Spike_Shiny",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -758,7 +758,7 @@
 			"uuid": "38454ff4-2a14-dda7-b969-4e1bf47c7712"
 		},
 		{
-			"name": "Spike",
+			"name": "Spike_Shiny",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -801,7 +801,7 @@
 			"uuid": "610fa74b-043a-ff9d-6b5d-e061be803a58"
 		},
 		{
-			"name": "Spike",
+			"name": "Spike_Shiny",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -844,7 +844,7 @@
 			"uuid": "38344c40-82ef-9d6b-5cb9-ec51a2d8bc33"
 		},
 		{
-			"name": "Spike",
+			"name": "Spike_Shiny",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -887,7 +887,7 @@
 			"uuid": "03be26f5-710d-d40f-f5f0-5d582aceb9ff"
 		},
 		{
-			"name": "Spike",
+			"name": "Spike_Shiny",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -930,7 +930,7 @@
 			"uuid": "0db89506-dd3f-6c3b-e2f0-a2c8698885e4"
 		},
 		{
-			"name": "Spike",
+			"name": "Spike_Shiny",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -973,7 +973,7 @@
 			"uuid": "23d7fb78-1b85-9ae0-ad99-36bba241f17b"
 		},
 		{
-			"name": "Tail",
+			"name": "Tail_Shiny",
 			"color": 0,
 			"origin": [0, 0, 0],
 			"rotation": [0, 0, 0],
@@ -2194,7 +2194,7 @@
 			"uuid": "d9c72f0e-ac42-3f4a-c9f8-e4fbd0c6c21d"
 		},
 		{
-			"name": "Tail",
+			"name": "Tail_Shiny",
 			"color": 0,
 			"origin": [0, 0, 0],
 			"rotation": [0, 0, 0],
@@ -2591,7 +2591,7 @@
 			"uuid": "d344c88f-de96-c799-452c-1a8a9bd3482d"
 		},
 		{
-			"name": "Internal",
+			"name": "Internal_Shiny",
 			"color": 0,
 			"origin": [0, 0, 0],
 			"rotation": [0, 0, 0],
@@ -4236,7 +4236,7 @@
 			"uuid": "ef5df43d-60b0-1ab6-70eb-27ed900db51f"
 		},
 		{
-			"name": "Flipper",
+			"name": "Flipper_Shiny",
 			"color": 0,
 			"origin": [0, 0, 0],
 			"rotation": [0, 0, 0],
@@ -4853,7 +4853,7 @@
 			"uuid": "4b7c0e0f-a22c-bb7e-e0f2-06308867740e"
 		},
 		{
-			"name": "Flipper",
+			"name": "Flipper_Shiny",
 			"color": 0,
 			"origin": [0, 0, 0],
 			"rotation": [0, 0, 0],
@@ -7938,7 +7938,7 @@
 			"uuid": "4e28d41b-57ef-24cd-166e-342204d32836"
 		},
 		{
-			"name": "Flipper",
+			"name": "Flipper_Shiny",
 			"color": 0,
 			"origin": [0, 0, 0],
 			"rotation": [0, 0, 0],
@@ -9609,7 +9609,7 @@
 			"uuid": "eee29ffc-1777-7fe1-4608-049d30b1b456"
 		},
 		{
-			"name": "Flipper",
+			"name": "Flipper_Shiny",
 			"color": 0,
 			"origin": [0, 0, 0],
 			"rotation": [0, 0, 0],
@@ -11064,7 +11064,7 @@
 			"uuid": "9eafb428-d42d-578d-9fe4-d0d7bf159096"
 		},
 		{
-			"name": "Flipper",
+			"name": "Flipper_Shiny",
 			"color": 0,
 			"origin": [0, 0, 0],
 			"rotation": [0, 0, 0],
@@ -12243,7 +12243,7 @@
 			"uuid": "56f7e3d1-8a7f-007e-8ef4-9cf356812a76"
 		},
 		{
-			"name": "Horn",
+			"name": "Horn_Shiny",
 			"color": 0,
 			"origin": [0, 0, 0],
 			"rotation": [0, 0, 0],
@@ -12372,7 +12372,7 @@
 			"uuid": "97e98320-c1a4-27f2-bb56-283145639180"
 		},
 		{
-			"name": "Horn",
+			"name": "Horn_Shiny",
 			"color": 0,
 			"origin": [0, 0, 0],
 			"rotation": [0, 0, 0],
@@ -12501,7 +12501,7 @@
 			"uuid": "779aa70d-851e-a532-1e65-7c121ec252af"
 		},
 		{
-			"name": "Horn",
+			"name": "Horn_Shiny",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -12544,7 +12544,7 @@
 			"uuid": "a47e171d-54c8-29bb-16b6-1dc958e9a94f"
 		},
 		{
-			"name": "Ear",
+			"name": "Ear_Shiny",
 			"color": 0,
 			"origin": [0, 0, 0],
 			"rotation": [0, 0, 0],
@@ -12925,7 +12925,7 @@
 			"uuid": "785743f6-b4ee-1c0a-8f7a-9426f883da69"
 		},
 		{
-			"name": "Ear",
+			"name": "Ear_Shiny",
 			"color": 0,
 			"origin": [0, 0, 0],
 			"rotation": [0, 0, 0],
@@ -13306,7 +13306,7 @@
 			"uuid": "cd4bf742-f973-76e7-7eb6-3d345c51dcfa"
 		},
 		{
-			"name": "Ear",
+			"name": "Ear_Shiny",
 			"color": 0,
 			"origin": [0, 0, 0],
 			"rotation": [0, 0, 0],
@@ -13687,7 +13687,7 @@
 			"uuid": "640dd63e-76d3-79a1-e3f8-69942a47c1b3"
 		},
 		{
-			"name": "Ear",
+			"name": "Ear_Shiny",
 			"color": 0,
 			"origin": [0, 0, 0],
 			"rotation": [0, 0, 0],
@@ -14068,7 +14068,7 @@
 			"uuid": "db2f1983-c4ee-742d-d0b4-ebd578862821"
 		},
 		{
-			"name": "Flipper",
+			"name": "Flipper_Shiny",
 			"color": 0,
 			"origin": [0, 0, 0],
 			"rotation": [0, 0, 0],
@@ -16296,7 +16296,7 @@
 			"uuid": "eff74a36-635f-ed37-62bb-4fb59c45b8b4"
 		},
 		{
-			"name": "Flipper",
+			"name": "Flipper_Shiny",
 			"color": 0,
 			"origin": [0, 0, 0],
 			"rotation": [0, 0, 0],
@@ -17751,7 +17751,7 @@
 			"uuid": "1c259a93-2f27-3fd0-3f51-c5b62cf0e185"
 		},
 		{
-			"name": "Flipper",
+			"name": "Flipper_Shiny",
 			"color": 0,
 			"origin": [0, 0, 0],
 			"rotation": [0, 0, 0],
@@ -19459,7 +19459,7 @@
 			"uuid": "2b0b88df-67d7-4c31-7f57-a2f13970574e"
 		},
 		{
-			"name": "Neck",
+			"name": "Neck_Shiny",
 			"color": 0,
 			"origin": [0, 0, 0],
 			"rotation": [0, 0, 0],
@@ -20787,7 +20787,7 @@
 			"uuid": "7d871e99-5f64-68f9-ecde-703e399d873a"
 		},
 		{
-			"name": "External",
+			"name": "External_Shiny",
 			"color": 0,
 			"origin": [0, 0, 0],
 			"rotation": [0, 0, 0],
@@ -34877,6 +34877,47 @@
 			"uuid": "14a200ed-8a4d-d1a8-907f-42c44c505f29",
 			"relative_path": "textures/armor/trims/wildTrim.png",
 			"source": "data:image/png;base64,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"
+		}
+	],
+	"collections": [
+		{
+			"uuid": "c2ba8c82-4c09-3cf7-7872-e2dc23c4490c",
+			"name": "ShinyParts",
+			"export_codec": "",
+			"export_path": "",
+			"children": [
+				"c136fae5-5391-c75d-b39f-867b89395649",
+				"a71dbf62-e580-4fb2-b7cf-896e6ded73d3",
+				"46be90c8-352e-1b30-395d-990972c3d989",
+				"51b34163-8a1f-1df5-43ad-52dcf1ea73b8",
+				"38454ff4-2a14-dda7-b969-4e1bf47c7712",
+				"610fa74b-043a-ff9d-6b5d-e061be803a58",
+				"38344c40-82ef-9d6b-5cb9-ec51a2d8bc33",
+				"03be26f5-710d-d40f-f5f0-5d582aceb9ff",
+				"0db89506-dd3f-6c3b-e2f0-a2c8698885e4",
+				"23d7fb78-1b85-9ae0-ad99-36bba241f17b",
+				"d9c72f0e-ac42-3f4a-c9f8-e4fbd0c6c21d",
+				"d344c88f-de96-c799-452c-1a8a9bd3482d",
+				"f78e1df3-62a5-9895-42cd-233bab450905",
+				"4b7c0e0f-a22c-bb7e-e0f2-06308867740e",
+				"05235fc6-e370-5506-ac96-77c5bc1f291d",
+				"3f91d0e4-b562-b0d7-4e55-d5407f86af5f",
+				"6ca8a1e0-646f-0858-45c0-7750a6f34e62",
+				"bed00313-e5dc-fa22-e089-097d8c9f0511",
+				"97e98320-c1a4-27f2-bb56-283145639180",
+				"779aa70d-851e-a532-1e65-7c121ec252af",
+				"a47e171d-54c8-29bb-16b6-1dc958e9a94f",
+				"785743f6-b4ee-1c0a-8f7a-9426f883da69",
+				"cd4bf742-f973-76e7-7eb6-3d345c51dcfa",
+				"640dd63e-76d3-79a1-e3f8-69942a47c1b3",
+				"db2f1983-c4ee-742d-d0b4-ebd578862821",
+				"ae1ac44f-61a4-9351-e67a-1bdbe07e16f4",
+				"b25587fb-9b8a-f0b5-5bb3-682b616b60e9",
+				"57590a18-0abc-16be-14d7-162499affa9d",
+				"21a79191-2c3d-e1ba-45b9-72086106bdca",
+				"edf12ac6-687d-84bb-c3a8-afbf025d74ed"
+			],
+			"visibility": false
 		}
 	],
 	"animations": [
