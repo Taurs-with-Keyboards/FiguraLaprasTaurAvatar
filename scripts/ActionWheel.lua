@@ -183,8 +183,8 @@ pages.main
 
 -- Avatar actions
 pages.avatar
-	:action( -1, avatar.vanillaSkinPage)
-	:action( -1, avatar.modelPage)
+	:action( -1, avatar.vanillaSkinAct)
+	:action( -1, avatar.modelAct)
 	:action( -1, pageActs.armor)
 	:action( -1, pageActs.camera)
 	:action( -1, backAct)

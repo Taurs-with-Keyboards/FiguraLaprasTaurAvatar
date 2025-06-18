@@ -15,7 +15,7 @@
 	},
 	"elements": [
 		{
-			"name": "Head",
+			"name": "Head_Skin",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -57,7 +57,7 @@
 			"uuid": "efe68301-6f74-cd1b-b84e-bbeb5d48b3a8"
 		},
 		{
-			"name": "Layer",
+			"name": "HAT_Skin",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -102,7 +102,7 @@
 			"uuid": "9d97fb12-c104-2629-3c56-ed8db9de0c55"
 		},
 		{
-			"name": "Body",
+			"name": "Body_Skin",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -145,7 +145,7 @@
 			"uuid": "1e502a9f-91c5-2876-6c70-f42c82ad9185"
 		},
 		{
-			"name": "Layer",
+			"name": "JACKET_Skin",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -190,7 +190,7 @@
 			"uuid": "267f2068-bba6-f8a9-5481-e51d56b90b60"
 		},
 		{
-			"name": "Arm",
+			"name": "Arm_Skin",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -233,7 +233,7 @@
 			"uuid": "dd06f4ce-60a9-ff14-2674-93381d42a278"
 		},
 		{
-			"name": "Arm",
+			"name": "Arm_Skin",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -276,7 +276,7 @@
 			"uuid": "ad741949-fbbd-458f-4daf-a7ebe2471050"
 		},
 		{
-			"name": "Layer",
+			"name": "RIGHT_SLEEVE_Skin",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -321,7 +321,7 @@
 			"uuid": "2e167da4-8de7-c3c7-efee-5c81fb2c282a"
 		},
 		{
-			"name": "Layer",
+			"name": "RIGHT_SLEEVE_Skin",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -366,7 +366,7 @@
 			"uuid": "2d4b87fd-ed0a-c2e3-3d34-0622d784f2b4"
 		},
 		{
-			"name": "Arm",
+			"name": "Arm_Skin",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -409,7 +409,7 @@
 			"uuid": "e04ecc1a-9cd9-8fd3-584e-5aa63dbb6921"
 		},
 		{
-			"name": "Arm",
+			"name": "Arm_Skin",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -452,7 +452,7 @@
 			"uuid": "60963ef7-7488-c58a-66e1-01911badecd7"
 		},
 		{
-			"name": "Layer",
+			"name": "LEFT_SLEEVE_Skin",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -497,7 +497,7 @@
 			"uuid": "baa24a6e-b400-6fea-13d4-14f13e73490f"
 		},
 		{
-			"name": "Layer",
+			"name": "LEFT_SLEEVE_Skin",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -3238,7 +3238,7 @@
 			"uuid": "ae4aef47-cb67-99c0-33db-4c2a7330f4ec"
 		},
 		{
-			"name": "Layer",
+			"name": "LOWER_LAYER",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -3283,7 +3283,7 @@
 			"uuid": "23754d30-97af-2b82-4245-496705391c63"
 		},
 		{
-			"name": "Head",
+			"name": "Head_Skin",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -3326,7 +3326,7 @@
 			"uuid": "cd0bfb08-3f55-5030-be49-4ddf685800c3"
 		},
 		{
-			"name": "Layer",
+			"name": "HAT_Skin",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -3371,7 +3371,7 @@
 			"uuid": "ead92934-e057-4558-cdf2-d9301b66a767"
 		},
 		{
-			"name": "Cape",
+			"name": "CAPE",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -3594,7 +3594,7 @@
 			"uuid": "c4a7028b-dd4d-591e-c425-049e84fd23dc"
 		},
 		{
-			"name": "Layer",
+			"name": "JACKET",
 			"color": 0,
 			"origin": [0, 0, 0],
 			"rotation": [0, 0, 0],
@@ -4149,7 +4149,7 @@
 			"uuid": "7dcf6a89-e2f8-c531-7e92-5b09bc282677"
 		},
 		{
-			"name": "Head",
+			"name": "Head_Skin",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -4192,7 +4192,7 @@
 			"uuid": "f5bff87b-eef7-9e0e-9da3-d90cf60f1e4b"
 		},
 		{
-			"name": "Layer",
+			"name": "HAT_Skin",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -5470,7 +5470,7 @@
 			"uuid": "05235fc6-e370-5506-ac96-77c5bc1f291d"
 		},
 		{
-			"name": "Layer",
+			"name": "LEFT_PANTS_LEG",
 			"color": 0,
 			"origin": [0, 0, 0],
 			"rotation": [0, 0, 0],
@@ -6087,7 +6087,7 @@
 			"uuid": "210f1a1b-b5ae-6cd9-8fa6-f1c02638d344"
 		},
 		{
-			"name": "Layer",
+			"name": "RIGHT_PANTS_LEG",
 			"color": 0,
 			"origin": [0, 0, 0],
 			"rotation": [0, 0, 0],
@@ -8495,7 +8495,7 @@
 			"uuid": "3f91d0e4-b562-b0d7-4e55-d5407f86af5f"
 		},
 		{
-			"name": "Layer",
+			"name": "LEFT_PANTS_LEG",
 			"color": 0,
 			"origin": [0, 0, 0],
 			"rotation": [0, 0, 0],
@@ -9052,7 +9052,7 @@
 			"uuid": "6749f8a2-a27d-10ac-3db9-4f8f10f7f19c"
 		},
 		{
-			"name": "Layer",
+			"name": "RIGHT_PANTS_LEG",
 			"color": 0,
 			"origin": [0, 0, 0],
 			"rotation": [0, 0, 0],
@@ -10094,7 +10094,7 @@
 			"uuid": "6ca8a1e0-646f-0858-45c0-7750a6f34e62"
 		},
 		{
-			"name": "Layer",
+			"name": "LEFT_PANTS_LEG",
 			"color": 0,
 			"origin": [0, 0, 0],
 			"rotation": [0, 0, 0],
@@ -10579,7 +10579,7 @@
 			"uuid": "d19b63e1-6fba-8e71-5220-c3b195f8c71f"
 		},
 		{
-			"name": "Layer",
+			"name": "RIGHT_PANTS_LEG",
 			"color": 0,
 			"origin": [0, 0, 0],
 			"rotation": [0, 0, 0],
@@ -11457,7 +11457,7 @@
 			"uuid": "bed00313-e5dc-fa22-e089-097d8c9f0511"
 		},
 		{
-			"name": "Layer",
+			"name": "LEFT_PANTS_LEG",
 			"color": 0,
 			"origin": [0, 0, 0],
 			"rotation": [0, 0, 0],
@@ -11850,7 +11850,7 @@
 			"uuid": "a54d1d3e-a78d-069e-5395-e121900d5a35"
 		},
 		{
-			"name": "Layer",
+			"name": "RIGHT_PANTS_LEG",
 			"color": 0,
 			"origin": [0, 0, 0],
 			"rotation": [0, 0, 0],
@@ -20614,7 +20614,7 @@
 			"uuid": "a62f9013-861a-2512-0bbb-5e3f19965241"
 		},
 		{
-			"name": "Layer",
+			"name": "LOWER_LAYER",
 			"color": 0,
 			"origin": [0, 0, 0],
 			"rotation": [0, 0, 0],
@@ -29937,7 +29937,7 @@
 			"uuid": "aed250d0-726b-7899-9ee7-1a6bddaf42c4"
 		},
 		{
-			"name": "Arm",
+			"name": "Arm_Skin",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -29981,7 +29981,7 @@
 			"uuid": "8087fc29-519b-34b7-3450-dee0e264c73c"
 		},
 		{
-			"name": "Layer",
+			"name": "RIGHT_SLEEVE_Skin",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -30026,7 +30026,7 @@
 			"uuid": "0bbccb7a-5371-ccce-8eb7-74ed1a473284"
 		},
 		{
-			"name": "Arm",
+			"name": "Arm_Skin",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -30070,7 +30070,7 @@
 			"uuid": "abba3a3d-34e4-bcce-4bde-40293b7f2e87"
 		},
 		{
-			"name": "Layer",
+			"name": "RIGHT_SLEEVE_Skin",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -30250,7 +30250,7 @@
 			"uuid": "91db4428-4b4c-df31-1a1f-45c97cf0a1da"
 		},
 		{
-			"name": "Arm",
+			"name": "Arm_Skin",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -30294,7 +30294,7 @@
 			"uuid": "2ad5477a-fa48-0811-dd20-91d740f61daf"
 		},
 		{
-			"name": "Layer",
+			"name": "LEFT_SLEEVE_Skin",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -30339,7 +30339,7 @@
 			"uuid": "14a65b3c-3b7c-d7ed-c8a1-39876d3a53f1"
 		},
 		{
-			"name": "Arm",
+			"name": "Arm_Skin",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -30383,7 +30383,7 @@
 			"uuid": "36edf3f0-2578-2223-825a-ec18cde8a30a"
 		},
 		{
-			"name": "Layer",
+			"name": "LEFT_SLEEVE_Skin",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -30915,7 +30915,7 @@
 			"uuid": "efbe9a84-1727-05ce-7c6f-130bb5d38d52"
 		},
 		{
-			"name": "Layer",
+			"name": "LOWER_LAYER",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -31095,7 +31095,7 @@
 			"uuid": "90c7a771-89a1-9b59-4785-36225a8b53d6"
 		},
 		{
-			"name": "Layer",
+			"name": "LOWER_LAYER",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -31275,7 +31275,7 @@
 			"uuid": "b6ea606f-6923-e2d1-7a6d-44b62f43b634"
 		},
 		{
-			"name": "Layer",
+			"name": "LOWER_LAYER",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -31455,7 +31455,7 @@
 			"uuid": "9ea04ae3-aff4-e934-77dc-ae4884cfcc81"
 		},
 		{
-			"name": "Layer",
+			"name": "LOWER_LAYER",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -31635,7 +31635,7 @@
 			"uuid": "f8f3f8cb-28c8-1da0-e21c-d8b0ad8729d7"
 		},
 		{
-			"name": "Layer",
+			"name": "LOWER_LAYER",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -31815,7 +31815,7 @@
 			"uuid": "e6a4355e-607a-32a3-1715-536ed428bacb"
 		},
 		{
-			"name": "Layer",
+			"name": "LOWER_LAYER",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -31995,7 +31995,7 @@
 			"uuid": "303feece-c020-fdb2-4f7a-5602e4ca060e"
 		},
 		{
-			"name": "Layer",
+			"name": "LOWER_LAYER",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -32175,7 +32175,7 @@
 			"uuid": "b6516678-f200-a34f-4cb2-29e9ca790656"
 		},
 		{
-			"name": "Layer",
+			"name": "LOWER_LAYER",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -32355,7 +32355,7 @@
 			"uuid": "04b9029f-763d-1b64-5722-5a4ef577e59e"
 		},
 		{
-			"name": "Layer",
+			"name": "LOWER_LAYER",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -35173,6 +35173,135 @@
 		}
 	],
 	"collections": [
+		{
+			"uuid": "7761ef0d-0656-02c8-125d-cc1975c4f737",
+			"name": "VanillaParts",
+			"export_codec": "",
+			"export_path": "",
+			"children": [
+				"efe68301-6f74-cd1b-b84e-bbeb5d48b3a8",
+				"9d97fb12-c104-2629-3c56-ed8db9de0c55",
+				"1e502a9f-91c5-2876-6c70-f42c82ad9185",
+				"267f2068-bba6-f8a9-5481-e51d56b90b60",
+				"dd06f4ce-60a9-ff14-2674-93381d42a278",
+				"ad741949-fbbd-458f-4daf-a7ebe2471050",
+				"2e167da4-8de7-c3c7-efee-5c81fb2c282a",
+				"2d4b87fd-ed0a-c2e3-3d34-0622d784f2b4",
+				"e04ecc1a-9cd9-8fd3-584e-5aa63dbb6921",
+				"60963ef7-7488-c58a-66e1-01911badecd7",
+				"baa24a6e-b400-6fea-13d4-14f13e73490f",
+				"b6d30d2f-613e-dcee-93b6-628332277082",
+				"cd0bfb08-3f55-5030-be49-4ddf685800c3",
+				"ead92934-e057-4558-cdf2-d9301b66a767",
+				"f5bff87b-eef7-9e0e-9da3-d90cf60f1e4b",
+				"ef5df43d-60b0-1ab6-70eb-27ed900db51f",
+				"8087fc29-519b-34b7-3450-dee0e264c73c",
+				"0bbccb7a-5371-ccce-8eb7-74ed1a473284",
+				"abba3a3d-34e4-bcce-4bde-40293b7f2e87",
+				"2078286d-9277-67a6-7edc-997d86a22293",
+				"2ad5477a-fa48-0811-dd20-91d740f61daf",
+				"14a65b3c-3b7c-d7ed-c8a1-39876d3a53f1",
+				"36edf3f0-2578-2223-825a-ec18cde8a30a",
+				"26fbeef8-34a5-9b52-b975-5da836ef711d"
+			],
+			"visibility": false
+		},
+		{
+			"uuid": "4d371aaf-7c69-9331-c6df-37343b80614e",
+			"name": "HatLayer",
+			"export_codec": "",
+			"export_path": "",
+			"children": ["9d97fb12-c104-2629-3c56-ed8db9de0c55", "ead92934-e057-4558-cdf2-d9301b66a767", "ef5df43d-60b0-1ab6-70eb-27ed900db51f"],
+			"visibility": false
+		},
+		{
+			"uuid": "e3969d4b-5139-128b-9f70-3df0ba4e30e4",
+			"name": "JacketLayer",
+			"export_codec": "",
+			"export_path": "",
+			"children": ["267f2068-bba6-f8a9-5481-e51d56b90b60", "7dcf6a89-e2f8-c531-7e92-5b09bc282677"],
+			"visibility": false
+		},
+		{
+			"uuid": "fb716691-7b56-46a5-86fd-a2e6b8488d19",
+			"name": "LeftSleeveLayer",
+			"export_codec": "",
+			"export_path": "",
+			"children": [
+				"baa24a6e-b400-6fea-13d4-14f13e73490f",
+				"b6d30d2f-613e-dcee-93b6-628332277082",
+				"14a65b3c-3b7c-d7ed-c8a1-39876d3a53f1",
+				"26fbeef8-34a5-9b52-b975-5da836ef711d"
+			],
+			"visibility": false
+		},
+		{
+			"uuid": "33974e5f-8d16-7ebb-2d80-5f17b17f5359",
+			"name": "RightSleeveLayer",
+			"export_codec": "",
+			"export_path": "",
+			"children": [
+				"2e167da4-8de7-c3c7-efee-5c81fb2c282a",
+				"2d4b87fd-ed0a-c2e3-3d34-0622d784f2b4",
+				"0bbccb7a-5371-ccce-8eb7-74ed1a473284",
+				"2078286d-9277-67a6-7edc-997d86a22293"
+			],
+			"visibility": false
+		},
+		{
+			"uuid": "bff83013-d40b-af15-23cb-464643fdaeb3",
+			"name": "LeftPantsLegLayer",
+			"export_codec": "",
+			"export_path": "",
+			"children": [
+				"210f1a1b-b5ae-6cd9-8fa6-f1c02638d344",
+				"6749f8a2-a27d-10ac-3db9-4f8f10f7f19c",
+				"d19b63e1-6fba-8e71-5220-c3b195f8c71f",
+				"a54d1d3e-a78d-069e-5395-e121900d5a35"
+			],
+			"visibility": false
+		},
+		{
+			"uuid": "e72c4e42-f36c-83b6-7140-0060c6663e9c",
+			"name": "RightPantsLegLayer",
+			"export_codec": "",
+			"export_path": "",
+			"children": [
+				"c9013ae4-bf42-e655-9bca-0059e4da4c3d",
+				"eee29ffc-1777-7fe1-4608-049d30b1b456",
+				"9eafb428-d42d-578d-9fe4-d0d7bf159096",
+				"56f7e3d1-8a7f-007e-8ef4-9cf356812a76"
+			],
+			"visibility": false
+		},
+		{
+			"uuid": "53588e67-c548-00ae-63d8-144371a79ae7",
+			"name": "LowerLayer",
+			"export_codec": "",
+			"export_path": "",
+			"children": [
+				"23754d30-97af-2b82-4245-496705391c63",
+				"7d871e99-5f64-68f9-ecde-703e399d873a",
+				"3956dd02-eeea-b9aa-8120-b3ff57bd25d7",
+				"d921bfb1-e769-ace6-a486-b2a08528336f",
+				"4a5b0f02-e135-7172-dde5-43bb1ce1acc3",
+				"baeb920d-df40-6aea-5ec0-a0599ffd17ba",
+				"06e7ea3f-a4d9-e085-1597-c96a779256e6",
+				"3d1a43f4-d705-7187-a55a-2dd93d53816d",
+				"73af814a-fc84-4725-3061-b76d172216e5",
+				"a11a67f5-1e3c-ecd8-b209-3ce84a389b74",
+				"3cbdf692-2f6d-432a-f303-5cd68560e8b2"
+			],
+			"visibility": false
+		},
+		{
+			"uuid": "e9c89967-2797-05d6-c4a6-498726954058",
+			"name": "Cape",
+			"export_codec": "",
+			"export_path": "",
+			"children": ["f3d7c059-c772-2b3c-17d4-76f679e5f2a1"],
+			"visibility": false
+		},
 		{
 			"uuid": "c2ba8c82-4c09-3cf7-7872-e2dc23c4490c",
 			"name": "ShinyParts",

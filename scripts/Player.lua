@@ -1,10 +1,5 @@
--- Required scripts
-local pokemonParts = require("lib.GroupIndex")(models.LaprasTaur)
-local itemCheck    = require("lib.ItemCheck")
-local color        = require("scripts.ColorProperties")
-
--- Glowing outline
-renderer:outlineColor(vectors.hexToRGB("69CDEC"))
+-- Required script
+local parts = require("lib.PartsAPI")
 
 -- Config setup
 config:name("LaprasTaur")
@@ -12,88 +7,23 @@ local vanillaSkin = config:load("AvatarVanillaSkin")
 local slim        = config:load("AvatarSlim") or false
 if vanillaSkin == nil then vanillaSkin = true end
 
--- Set skull and portrait groups to visible (incase disabled in blockbench)
-pokemonParts.Skull   :visible(true)
-pokemonParts.Portrait:visible(true)
+-- Reenabled parts
+parts.group.Skull   :visible(true)
+parts.group.Portrait:visible(true)
 
--- All vanilla skin parts
-local skin = {
-	
-	pokemonParts.Head.Head,
-	pokemonParts.Head.Layer,
-	
-	pokemonParts.Body.Body,
-	pokemonParts.Body.Layer,
-	
-	pokemonParts.leftArmDefault,
-	pokemonParts.leftArmSlim,
-	pokemonParts.leftArmDefaultFP,
-	pokemonParts.leftArmSlimFP,
-	
-	pokemonParts.rightArmDefault,
-	pokemonParts.rightArmSlim,
-	pokemonParts.rightArmDefaultFP,
-	pokemonParts.rightArmSlimFP,
-	
-	pokemonParts.Portrait.Head,
-	pokemonParts.Portrait.Layer,
-	
-	pokemonParts.Skull.Head,
-	pokemonParts.Skull.Layer
-	
-}
+-- Arm parts
+local defaultParts = parts:createTable(function(part) return part:getName():find("ArmDefault") end)
+local slimParts    = parts:createTable(function(part) return part:getName():find("ArmSlim")    end)
 
--- All layer parts
-local layer = {
-	
-	HAT = {
-		pokemonParts.Head.Layer
-	},
-	JACKET = {
-		pokemonParts.Body.Layer,
-		pokemonParts.Neck.Layer
-	},
-	LEFT_SLEEVE = {
-		pokemonParts.leftArmDefault.Layer,
-		pokemonParts.leftArmSlim.Layer,
-		pokemonParts.leftArmDefaultFP.Layer,
-		pokemonParts.leftArmSlimFP.Layer
-	},
-	RIGHT_SLEEVE = {
-		pokemonParts.rightArmDefault.Layer,
-		pokemonParts.rightArmSlim.Layer,
-		pokemonParts.rightArmDefaultFP.Layer,
-		pokemonParts.rightArmSlimFP.Layer
-	},
-	LEFT_PANTS_LEG = {
-		pokemonParts.FrontLeftFlipper.Layer,
-		pokemonParts.FrontLeftFlipperTip.Layer,
-		pokemonParts.BackLeftFlipper.Layer,
-		pokemonParts.BackLeftFlipperTip.Layer
-	},
-	RIGHT_PANTS_LEG = {
-		pokemonParts.FrontRightFlipper.Layer,
-		pokemonParts.FrontRightFlipperTip.Layer,
-		pokemonParts.BackRightFlipper.Layer,
-		pokemonParts.BackRightFlipperTip.Layer
-	},
-	CAPE = {
-		pokemonParts.Cape
-	},
-	LOWER_BODY = {
-		pokemonParts.Main.Layer,
-		pokemonParts.Shell.Layer,
-		pokemonParts.SpikeMF.Layer,
-		pokemonParts.SpikeMM.Layer,
-		pokemonParts.SpikeMB.Layer,
-		pokemonParts.SpikeLS.Layer,
-		pokemonParts.SpikeLF.Layer,
-		pokemonParts.SpikeLB.Layer,
-		pokemonParts.SpikeRS.Layer,
-		pokemonParts.SpikeRF.Layer,
-		pokemonParts.SpikeRB.Layer
-	},
-}
+-- Vanilla skin parts
+local skinParts = parts:createTable(function(part) return part:getName():find("_[sS]kin") end)
+
+-- Layer parts
+local layerTypes = {"HAT", "JACKET", "LEFT_SLEEVE", "RIGHT_SLEEVE", "LEFT_PANTS_LEG", "RIGHT_PANTS_LEG", "CAPE", "LOWER_LAYER"}
+local layerParts = {}
+for _, type in pairs(layerTypes) do
+	layerParts[type] = parts:createTable(function(part) return part:getName():find(type) end)
+end
 
 -- Determine vanilla player type on init
 local vanillaAvatarType
@@ -103,35 +33,30 @@ function events.ENTITY_INIT()
 	
 end
 
--- Misc tick required events
-function events.TICK()
+function events.RENDER(delta, context)
 	
 	-- Model shape
 	local slimShape = (vanillaSkin and vanillaAvatarType == "SLIM") or (slim and not vanillaSkin)
-	
-	pokemonParts.leftArmDefault:visible(not slimShape)
-	pokemonParts.rightArmDefault:visible(not slimShape)
-	pokemonParts.leftArmDefaultFP:visible(not slimShape)
-	pokemonParts.rightArmDefaultFP:visible(not slimShape)
-	
-	pokemonParts.leftArmSlim:visible(slimShape)
-	pokemonParts.rightArmSlim:visible(slimShape)
-	pokemonParts.leftArmSlimFP:visible(slimShape)
-	pokemonParts.rightArmSlimFP:visible(slimShape)
+	for _, part in ipairs(defaultParts) do
+		part:visible(not slimShape)
+	end
+	for _, part in ipairs(slimParts) do
+		part:visible(slimShape)
+	end
 	
 	-- Skin textures
 	local skinType = vanillaSkin and "SKIN" or "PRIMARY"
-	for _, part in ipairs(skin) do
+	for _, part in ipairs(skinParts) do
 		part:primaryTexture(skinType)
 	end
 	
 	-- Cape textures
-	pokemonParts.Cape:primaryTexture(vanillaSkin and "CAPE" or "PRIMARY")
+	parts.group.Cape:primaryTexture(vanillaSkin and "CAPE" or "PRIMARY")
 	
 	-- Layer toggling
-	for layerType, parts in pairs(layer) do
-		local enabled = enabled
-		if layerType == "LOWER_BODY" then
+	for layerType, parts in pairs(layerParts) do
+		local enabled
+		if layerType == "LOWER_LAYER" then
 			enabled = player:isSkinLayerVisible("RIGHT_PANTS_LEG") or player:isSkinLayerVisible("LEFT_PANTS_LEG")
 		else
 			enabled = player:isSkinLayerVisible(layerType)
@@ -141,10 +66,13 @@ function events.TICK()
 		end
 	end
 	
+	-- Shadow size
+	renderer:shadowRadius(math.map(parts.group.Player:getAnimScale():lengthSquared() / 3, 0, 1, 0.25, 1))
+	
 end
 
 -- Vanilla skin toggle
-local function setVanillaSkin(boolean)
+function pings.setAvatarVanillaSkin(boolean)
 	
 	vanillaSkin = boolean
 	config:save("AvatarVanillaSkin", vanillaSkin)
@@ -152,7 +80,7 @@ local function setVanillaSkin(boolean)
 end
 
 -- Model type toggle
-local function setModelType(boolean)
+function pings.setAvatarModelType(boolean)
 	
 	slim = boolean
 	config:save("AvatarSlim", slim)
@@ -160,74 +88,74 @@ local function setModelType(boolean)
 end
 
 -- Sync variables
-local function syncPlayer(a, b)
+function pings.syncPlayer(a, b)
 	
 	vanillaSkin = a
 	slim = b
 	
 end
 
--- Pings setup
-pings.setAvatarVanillaSkin = setVanillaSkin
-pings.setAvatarModelType   = setModelType
-pings.syncPlayer           = syncPlayer
+-- Host only instructions
+if not host:isHost() then return end
+
+-- Required scripts
+local itemCheck = require("lib.ItemCheck")
+local s, c = pcall(require, "scripts.ColorProperties")
+if not s then c = {} end
 
 -- Sync on tick
-if host:isHost() then
-	function events.TICK()
-		
-		if world.getTime() % 200 == 0 then
-			pings.syncPlayer(vanillaSkin, slim)
-		end
-		
+function events.TICK()
+	
+	if world.getTime() % 200 == 0 then
+		pings.syncPlayer(vanillaSkin, slim)
 	end
+	
 end
 
--- Activate actions
-setVanillaSkin(vanillaSkin)
-setModelType(slim)
-
--- Setup table
+-- Table setup
 local t = {}
 
--- Action wheel pages
-t.vanillaSkinPage = action_wheel:newAction()
-	:item(itemCheck("player_head{'SkullOwner':'"..avatar:getEntityName().."'}"))
+-- Actions
+t.vanillaSkinAct = action_wheel:newAction()
+	:item(itemCheck("player_head{SkullOwner:"..avatar:getEntityName().."}"))
 	:onToggle(pings.setAvatarVanillaSkin)
 	:toggled(vanillaSkin)
 
-t.modelPage = action_wheel:newAction()
+t.modelAct = action_wheel:newAction()
 	:item(itemCheck("player_head"))
-	:toggleItem(itemCheck("player_head{'SkullOwner':'MHF_Alex'}"))
+	:toggleItem(itemCheck("player_head{SkullOwner:MHF_Alex}"))
 	:onToggle(pings.setAvatarModelType)
 	:toggled(slim)
 
--- Update action page info
-function events.TICK()
+-- Update actions
+function events.RENDER(delta, context)
 	
-	t.vanillaSkinPage
-		:title(toJson(
-			{
-				"",
-				{text = "Toggle Vanilla Texture\n\n", bold = true, color = color.primary},
-				{text = "Toggles the usage of your vanilla skin for the upper body.", color = color.secondary}
-			}
-		))
-		:hoverColor(color.hover)
-		:toggleColor(color.active)
-	
-	t.modelPage
-		:title(toJson(
-			{
-				"",
-				{text = "Toggle Model Shape\n\n", bold = true, color = color.primary},
-				{text = "Adjust the model shape to use Default or Slim Proportions.\nWill be overridden by the vanilla skin toggle.", color = color.secondary}
-			}
-		))
-		:hoverColor(color.hover)
-		:toggleColor(color.active)
+	if action_wheel:isEnabled() then
+		t.vanillaSkinAct
+			:title(toJson(
+				{
+					"",
+					{text = "Toggle Vanilla Texture\n\n", bold = true, color = c.primary},
+					{text = "Toggles the usage of your vanilla skin.", color = c.secondary}
+				}
+			))
+		
+		t.modelAct
+			:title(toJson(
+				{
+					"",
+					{text = "Toggle Model Shape\n\n", bold = true, color = c.primary},
+					{text = "Adjust the model shape to use Default or Slim Proportions.\nWill be overridden by the vanilla skin toggle.", color = c.secondary}
+				}
+			))
+		
+		for _, act in pairs(t) do
+			act:hoverColor(c.hover):toggleColor(c.active)
+		end
+		
+	end
 	
 end
 
--- Return action wheel pages
+-- Return actions
 return t
