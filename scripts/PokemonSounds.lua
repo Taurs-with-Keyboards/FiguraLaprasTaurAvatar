@@ -1,5 +1,5 @@
 -- Required scripts
-local pokeballParts = require("lib.GroupIndex")(models.Pokeball)
+local pokemonParts = require("lib.GroupIndex")(models.LaprasTaur)
 local average       = require("lib.Average")
 
 -- Keybind config
@@ -10,7 +10,7 @@ function events.TICK()
 	
 	-- Hit sound
 	if player:getNbt()["HurtTime"] == 10 then
-		if average(pokeballParts.Pokeball:getScale():unpack()) >= 0.5 then
+		if average(pokemonParts.PokeBall:getScale():unpack()) >= 0.5 then
 			sounds:playSound("cobblemon:poke_ball.open", player:getPos(), 0.4)
 		else
 			sounds:playSound("cobblemon:pokemon.lapras.cry", player:getPos(), 0.6, math.random()*0.35+0.85)

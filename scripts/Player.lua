@@ -1,8 +1,7 @@
 -- Required scripts
-local pokemonParts  = require("lib.GroupIndex")(models.LaprasTaur)
-local pokeballParts = require("lib.GroupIndex")(models.Pokeball)
-local itemCheck     = require("lib.ItemCheck")
-local color         = require("scripts.ColorProperties")
+local pokemonParts = require("lib.GroupIndex")(models.LaprasTaur)
+local itemCheck    = require("lib.ItemCheck")
+local color        = require("scripts.ColorProperties")
 
 -- Glowing outline
 renderer:outlineColor(vectors.hexToRGB("69CDEC"))

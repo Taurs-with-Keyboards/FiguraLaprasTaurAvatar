@@ -207,7 +207,7 @@ pages.camera
 
 -- Lapras actions
 pages.lapras
-	:action( -1, pokeball.togglePage)
+	:action( -1, pokeball.toggleAct)
 	:action( -1, shiny.shinyAct)
 	:action( -1, pageActs.fall)
 	:action( -1, pageActs.whirlpool)
