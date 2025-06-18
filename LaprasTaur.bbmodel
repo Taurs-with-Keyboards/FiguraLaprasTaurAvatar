@@ -30566,7 +30566,7 @@
 			"uuid": "184b82ed-5341-caa8-f0fc-a0d4170bf857"
 		},
 		{
-			"name": "Eyes",
+			"name": "Eyes_EyeGlow",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
