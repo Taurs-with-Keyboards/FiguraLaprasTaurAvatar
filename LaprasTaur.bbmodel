@@ -33622,7 +33622,7 @@
 									]
 								},
 								{
-									"name": "RiderPos1",
+									"name": "Seat1",
 									"origin": [0, 24, -1],
 									"color": 0,
 									"uuid": "90122c86-18f6-21a1-f099-4650314c1295",
@@ -33636,7 +33636,7 @@
 									"children": []
 								},
 								{
-									"name": "RiderPos2",
+									"name": "Seat2",
 									"origin": [0, 24, 13],
 									"color": 0,
 									"uuid": "acdbd05a-84fb-0ebc-6ff1-9b444f013ca9",
@@ -33663,7 +33663,7 @@
 									"selected": false,
 									"children": [
 										{
-											"name": "RiderPosChest",
+											"name": "ChestSeat",
 											"origin": [0, 40, 2],
 											"color": 0,
 											"uuid": "d4d2d939-9054-f0c0-7836-de3b63a23b85",
