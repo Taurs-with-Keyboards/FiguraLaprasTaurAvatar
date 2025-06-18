@@ -1,3 +1,6 @@
+-- Required script
+local parts = require("lib.PartsAPI")
+
 function events.ON_PLAY_SOUND(id, pos, vol, pitch, loop, cat, path)
 	
 	-- Don't trigger if the sound was played by Figura (prevent potential infinite loop)
@@ -9,9 +12,10 @@ function events.ON_PLAY_SOUND(id, pos, vol, pitch, loop, cat, path)
 	-- Make sure the sound is (most likely) played by the user
 	if (player:getPos() - pos):length() > 0.05 then return end
 	
-	-- If sound contains ".step", stop the sound
-	if id:find(".step") then
-		return true
+	-- If sound contains ".hurt", play an additional hurt sound along side it
+	if id:find(".hurt") then
+		local scale = parts.group.Player:getAnimScale():lengthSquared() / 3
+		sounds:playSound("cobblemon:"..(scale > 0.5 and "pokemon.lapras.cry" or "poke_ball.open"), pos, 0.6)
 	end
 	
 end
