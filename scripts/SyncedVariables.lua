@@ -1,4 +1,4 @@
--- Setup table
+-- Table setup
 local t = {
 	dG = false,
 	nV = false,
@@ -75,5 +75,5 @@ if host:isHost() then
 	end
 end
 
--- Returns table
+-- Returns variables
 return t
