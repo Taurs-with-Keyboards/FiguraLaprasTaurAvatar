@@ -34,9 +34,6 @@ if not s then shiny = {} end
 local s, eyes = pcall(require, "scripts.GlowingEyes")
 if not s then eyes = {} end
 
-local s, arms = pcall(require, "scripts.Arms")
-if not s then arms = {} end
-
 local s, c = pcall(require, "scripts.ColorProperties")
 if not s then c = {} end
 
@@ -238,5 +235,5 @@ pages.anims
 	:action( -1, anims.stretchPage)
 	:action( -1, anims.laughPage)
 	:action( -1, anims.flipPage)
-	:action( -1, arms.movePage)
+	:action( -1, squapi.armsAct)
 	:action( -1, backAct)

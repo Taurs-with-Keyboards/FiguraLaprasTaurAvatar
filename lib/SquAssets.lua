@@ -413,10 +413,10 @@ function squassets.BERP:new(stiff, bounce, lowerLimit, upperLimit, initialPos, i
 
     if self.upper and self.pos > self.upper then
       self.pos = self.upper
-      self.vel = 0
+      self.vel = -self.vel
     elseif self.lower and self.pos < self.lower then
       self.pos = self.lower
-      self.vel = 0
+      self.vel = -self.vel
     end
 
     --returns position so that you can immediately apply the position as it is changed.

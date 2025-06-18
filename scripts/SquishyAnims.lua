@@ -1,11 +1,19 @@
--- Required scripts
-local pokemonParts = require("lib.GroupIndex")(models.LaprasTaur)
-local squapi       = require("lib.SquAPIOld")
-local ground       = require("lib.GroundCheck")
-local pose         = require("scripts.Posing")
+-- Kills script if squAPI or squAssets cannot be found
+local s, squapi = pcall(require, "lib.SquAPI")
+if not s then return {} end
+local s, squassets = pcall(require, "lib.SquAssets")
+if not s then return {} end
 
--- Animation setup
-local anims = animations.LaprasTaur
+-- Required scripts
+local parts   = require("lib.PartsAPI")
+local lerp    = require("lib.LerpAPI")
+local ground  = require("lib.GroundCheck")
+local pose    = require("scripts.Posing")
+local effects = require("scripts.SyncedVariables")
+
+-- Config setup
+config:name("LaprasTaur")
+local armsMove = config:load("SquapiArmsMove") or false
 
 -- Calculate parent's rotations
 local function calculateParentRot(m)
@@ -18,135 +26,241 @@ local function calculateParentRot(m)
 	
 end
 
--- Squishy smooth Head + Neck
-squapi.smoothHeadNeck(
-	pokemonParts.UpperBody,
-	pokemonParts.Neck,
-	nil,
-	0.4,
-	false
+-- Lerp tables
+local leftArmLerp  = lerp:new(0.5, armsMove and 1 or 0)
+local rightArmLerp = lerp:new(0.5, armsMove and 1 or 0)
+
+-- Squishy ears
+local ears = squapi.ear:new(
+	parts.group.LeftEar,
+	parts.group.RightEar,
+	0.35,  -- Range Multiplier (0.35)
+	true,  -- Horizontal (true)
+	-0.5,  -- Bend Strength (-0.5)
+	false, -- Do Flick (false)
+	400,   -- Flick Chance (400)
+	0.05,  -- Stiffness (0.05)
+	0.9    -- Bounce (0.9)
 )
 
--- Ear animations
-squapi.ear(
-	pokemonParts.LeftEar,
-	pokemonParts.RightEar,
-	false,
-	nil,
-	0.35,
-	true,
-	-0.5,
-	0.05,
-	0.1
+-- Head table
+local headParts = {
+	
+	parts.group.UpperBody,
+	parts.group.Neck
+	
+}
+
+-- Squishy smooth torso
+local head = squapi.smoothHead:new(
+	headParts,
+	0.3,  -- Strength (0.3)
+	0.4,  -- Tilt (0.4)
+	1,    -- Speed (1)
+	false -- Keep Original Head Pos (false)
 )
 
--- Lerp offset table
-local offset = {
-	current    = 0,
-	nextTick   = 0,
-	target     = 0,
-	currentPos = 0
-}
+-- Squishy vanilla arms
+local leftArm = squapi.arm:new(
+	parts.group.LeftArm,
+	1,     -- Strength (1)
+	false, -- Right Arm (false)
+	true   -- Keep Position (true)
+)
 
--- Lerp shift table
-local water = {
-	current    = 0,
-	nextTick   = 0,
-	target     = 0,
-	currentPos = 0
-}
+local rightArm = squapi.arm:new(
+	parts.group.RightArm,
+	1,    -- Strength (1)
+	true, -- Right Arm (true)
+	true  -- Keep Position (true)
+)
 
--- Ticks lerps
+-- Arm strength variables
+local leftArmStrength  = leftArm.strength
+local rightArmStrength = rightArm.strength
+
+-- Body bounce
+local lapras = squassets.BERP:new(0.01, 0.975, -25)
+local laprasTarget = 0
+local _onGround = true
+
 function events.TICK()
 	
-	-- Targets
-	offset.target = (anims.frontFlip:isPlaying() or anims.backFlip:isPlaying() or anims.napDown:isPlaying() or anims.napHold:isPlaying() or pose.sleep) and 1 or 0
-	water.target  = player:isInWater() and 1 or 0
+	-- Arm variables
+	local handedness  = player:isLeftHanded()
+	local activeness  = player:getActiveHand()
+	local leftActive  = not handedness and "OFF_HAND" or "MAIN_HAND"
+	local rightActive = handedness and "OFF_HAND" or "MAIN_HAND"
+	local leftSwing   = player:getSwingArm() == leftActive
+	local rightSwing  = player:getSwingArm() == rightActive
+	local leftItem    = player:getHeldItem(not handedness)
+	local rightItem   = player:getHeldItem(handedness)
+	local using       = player:isUsingItem()
+	local usingL      = activeness == leftActive and leftItem:getUseAction() or "NONE"
+	local usingR      = activeness == rightActive and rightItem:getUseAction() or "NONE"
+	local bow         = using and (usingL == "BOW" or usingR == "BOW")
+	local crossL      = leftItem.tag and leftItem.tag["Charged"] == 1
+	local crossR      = rightItem.tag and rightItem.tag["Charged"] == 1
 	
-	-- Tick lerp
-	offset.current = offset.nextTick
-	water.current  = water.nextTick
-	offset.nextTick = math.lerp(offset.nextTick, offset.target, 0.2)
-	water.nextTick  = math.lerp(water.nextTick,  water.target,  0.05)
+	-- Arm movement overrides
+	local armShouldMove = pose.swim or pose.crawl
 	
-end
-
--- LowerBody physics
-squapi.lapras  = squapi.bounceObject:new()
-squapi.flipper = squapi.bounceObject:new()
-
-function events.RENDER(delta, context)
-	
-	-- Render lerp
-	water.currentPos = math.lerp(water.current, water.nextTick, delta)
+	-- Control targets based on variables
+	leftArmLerp.target  = (armsMove or armShouldMove or leftSwing  or bow or ((crossL or crossR) or (using and usingL ~= "NONE"))) and 1 or 0
+	rightArmLerp.target = (armsMove or armShouldMove or rightSwing or bow or ((crossL or crossR) or (using and usingR ~= "NONE"))) and 1 or 0
 	
 	-- Variables
-	local yvel     = squapi.yvel()
-	local yDir     = player:getLookDir()[2]
-	local extend   = anims.extend:isPlaying()
+	local yvel = math.clamp(squassets.verticalVel(), -0.5, 0.5)
 	local onGround = ground()
-	local upDir    = math.abs(math.max(yDir -1, -1))
-	local extDir   = math.map(math.abs(yDir), 0, 1, 1, -1)
-	local elyDir   = math.map(math.abs(yDir), 0, 1, 1, 0)
-	local stopMove = anims.frontFlip:isPlaying() or anims.backFlip:isPlaying()
-	local limit    = math.lerp(60,   20,    water.currentPos)
-	local stiff    = math.lerp(0.02, 0.001, water.currentPos)
-	local bounce   = math.lerp(0.1,  0.05,  water.currentPos)
 	
-	-- Rotations
-	local laprasRot  = vec(squapi.lapras.pos,  0, 0)
-	local flipperRot = vec(0, 0, squapi.flipper.pos)
-	
-	-- Bounce off ground
-	if onGround and not extend then
-		laprasRot  = -laprasRot:applyFunc(math.abs)
-		flipperRot = -flipperRot:applyFunc(math.abs)
+	-- Set targets
+	if pose.crawl then
+		laprasTarget = 0
+	elseif not onGround then
+		laprasTarget = yvel * 75
+	elseif onGround ~= _onGround then
+		laprasTarget = -laprasTarget
 	end
 	
-	-- Apply
-	pokemonParts.Main:offsetRot(laprasRot)
+	-- Limits
+	if onGround then
+		lapras.upper = 0
+	else
+		lapras.upper = 35
+	end
 	
-	pokemonParts.FrontLeftFlipper:offsetRot(flipperRot)
-	pokemonParts.FrontLeftFlipperTip:offsetRot(flipperRot)
+	-- Stiffness and bounce
+	if player:isInWater() then
+		lapras.stiff = 0.005
+		lapras.bounce = 0.99
+	else
+		lapras.stiff = 0.02
+		lapras.bounce = 0.95
+	end
 	
-	pokemonParts.FrontRightFlipper:offsetRot(-flipperRot)
-	pokemonParts.FrontRightFlipperTip:offsetRot(-flipperRot)
-	
-	pokemonParts.BackLeftFlipper:offsetRot(flipperRot)
-	pokemonParts.BackLeftFlipperTip:offsetRot(flipperRot)
-	
-	pokemonParts.BackRightFlipper:offsetRot(-flipperRot)
-	pokemonParts.BackRightFlipperTip:offsetRot(-flipperRot)
-	
-	-- Targets
-	local laprasTarget  = stopMove and 0 or (math.clamp(yvel * (not extend and 40 or 80 * (pose.elytra and elyDir or extDir)), -20 * (not extend and upDir or 1), 20))
-	local flipperTarget = stopMove and 0 or (pose.climb and 60 or math.clamp(yvel * 80 * (pose.elytra and elyDir or not extend and 1 or extDir), -limit, limit))
-	
-	-- Do bounce
-	squapi.lapras:doBounce(laprasTarget,   stiff, bounce)
-	squapi.flipper:doBounce(flipperTarget, stiff, bounce)
+	-- Store data
+	_onGround = onGround
 	
 end
 
 function events.RENDER(delta, context)
 	
-	-- Render lerp
-	offset.currentPos = math.lerp(offset.current, offset.nextTick, delta)
+	-- Variables
+	local idleTimer   = world.getTime(delta)
+	local idleRot     = vec(math.deg(math.sin(idleTimer * 0.067) * 0.05), 0, math.deg(math.cos(idleTimer * 0.09) * 0.05 + 0.05))
+	local firstPerson = context == "FIRST_PERSON"
 	
-	-- Offset smooth torso itself
-	pokemonParts.Neck:offsetRot(math.lerp(pokemonParts.Neck:getOffsetRot(), 0, offset.currentPos))
-	pokemonParts.UpperBody:offsetRot(math.lerp(pokemonParts.UpperBody:getOffsetRot(), 0, offset.currentPos))
+	-- Adjust arm strengths
+	leftArm.strength  = leftArmStrength  * leftArmLerp.currPos
+	rightArm.strength = rightArmStrength * rightArmLerp.currPos
+	
+	-- Adjust arm characteristics after applied by squapi
+	parts.group.LeftArm
+		:offsetRot(
+			parts.group.LeftArm:getOffsetRot()
+			+ ((-idleRot + (vanilla_model.BODY:getOriginRot() * 0.75)) * math.map(leftArmLerp.currPos, 0, 1, 1, 0))
+		)
+		:pos(parts.group.LeftArm:getPos() * vec(1, 1, -1))
+		:visible(not firstPerson)
+	
+	parts.group.RightArm
+		:offsetRot(
+			parts.group.RightArm:getOffsetRot()
+			+ ((idleRot + (vanilla_model.BODY:getOriginRot() * 0.75)) * math.map(rightArmLerp.currPos, 0, 1, 1, 0))
+		)
+		:pos(parts.group.RightArm:getPos() * vec(1, 1, -1))
+		:visible(not firstPerson)
+	
+	-- Set visible if in first person
+	parts.group.LeftArmFP:visible(firstPerson)
+	parts.group.RightArmFP:visible(firstPerson)
 	
 	-- Offset smooth torso in various parts
-	-- Note: acts strangely with `pokemonParts.Body`
-	for _, group in ipairs(pokemonParts.UpperBody:getChildren()) do
-		if group ~= pokemonParts.Body then
-			group:offsetRot(math.lerp(-((calculateParentRot(group:getParent()) + 180) % 360 - 180), 0, offset.currentPos))
+	-- Note: acts strangely with `parts.group.body`
+	for _, group in ipairs(parts.group.UpperBody:getChildren()) do
+		if group ~= parts.group.Body then
+			group:rot(-calculateParentRot(group:getParent()))
 		end
 	end
 	
-	-- Remove jank caused by crawling
-	pokemonParts.Body:offsetRot(pose.crawl and -vanilla_model.BODY:getOriginRot() or 0)
-	pokemonParts.UpperBody:offsetRot(pose.crawl and 0 or pokemonParts.UpperBody:getOffsetRot())
+	-- Calc body bounce
+	lapras:berp(laprasTarget, delta)
+	
+	-- Apply body bounce
+	parts.group.Main:offsetRot(lapras.pos, 0, 0)
+	parts.group.FrontLeftFlipper:offsetRot(0, 0, lapras.pos * 2)
+	parts.group.FrontLeftFlipperTip:offsetRot(0, 0, lapras.pos * 2)
+	parts.group.FrontRightFlipper:offsetRot(0, 0, -lapras.pos * 2)
+	parts.group.FrontRightFlipperTip:offsetRot(0, 0, -lapras.pos * 2)
+	parts.group.BackLeftFlipper:offsetRot(0, 0, lapras.pos * 2)
+	parts.group.BackLeftFlipperTip:offsetRot(0, 0, lapras.pos * 2)
+	parts.group.BackRightFlipper:offsetRot(0, 0, -lapras.pos * 2)
+	parts.group.BackRightFlipperTip:offsetRot(0, 0, -lapras.pos * 2)
 	
 end
+
+-- Arm movement toggle
+function pings.setSquapiArmsMove(boolean)
+	
+	armsMove = boolean
+	config:save("SquapiArmsMove", armsMove)
+	
+end
+
+-- Sync variable
+function pings.syncSquapi(a)
+	
+	armsMove = a
+	
+end
+
+-- Host only instructions
+if not host:isHost() then return end
+
+-- Required scripts
+local itemCheck = require("lib.ItemCheck")
+local s, c = pcall(require, "scripts.ColorProperties")
+if not s then c = {} end
+
+-- Sync on tick
+function events.TICK()
+	
+	if world.getTime() % 200 == 0 then
+		pings.syncSquapi(armsMove)
+	end
+	
+end
+
+-- Table setup
+local t = {}
+
+-- Actions
+t.armsAct = action_wheel:newAction()
+	:item(itemCheck("red_dye"))
+	:toggleItem(itemCheck("rabbit_foot"))
+	:onToggle(pings.setSquapiArmsMove)
+	:toggled(armsMove)
+
+-- Update action
+function events.RENDER(delta, context)
+	
+	if action_wheel:isEnabled() then
+		t.armsAct
+			:title(toJson(
+				{
+					"",
+					{text = "Arm Movement Toggle\n\n", bold = true, color = c.primary},
+					{text = "Toggles the movement swing movement of the arms.\nActions are not effected.", color = c.secondary}
+				}
+			))
+		
+		for _, act in pairs(t) do
+			act:hoverColor(c.hover):toggleColor(c.active)
+		end
+		
+	end
+	
+end
+
+-- Return action
+return t
