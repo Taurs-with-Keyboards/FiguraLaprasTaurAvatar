@@ -191,12 +191,12 @@ pages.avatar
 
 -- Armor actions
 pages.armor
-	:action( -1, armor.helmetPage)
-	:action( -1, armor.chestplatePage)
-	:action( -1, armor.leggingsPage)
-	:action( -1, armor.bootsPage)
-	:action( -1, armor.shellPage)
-	:action( -1, armor.allPage)
+	:action( -1, armor.helmetAct)
+	:action( -1, armor.chestplateAct)
+	:action( -1, armor.leggingsAct)
+	:action( -1, armor.bootsAct)
+	:action( -1, armor.shellAct)
+	:action( -1, armor.allAct)
 	:action( -1, backAct)
 
 -- Camera actions

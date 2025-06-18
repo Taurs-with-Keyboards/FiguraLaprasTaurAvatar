@@ -3194,7 +3194,7 @@
 			"uuid": "37d9d566-9471-d4b4-dcc4-df8af307298b"
 		},
 		{
-			"name": "Leather",
+			"name": "HelmetLeather",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -3414,7 +3414,7 @@
 			"uuid": "f3d7c059-c772-2b3c-17d4-76f679e5f2a1"
 		},
 		{
-			"name": "Trim",
+			"name": "HelmetTrim",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -3458,7 +3458,7 @@
 			"uuid": "79636586-2a0d-152b-74cf-dc48646fcf6c"
 		},
 		{
-			"name": "Trim",
+			"name": "ChestplateTrim",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -3503,7 +3503,7 @@
 			"uuid": "8eeacec4-424d-0c1e-a496-6d2192cfcdfc"
 		},
 		{
-			"name": "Trim",
+			"name": "ChestplateTrim",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -3548,7 +3548,7 @@
 			"uuid": "837c7fb0-b5ae-fdb0-4752-01b68c70404f"
 		},
 		{
-			"name": "Trim",
+			"name": "ChestplateTrim",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -6704,7 +6704,7 @@
 			"uuid": "c9013ae4-bf42-e655-9bca-0059e4da4c3d"
 		},
 		{
-			"name": "Leather",
+			"name": "BootLeather",
 			"color": 0,
 			"origin": [0, 0, 0],
 			"rotation": [0, 0, 0],
@@ -7321,7 +7321,7 @@
 			"uuid": "53e43f01-e3eb-01d2-0108-b6784e4ee24c"
 		},
 		{
-			"name": "Leather",
+			"name": "BootLeather",
 			"color": 0,
 			"origin": [0, 0, 0],
 			"rotation": [0, 0, 0],
@@ -14625,7 +14625,7 @@
 			"uuid": "ae1ac44f-61a4-9351-e67a-1bdbe07e16f4"
 		},
 		{
-			"name": "Leather",
+			"name": "BootLeather",
 			"color": 0,
 			"origin": [0, 0, 0],
 			"rotation": [0, 0, 0],
@@ -15739,7 +15739,7 @@
 			"uuid": "88db4281-889d-69d8-a5da-bed59507d90c"
 		},
 		{
-			"name": "Leather",
+			"name": "BootLeather",
 			"color": 0,
 			"origin": [0, 0, 0],
 			"rotation": [0, 0, 0],
@@ -16781,7 +16781,7 @@
 			"uuid": "b25587fb-9b8a-f0b5-5bb3-682b616b60e9"
 		},
 		{
-			"name": "Leather",
+			"name": "BootLeather",
 			"color": 0,
 			"origin": [0, 0, 0],
 			"rotation": [0, 0, 0],
@@ -17266,7 +17266,7 @@
 			"uuid": "923eb68c-6222-1559-b715-ab2e962c860b"
 		},
 		{
-			"name": "Leather",
+			"name": "BootLeather",
 			"color": 0,
 			"origin": [0, 0, 0],
 			"rotation": [0, 0, 0],
@@ -18144,7 +18144,7 @@
 			"uuid": "57590a18-0abc-16be-14d7-162499affa9d"
 		},
 		{
-			"name": "Leather",
+			"name": "BootLeather",
 			"color": 0,
 			"origin": [0, 0, 0],
 			"rotation": [0, 0, 0],
@@ -18930,7 +18930,7 @@
 			"uuid": "20d15310-28f1-5d3c-1d60-d09fe8b76c19"
 		},
 		{
-			"name": "Leather",
+			"name": "BootLeather",
 			"color": 0,
 			"origin": [0, 0, 0],
 			"rotation": [0, 0, 0],
@@ -19323,7 +19323,7 @@
 			"uuid": "469c617b-7a0a-4be4-212b-01aa3b32d7e6"
 		},
 		{
-			"name": "Leather",
+			"name": "ChestplateLeather",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -19368,7 +19368,7 @@
 			"uuid": "ae398d82-fc06-eb17-4060-37fca07f4403"
 		},
 		{
-			"name": "Leather",
+			"name": "ChestplateLeather",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -19413,7 +19413,7 @@
 			"uuid": "ed42f930-8339-ed9a-f088-b18d160a98af"
 		},
 		{
-			"name": "Leather",
+			"name": "ChestplateLeather",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -20014,7 +20014,7 @@
 			"uuid": "21a79191-2c3d-e1ba-45b9-72086106bdca"
 		},
 		{
-			"name": "Leather",
+			"name": "LeggingsLeather",
 			"color": 0,
 			"origin": [0, 0, 0],
 			"rotation": [0, 0, 0],
@@ -20960,7 +20960,7 @@
 			"uuid": "edf12ac6-687d-84bb-c3a8-afbf025d74ed"
 		},
 		{
-			"name": "Leather",
+			"name": "LeggingsLeather",
 			"color": 0,
 			"origin": [0, 0, 0],
 			"rotation": [0, 0, 0],
@@ -21133,7 +21133,7 @@
 			"uuid": "f93d4b3f-d1ba-75fe-a73b-a080968b0727"
 		},
 		{
-			"name": "Leather",
+			"name": "LeggingsLeather",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -21733,7 +21733,7 @@
 			"uuid": "1145d42c-f2d7-6d48-1536-d585e89130c8"
 		},
 		{
-			"name": "Trim",
+			"name": "LeggingsTrim",
 			"color": 0,
 			"origin": [0, 0, 0],
 			"rotation": [0, 0, 0],
@@ -22288,7 +22288,7 @@
 			"uuid": "31454a29-cd43-dc0b-2507-1c7c45c9f3f8"
 		},
 		{
-			"name": "Trim",
+			"name": "LeggingsTrim",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -22950,7 +22950,7 @@
 			"uuid": "605b785b-a287-8256-39f4-945c8295c122"
 		},
 		{
-			"name": "Trim",
+			"name": "BootTrim",
 			"color": 0,
 			"origin": [0, 0, 0],
 			"rotation": [0, 0, 0],
@@ -24124,7 +24124,7 @@
 			"uuid": "5ae8c056-114f-9971-7221-b620b3e5953d"
 		},
 		{
-			"name": "Trim",
+			"name": "BootTrim",
 			"color": 0,
 			"origin": [0, 0, 0],
 			"rotation": [0, 0, 0],
@@ -25298,7 +25298,7 @@
 			"uuid": "aab33816-5f6f-1425-efdb-a2e8a8b33d8d"
 		},
 		{
-			"name": "Trim",
+			"name": "BootTrim",
 			"color": 0,
 			"origin": [0, 0, 0],
 			"rotation": [0, 0, 0],
@@ -25915,7 +25915,7 @@
 			"uuid": "fd5198ad-ceb2-29ff-de97-a1a4b7388876"
 		},
 		{
-			"name": "Trim",
+			"name": "BootTrim",
 			"color": 0,
 			"origin": [0, 0, 0],
 			"rotation": [0, 0, 0],
@@ -26957,7 +26957,7 @@
 			"uuid": "1e9a4d78-5754-6ac7-f839-4f88d582fa54"
 		},
 		{
-			"name": "Trim",
+			"name": "BootTrim",
 			"color": 0,
 			"origin": [0, 0, 0],
 			"rotation": [0, 0, 0],
@@ -27442,7 +27442,7 @@
 			"uuid": "28ed7fd7-2cca-0e6a-b766-6cef060b1935"
 		},
 		{
-			"name": "Trim",
+			"name": "BootTrim",
 			"color": 0,
 			"origin": [0, 0, 0],
 			"rotation": [0, 0, 0],
@@ -28320,7 +28320,7 @@
 			"uuid": "7736b3be-c160-369a-90e7-d64ea1551323"
 		},
 		{
-			"name": "Trim",
+			"name": "BootTrim",
 			"color": 0,
 			"origin": [0, 0, 0],
 			"rotation": [0, 0, 0],
@@ -29198,7 +29198,7 @@
 			"uuid": "59b3fa71-7390-8da1-97cb-5ee43b518fa7"
 		},
 		{
-			"name": "Trim",
+			"name": "BootTrim",
 			"color": 0,
 			"origin": [0, 0, 0],
 			"rotation": [0, 0, 0],
@@ -29591,7 +29591,7 @@
 			"uuid": "953f78fa-c9d5-b91d-6e34-7967f989aa45"
 		},
 		{
-			"name": "Chestplate",
+			"name": "Leggings",
 			"color": 0,
 			"origin": [0, 0, 0],
 			"rotation": [0, 0, 0],
@@ -29764,7 +29764,7 @@
 			"uuid": "f16061e1-da41-f60d-2d61-34accfb7dcad"
 		},
 		{
-			"name": "Trim",
+			"name": "LeggingsTrim",
 			"color": 0,
 			"origin": [0, 0, 0],
 			"rotation": [0, 0, 0],
@@ -30160,7 +30160,7 @@
 			"uuid": "a5a342b7-83b0-d078-8776-7c1ddac49437"
 		},
 		{
-			"name": "Leather",
+			"name": "ChestplateLeather",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -30205,7 +30205,7 @@
 			"uuid": "9aa2de7f-0de7-d835-cc8a-07a0082dc973"
 		},
 		{
-			"name": "Trim",
+			"name": "ChestplateTrim",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -30474,7 +30474,7 @@
 			"uuid": "bd40cdc1-0967-68eb-cff5-8f1827e174c8"
 		},
 		{
-			"name": "Leather",
+			"name": "ChestplateLeather",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -30520,7 +30520,7 @@
 			"uuid": "3e5330b1-a158-cd4e-0b5c-ce2615a77d72"
 		},
 		{
-			"name": "Trim",
+			"name": "ChestplateTrim",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -30653,7 +30653,7 @@
 			"uuid": "b4c686a2-7b4d-6820-044a-c95942967f4d"
 		},
 		{
-			"name": "Leather",
+			"name": "LeggingsLeather",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -30698,7 +30698,7 @@
 			"uuid": "81381629-49d3-8a84-5740-db87cbab3905"
 		},
 		{
-			"name": "Trim",
+			"name": "LeggingsTrim",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -30960,7 +30960,7 @@
 			"uuid": "3956dd02-eeea-b9aa-8120-b3ff57bd25d7"
 		},
 		{
-			"name": "Chestplate",
+			"name": "Leggings",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -31005,7 +31005,7 @@
 			"uuid": "b7433d13-896b-ebdc-a058-008b39f9cba6"
 		},
 		{
-			"name": "Leather",
+			"name": "LeggingsLeather",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -31050,7 +31050,7 @@
 			"uuid": "28237646-a0a3-bec7-4546-b77e46c4cb6a"
 		},
 		{
-			"name": "Trim",
+			"name": "LeggingsTrim",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -31140,7 +31140,7 @@
 			"uuid": "d921bfb1-e769-ace6-a486-b2a08528336f"
 		},
 		{
-			"name": "Chestplate",
+			"name": "Leggings",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -31185,7 +31185,7 @@
 			"uuid": "0af4b519-985c-3330-3955-f58dfb086e92"
 		},
 		{
-			"name": "Leather",
+			"name": "LeggingsLeather",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -31230,7 +31230,7 @@
 			"uuid": "dd7b43ef-aabf-53e3-9993-60a1ecb08793"
 		},
 		{
-			"name": "Trim",
+			"name": "LeggingsTrim",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -31320,7 +31320,7 @@
 			"uuid": "4a5b0f02-e135-7172-dde5-43bb1ce1acc3"
 		},
 		{
-			"name": "Chestplate",
+			"name": "Leggings",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -31365,7 +31365,7 @@
 			"uuid": "e313c395-efb7-b607-dda9-84c69a18348f"
 		},
 		{
-			"name": "Leather",
+			"name": "LeggingsLeather",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -31410,7 +31410,7 @@
 			"uuid": "969aa453-b936-1a5d-2069-1ea58e5d4bba"
 		},
 		{
-			"name": "Trim",
+			"name": "LeggingsTrim",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -31500,7 +31500,7 @@
 			"uuid": "baeb920d-df40-6aea-5ec0-a0599ffd17ba"
 		},
 		{
-			"name": "Chestplate",
+			"name": "Leggings",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -31545,7 +31545,7 @@
 			"uuid": "7a6e07df-31da-8c75-8842-41eef0c40cd5"
 		},
 		{
-			"name": "Leather",
+			"name": "LeggingsLeather",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -31590,7 +31590,7 @@
 			"uuid": "fe8d7973-55be-8ef2-512c-9eac487b8152"
 		},
 		{
-			"name": "Trim",
+			"name": "LeggingsTrim",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -31680,7 +31680,7 @@
 			"uuid": "06e7ea3f-a4d9-e085-1597-c96a779256e6"
 		},
 		{
-			"name": "Chestplate",
+			"name": "Leggings",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -31725,7 +31725,7 @@
 			"uuid": "fcab44ea-654b-e812-bf5d-ac6d1b7579b3"
 		},
 		{
-			"name": "Leather",
+			"name": "LeggingsLeather",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -31770,7 +31770,7 @@
 			"uuid": "a4f09ca3-b841-e2ff-5f3d-d1b3a5f10ec4"
 		},
 		{
-			"name": "Trim",
+			"name": "Leggings",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -31860,7 +31860,7 @@
 			"uuid": "3d1a43f4-d705-7187-a55a-2dd93d53816d"
 		},
 		{
-			"name": "Chestplate",
+			"name": "Leggings",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -31905,7 +31905,7 @@
 			"uuid": "003b6db7-7e00-0293-1c4b-7d20c9380928"
 		},
 		{
-			"name": "Leather",
+			"name": "LeggingsLeather",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -31950,7 +31950,7 @@
 			"uuid": "dd916894-f825-919d-ea9a-6f445777273d"
 		},
 		{
-			"name": "Trim",
+			"name": "LeggingsTrim",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -32040,7 +32040,7 @@
 			"uuid": "73af814a-fc84-4725-3061-b76d172216e5"
 		},
 		{
-			"name": "Chestplate",
+			"name": "Leggings",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -32085,7 +32085,7 @@
 			"uuid": "59f96eb4-980b-fdf2-9255-6db1869a61ea"
 		},
 		{
-			"name": "Leather",
+			"name": "LeggingsLeather",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -32130,7 +32130,7 @@
 			"uuid": "e1b98d0b-dc4d-e060-3b9d-9955d3a43980"
 		},
 		{
-			"name": "Trim",
+			"name": "LeggingsTrim",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -32220,7 +32220,7 @@
 			"uuid": "a11a67f5-1e3c-ecd8-b209-3ce84a389b74"
 		},
 		{
-			"name": "Chestplate",
+			"name": "Leggings",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -32265,7 +32265,7 @@
 			"uuid": "6ceb8ce7-0c95-a42c-4add-032a6758bc40"
 		},
 		{
-			"name": "Leather",
+			"name": "LeggingsLeather",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -32310,7 +32310,7 @@
 			"uuid": "246fa65e-2f73-547c-6893-3c096020f052"
 		},
 		{
-			"name": "Trim",
+			"name": "LeggingsTrim",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -32400,7 +32400,7 @@
 			"uuid": "3cbdf692-2f6d-432a-f303-5cd68560e8b2"
 		},
 		{
-			"name": "Chestplate",
+			"name": "Leggings",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -32445,7 +32445,7 @@
 			"uuid": "c826321c-9ec8-d9ea-276c-69613f5f48ba"
 		},
 		{
-			"name": "Leather",
+			"name": "LeggingsLeather",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -32490,7 +32490,7 @@
 			"uuid": "192868c5-8026-230b-de1f-9eb71da25127"
 		},
 		{
-			"name": "Trim",
+			"name": "LeggingsTrim",
 			"box_uv": false,
 			"rescale": false,
 			"locked": false,
@@ -33320,7 +33320,7 @@
 								"f78e1df3-62a5-9895-42cd-233bab450905",
 								"7d871e99-5f64-68f9-ecde-703e399d873a",
 								{
-									"name": "ShellArmorChestplate",
+									"name": "ShellArmorShell",
 									"origin": [0, 0, 0],
 									"color": 0,
 									"uuid": "418ddc68-9f02-73b8-78f9-a59699a86063",
@@ -33350,7 +33350,7 @@
 										"0db89506-dd3f-6c3b-e2f0-a2c8698885e4",
 										"3cbdf692-2f6d-432a-f303-5cd68560e8b2",
 										{
-											"name": "SpikeMFArmorChestplate",
+											"name": "SpikeMFArmorShell",
 											"origin": [0, 0, 0],
 											"color": 0,
 											"uuid": "90b4e37d-f141-4508-94c6-a1438cf81734",
@@ -33382,7 +33382,7 @@
 										"03be26f5-710d-d40f-f5f0-5d582aceb9ff",
 										"a11a67f5-1e3c-ecd8-b209-3ce84a389b74",
 										{
-											"name": "SpikeMMArmorChestplate",
+											"name": "SpikeMMArmorShell",
 											"origin": [0, 0, 0],
 											"color": 0,
 											"uuid": "0bdc5e19-98a7-6fdf-b483-ad7acebe4314",
@@ -33414,7 +33414,7 @@
 										"23d7fb78-1b85-9ae0-ad99-36bba241f17b",
 										"73af814a-fc84-4725-3061-b76d172216e5",
 										{
-											"name": "SpikeMBArmorChestplate",
+											"name": "SpikeMBArmorShell",
 											"origin": [0, 0, 0],
 											"color": 0,
 											"uuid": "78512afe-3373-3efa-a665-62977c88dc99",
@@ -33446,7 +33446,7 @@
 										"46be90c8-352e-1b30-395d-990972c3d989",
 										"3d1a43f4-d705-7187-a55a-2dd93d53816d",
 										{
-											"name": "SpikeLSArmorChestplate",
+											"name": "SpikeLSArmorShell",
 											"origin": [0, 0, 0],
 											"color": 0,
 											"uuid": "ce89fdf4-7688-2922-91d5-9abc254694f4",
@@ -33478,7 +33478,7 @@
 										"51b34163-8a1f-1df5-43ad-52dcf1ea73b8",
 										"06e7ea3f-a4d9-e085-1597-c96a779256e6",
 										{
-											"name": "SpikeLFArmorChestplate",
+											"name": "SpikeLFArmorShell",
 											"origin": [0, 0, 0],
 											"color": 0,
 											"uuid": "71b2511b-d4db-30ad-00e5-a3ab41d63d60",
@@ -33510,7 +33510,7 @@
 										"610fa74b-043a-ff9d-6b5d-e061be803a58",
 										"baeb920d-df40-6aea-5ec0-a0599ffd17ba",
 										{
-											"name": "SpikeLBArmorChestplate",
+											"name": "SpikeLBArmorShell",
 											"origin": [0, 0, 0],
 											"color": 0,
 											"uuid": "ff47b0c4-eabc-61cd-4655-11f3d4689266",
@@ -33542,7 +33542,7 @@
 										"a71dbf62-e580-4fb2-b7cf-896e6ded73d3",
 										"4a5b0f02-e135-7172-dde5-43bb1ce1acc3",
 										{
-											"name": "SpikeRSArmorChestplate",
+											"name": "SpikeRSArmorShell",
 											"origin": [0, 0, 0],
 											"color": 0,
 											"uuid": "4b9e0d2e-d989-51b6-953b-fe77da79e85b",
@@ -33574,7 +33574,7 @@
 										"38454ff4-2a14-dda7-b969-4e1bf47c7712",
 										"d921bfb1-e769-ace6-a486-b2a08528336f",
 										{
-											"name": "SpikeRFArmorChestplate",
+											"name": "SpikeRFArmorShell",
 											"origin": [0, 0, 0],
 											"color": 0,
 											"uuid": "cf85b001-b8a8-b006-9737-9289488a8bd6",
@@ -33606,7 +33606,7 @@
 										"38344c40-82ef-9d6b-5cb9-ec51a2d8bc33",
 										"3956dd02-eeea-b9aa-8120-b3ff57bd25d7",
 										{
-											"name": "SpikeRBArmorChestplate",
+											"name": "SpikeRBArmorShell",
 											"origin": [0, 0, 0],
 											"color": 0,
 											"uuid": "1251a551-db62-9def-828b-c5e36783c57d",
@@ -35300,6 +35300,72 @@
 			"export_codec": "",
 			"export_path": "",
 			"children": ["f3d7c059-c772-2b3c-17d4-76f679e5f2a1"],
+			"visibility": false
+		},
+		{
+			"uuid": "211e15aa-4c80-b6a7-c13d-d289c33a7e3e",
+			"name": "ArmorHelmet",
+			"export_codec": "",
+			"export_path": "",
+			"children": ["a500e3a3-5677-9628-7f9c-3656b784c094", "f55b9bef-7532-29e8-db2b-191eef5156bf"],
+			"visibility": false
+		},
+		{
+			"uuid": "a8cd28a3-2cbd-30e3-cc8b-70d949e1a378",
+			"name": "ArmorChestplate",
+			"export_codec": "",
+			"export_path": "",
+			"children": [
+				"0e9c7cdf-741f-75c1-9b5b-9de5f6635822",
+				"180f648c-3d83-0f67-9ce0-dd85b8766b5e",
+				"8f06bd0d-1eb0-09a5-1e9f-539d3413c27b",
+				"fb7bf6da-9ae8-7947-3595-995742fb4182",
+				"45734e59-58b3-700f-2f91-a7ad1a32def1"
+			],
+			"visibility": false
+		},
+		{
+			"uuid": "68b81b17-2098-ae32-c932-0df5c29c9589",
+			"name": "ArmorLeggings",
+			"export_codec": "",
+			"export_path": "",
+			"children": ["00247fa0-e90c-fd20-fde2-204ae793c042", "79051a4c-c451-f22d-e175-385787a5e383", "e11725bb-40f4-1a52-c7c8-a432f3b4ad3f"],
+			"visibility": false
+		},
+		{
+			"uuid": "a14502c0-f0b8-f655-a616-c08cb221af53",
+			"name": "ArmorBoots",
+			"export_codec": "",
+			"export_path": "",
+			"children": [
+				"7c85875e-a34a-3dfb-869b-d147ba00f46b",
+				"be019718-cd08-2672-3e8a-362bfb829744",
+				"0b0426f6-eb63-a08e-c81e-d4ae3a8268e6",
+				"da928350-5dcc-93d6-d0f0-f538d017e364",
+				"1608ab06-2cdc-c2b6-bde0-ab10298f2cf7",
+				"63799bb7-dd31-4ff3-c95c-1e2091e6ff7d",
+				"fed0950e-f6aa-948c-a5a1-004e80dafa63",
+				"b3cb02ee-babf-9580-0c5c-6ff72a62166a"
+			],
+			"visibility": false
+		},
+		{
+			"uuid": "14e5b358-104b-ab20-1c8e-5a5d76bb5b00",
+			"name": "ArmorShell",
+			"export_codec": "",
+			"export_path": "",
+			"children": [
+				"418ddc68-9f02-73b8-78f9-a59699a86063",
+				"90b4e37d-f141-4508-94c6-a1438cf81734",
+				"0bdc5e19-98a7-6fdf-b483-ad7acebe4314",
+				"78512afe-3373-3efa-a665-62977c88dc99",
+				"ce89fdf4-7688-2922-91d5-9abc254694f4",
+				"71b2511b-d4db-30ad-00e5-a3ab41d63d60",
+				"ff47b0c4-eabc-61cd-4655-11f3d4689266",
+				"4b9e0d2e-d989-51b6-953b-fe77da79e85b",
+				"cf85b001-b8a8-b006-9737-9289488a8bd6",
+				"1251a551-db62-9def-828b-c5e36783c57d"
+			],
 			"visibility": false
 		},
 		{

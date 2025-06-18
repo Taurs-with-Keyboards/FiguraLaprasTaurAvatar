@@ -1,222 +1,131 @@
 -- Required scripts
-local pokemonParts = require("lib.GroupIndex")(models.LaprasTaur)
-local laprasArmor  = require("lib.KattArmor")()
-local itemCheck    = require("lib.ItemCheck")
-local color        = require("scripts.ColorProperties")
+local parts       = require("lib.PartsAPI")
+local laprasArmor = require("lib.KattArmor")()
 
 -- Setting the leggings to layer 1
 laprasArmor.Armor.Leggings:setLayer(1)
 
 -- Armor parts
 laprasArmor.Armor.Helmet
-	:addParts(pokemonParts.headArmorHelmet.Helmet)
-	:addTrimParts(pokemonParts.headArmorHelmet.Trim)
+	:addParts(table.unpack(parts:createTable(function(part) return part:getName() == "Helmet" end)))
+	:addTrimParts(table.unpack(parts:createTable(function(part) return part:getName() == "HelmetTrim" end)))
 laprasArmor.Armor.Chestplate
-	:addParts(
-		pokemonParts.bodyArmorChestplate.Chestplate,
-		pokemonParts.leftArmArmorChestplate.Chestplate,
-		pokemonParts.rightArmArmorChestplate.Chestplate,
-		pokemonParts.leftArmArmorChestplateFP.Chestplate,
-		pokemonParts.rightArmArmorChestplateFP.Chestplate,
-		pokemonParts.ShellArmorChestplate.Chestplate,
-		pokemonParts.SpikeMFArmorChestplate.Chestplate,
-		pokemonParts.SpikeMMArmorChestplate.Chestplate,
-		pokemonParts.SpikeMBArmorChestplate.Chestplate,
-		pokemonParts.SpikeLSArmorChestplate.Chestplate,
-		pokemonParts.SpikeLFArmorChestplate.Chestplate,
-		pokemonParts.SpikeLBArmorChestplate.Chestplate,
-		pokemonParts.SpikeRSArmorChestplate.Chestplate,
-		pokemonParts.SpikeRFArmorChestplate.Chestplate,
-		pokemonParts.SpikeRBArmorChestplate.Chestplate
-	)
-	:addTrimParts(
-		pokemonParts.bodyArmorChestplate.Trim,
-		pokemonParts.leftArmArmorChestplate.Trim,
-		pokemonParts.rightArmArmorChestplate.Trim,
-		pokemonParts.leftArmArmorChestplateFP.Trim,
-		pokemonParts.rightArmArmorChestplateFP.Trim,
-		pokemonParts.ShellArmorChestplate.Trim,
-		pokemonParts.SpikeMFArmorChestplate.Trim,
-		pokemonParts.SpikeMMArmorChestplate.Trim,
-		pokemonParts.SpikeMBArmorChestplate.Trim,
-		pokemonParts.SpikeLSArmorChestplate.Trim,
-		pokemonParts.SpikeLFArmorChestplate.Trim,
-		pokemonParts.SpikeLBArmorChestplate.Trim,
-		pokemonParts.SpikeRSArmorChestplate.Trim,
-		pokemonParts.SpikeRFArmorChestplate.Trim,
-		pokemonParts.SpikeRBArmorChestplate.Trim
-	)
+	:addParts(table.unpack(parts:createTable(function(part) return part:getName() == "Chestplate" end)))
+	:addTrimParts(table.unpack(parts:createTable(function(part) return part:getName() == "ChestplateTrim" end)))
 laprasArmor.Armor.Leggings
-	:addParts(
-		pokemonParts.bodyArmorLeggings.Leggings,
-		pokemonParts.NeckArmorLeggings.Leggings,
-		pokemonParts.MainArmorLeggings.Leggings
-	)
-	:addTrimParts(
-		pokemonParts.bodyArmorLeggings.Trim,
-		pokemonParts.NeckArmorLeggings.Trim,
-		pokemonParts.MainArmorLeggings.Trim
-	)
+	:addParts(table.unpack(parts:createTable(function(part) return part:getName() == "Leggings" end)))
+	:addTrimParts(table.unpack(parts:createTable(function(part) return part:getName() == "LeggingsTrim" end)))
 laprasArmor.Armor.Boots
-	:addParts(
-		pokemonParts.FrontLeftFlipperArmorBoot.Boot,
-		pokemonParts.FrontLeftFlipperTipArmorBoot.Boot,
-		pokemonParts.FrontRightFlipperArmorBoot.Boot,
-		pokemonParts.FrontRightFlipperTipArmorBoot.Boot,
-		pokemonParts.BackLeftFlipperArmorBoot.Boot,
-		pokemonParts.BackLeftFlipperTipArmorBoot.Boot,
-		pokemonParts.BackRightFlipperArmorBoot.Boot,
-		pokemonParts.BackRightFlipperTipArmorBoot.Boot
-	)
-	:addTrimParts(
-		pokemonParts.FrontLeftFlipperArmorBoot.Trim,
-		pokemonParts.FrontLeftFlipperTipArmorBoot.Trim,
-		pokemonParts.FrontRightFlipperArmorBoot.Trim,
-		pokemonParts.FrontRightFlipperTipArmorBoot.Trim,
-		pokemonParts.BackLeftFlipperArmorBoot.Trim,
-		pokemonParts.BackLeftFlipperTipArmorBoot.Trim,
-		pokemonParts.BackRightFlipperArmorBoot.Trim,
-		pokemonParts.BackRightFlipperTipArmorBoot.Trim
-	)
+	:addParts(table.unpack(parts:createTable(function(part) return part:getName() == "Boot" end)))
+	:addTrimParts(table.unpack(parts:createTable(function(part) return part:getName() == "BootTrim" end)))
 
 -- Leather armor
 laprasArmor.Materials.leather
-	:setTexture(textures["textures.armor.leatherArmor"] or textures["models.LaprasTaur.leatherArmor"])
-	:addParts(laprasArmor.Armor.Helmet,
-		pokemonParts.headArmorHelmet.Leather
-	)
-	:addParts(laprasArmor.Armor.Chestplate,
-		pokemonParts.bodyArmorChestplate.Leather,
-		pokemonParts.leftArmArmorChestplate.Leather,
-		pokemonParts.rightArmArmorChestplate.Leather,
-		pokemonParts.leftArmArmorChestplateFP.Leather,
-		pokemonParts.rightArmArmorChestplateFP.Leather,
-		pokemonParts.ShellArmorChestplate.Leather,
-		pokemonParts.SpikeMFArmorChestplate.Leather,
-		pokemonParts.SpikeMMArmorChestplate.Leather,
-		pokemonParts.SpikeMBArmorChestplate.Leather,
-		pokemonParts.SpikeLSArmorChestplate.Leather,
-		pokemonParts.SpikeLFArmorChestplate.Leather,
-		pokemonParts.SpikeLBArmorChestplate.Leather,
-		pokemonParts.SpikeRSArmorChestplate.Leather,
-		pokemonParts.SpikeRFArmorChestplate.Leather,
-		pokemonParts.SpikeRBArmorChestplate.Leather
-	)
-	:addParts(laprasArmor.Armor.Leggings,
-		pokemonParts.bodyArmorLeggings.Leather,
-		pokemonParts.NeckArmorLeggings.Leather,
-		pokemonParts.MainArmorLeggings.Leather
-	)
-	:addParts(laprasArmor.Armor.Boots,
-		pokemonParts.FrontLeftFlipperArmorBoot.Leather,
-		pokemonParts.FrontLeftFlipperTipArmorBoot.Leather,
-		pokemonParts.FrontRightFlipperArmorBoot.Leather,
-		pokemonParts.FrontRightFlipperTipArmorBoot.Leather,
-		pokemonParts.BackLeftFlipperArmorBoot.Leather,
-		pokemonParts.BackLeftFlipperTipArmorBoot.Leather,
-		pokemonParts.BackRightFlipperArmorBoot.Leather,
-		pokemonParts.BackRightFlipperTipArmorBoot.Leather
-	)
+	:setTexture(textures["textures.armor.leatherArmor"] or textures["LaprasTaur.leatherArmor"])
+	:addParts(laprasArmor.Armor.Helmet,     table.unpack(parts:createTable(function(part) return part:getName() == "HelmetLeather" end)))
+	:addParts(laprasArmor.Armor.Chestplate, table.unpack(parts:createTable(function(part) return part:getName() == "ChestplateLeather" end)))
+	:addParts(laprasArmor.Armor.Leggings,   table.unpack(parts:createTable(function(part) return part:getName() == "LeggingsLeather" end)))
+	:addParts(laprasArmor.Armor.Boots,      table.unpack(parts:createTable(function(part) return part:getName() == "BootLeather" end)))
 
 -- Chainmail armor
 laprasArmor.Materials.chainmail
-	:setTexture(textures["textures.armor.chainmailArmor"] or textures["models.LaprasTaur.chainmailArmor"])
+	:setTexture(textures["textures.armor.chainmailArmor"] or textures["LaprasTaur.chainmailArmor"])
 
 -- Iron armor
 laprasArmor.Materials.iron
-	:setTexture(textures["textures.armor.ironArmor"] or textures["models.LaprasTaur.ironArmor"])
+	:setTexture(textures["textures.armor.ironArmor"] or textures["LaprasTaur.ironArmor"])
 
 -- Golden armor
 laprasArmor.Materials.golden
-	:setTexture(textures["textures.armor.goldenArmor"] or textures["models.LaprasTaur.goldenArmor"])
+	:setTexture(textures["textures.armor.goldenArmor"] or textures["LaprasTaur.goldenArmor"])
 
 -- Diamond armor
 laprasArmor.Materials.diamond
-	:setTexture(textures["textures.armor.diamondArmor"] or textures["models.LaprasTaur.diamondArmor"])
+	:setTexture(textures["textures.armor.diamondArmor"] or textures["LaprasTaur.diamondArmor"])
 
 -- Netherite armor
 laprasArmor.Materials.netherite
-	:setTexture(textures["textures.armor.netheriteArmor"] or textures["models.LaprasTaur.netheriteArmor"])
+	:setTexture(textures["textures.armor.netheriteArmor"] or textures["LaprasTaur.netheriteArmor"])
 
 -- Turtle helmet
 laprasArmor.Materials.turtle
-	:setTexture(textures["textures.armor.turtleHelmet"] or textures["models.LaprasTaur.turtleHelmet"])
+	:setTexture(textures["textures.armor.turtleHelmet"] or textures["LaprasTaur.turtleHelmet"])
 	:addParts(laprasArmor.Armor.Helmet,
-		pokemonParts.TurtleHelmet
+		parts.group.TurtleHelmet
 	)
 
 -- Trims
 -- Bolt
 laprasArmor.TrimPatterns.bolt
-	:setTexture(textures["textures.armor.trims.boltTrim"] or textures["models.LaprasTaur.boltTrim"])
+	:setTexture(textures["textures.armor.trims.boltTrim"] or textures["LaprasTaur.boltTrim"])
 
 -- Coast
 laprasArmor.TrimPatterns.coast
-	:setTexture(textures["textures.armor.trims.coastTrim"] or textures["models.LaprasTaur.coastTrim"])
+	:setTexture(textures["textures.armor.trims.coastTrim"] or textures["LaprasTaur.coastTrim"])
 
 -- Dune
 laprasArmor.TrimPatterns.dune
-	:setTexture(textures["textures.armor.trims.duneTrim"] or textures["models.LaprasTaur.duneTrim"])
+	:setTexture(textures["textures.armor.trims.duneTrim"] or textures["LaprasTaur.duneTrim"])
 
 -- Eye
 laprasArmor.TrimPatterns.eye
-	:setTexture(textures["textures.armor.trims.eyeTrim"] or textures["models.LaprasTaur.eyeTrim"])
+	:setTexture(textures["textures.armor.trims.eyeTrim"] or textures["LaprasTaur.eyeTrim"])
 
 -- Flow
 laprasArmor.TrimPatterns.flow
-	:setTexture(textures["textures.armor.trims.flowTrim"] or textures["models.LaprasTaur.flowTrim"])
+	:setTexture(textures["textures.armor.trims.flowTrim"] or textures["LaprasTaur.flowTrim"])
 
 -- Host
 laprasArmor.TrimPatterns.host
-	:setTexture(textures["textures.armor.trims.hostTrim"] or textures["models.LaprasTaur.hostTrim"])
+	:setTexture(textures["textures.armor.trims.hostTrim"] or textures["LaprasTaur.hostTrim"])
 
 -- Raiser
 laprasArmor.TrimPatterns.raiser
-	:setTexture(textures["textures.armor.trims.raiserTrim"] or textures["models.LaprasTaur.raiserTrim"])
+	:setTexture(textures["textures.armor.trims.raiserTrim"] or textures["LaprasTaur.raiserTrim"])
 
 -- Rib
 laprasArmor.TrimPatterns.rib
-	:setTexture(textures["textures.armor.trims.ribTrim"] or textures["models.LaprasTaur.ribTrim"])
+	:setTexture(textures["textures.armor.trims.ribTrim"] or textures["LaprasTaur.ribTrim"])
 
 -- Sentry
 laprasArmor.TrimPatterns.sentry
-	:setTexture(textures["textures.armor.trims.sentryTrim"] or textures["models.LaprasTaur.sentryTrim"])
+	:setTexture(textures["textures.armor.trims.sentryTrim"] or textures["LaprasTaur.sentryTrim"])
 
 -- Shaper
 laprasArmor.TrimPatterns.shaper
-	:setTexture(textures["textures.armor.trims.shaperTrim"] or textures["models.LaprasTaur.shaperTrim"])
+	:setTexture(textures["textures.armor.trims.shaperTrim"] or textures["LaprasTaur.shaperTrim"])
 
 -- Silence
 laprasArmor.TrimPatterns.silence
-	:setTexture(textures["textures.armor.trims.silenceTrim"] or textures["models.LaprasTaur.silenceTrim"])
+	:setTexture(textures["textures.armor.trims.silenceTrim"] or textures["LaprasTaur.silenceTrim"])
 
 -- Snout
 laprasArmor.TrimPatterns.snout
-	:setTexture(textures["textures.armor.trims.snoutTrim"] or textures["models.LaprasTaur.snoutTrim"])
+	:setTexture(textures["textures.armor.trims.snoutTrim"] or textures["LaprasTaur.snoutTrim"])
 
 -- Spire
 laprasArmor.TrimPatterns.spire
-	:setTexture(textures["textures.armor.trims.spireTrim"] or textures["models.LaprasTaur.spireTrim"])
+	:setTexture(textures["textures.armor.trims.spireTrim"] or textures["LaprasTaur.spireTrim"])
 
 -- Tide
 laprasArmor.TrimPatterns.tide
-	:setTexture(textures["textures.armor.trims.tideTrim"] or textures["models.LaprasTaur.tideTrim"])
+	:setTexture(textures["textures.armor.trims.tideTrim"] or textures["LaprasTaur.tideTrim"])
 
 -- Vex
 laprasArmor.TrimPatterns.vex
-	:setTexture(textures["textures.armor.trims.vexTrim"] or textures["models.LaprasTaur.vexTrim"])
+	:setTexture(textures["textures.armor.trims.vexTrim"] or textures["LaprasTaur.vexTrim"])
 
 -- Ward
 laprasArmor.TrimPatterns.ward
-	:setTexture(textures["textures.armor.trims.wardTrim"] or textures["models.LaprasTaur.wardTrim"])
+	:setTexture(textures["textures.armor.trims.wardTrim"] or textures["LaprasTaur.wardTrim"])
 
 -- Wayfinder
 laprasArmor.TrimPatterns.wayfinder
-	:setTexture(textures["textures.armor.trims.wayfinderTrim"] or textures["models.LaprasTaur.wayfinderTrim"])
+	:setTexture(textures["textures.armor.trims.wayfinderTrim"] or textures["LaprasTaur.wayfinderTrim"])
 
 -- Wild
 laprasArmor.TrimPatterns.wild
-	:setTexture(textures["textures.armor.trims.wildTrim"] or textures["models.LaprasTaur.wildTrim"])
+	:setTexture(textures["textures.armor.trims.wildTrim"] or textures["LaprasTaur.wildTrim"])
 
 -- Config setup
 config:name("LaprasTaur")
@@ -231,69 +140,24 @@ if leggings   == nil then leggings   = true end
 if boots      == nil then boots      = true end
 if shell      == nil then shell      = true end
 
--- All helmet parts
-local helmetGroups = {
-	
-	pokemonParts.headArmorHelmet,
-	pokemonParts.HelmetItemPivot
-	
-}
+-- Helmet parts
+local helmetGroups = parts:createTable(function(part) return part:getName():find("ArmorHelmet") end)
 
--- All chestplate parts
-local chestplateGroups = {
-	
-	pokemonParts.bodyArmorChestplate,
-	pokemonParts.leftArmArmorChestplate,
-	pokemonParts.rightArmArmorChestplate,
-	pokemonParts.leftArmArmorChestplateFP,
-	pokemonParts.rightArmArmorChestplateFP
-	
-}
+-- Chestplate parts
+local chestplateGroups = parts:createTable(function(part) return part:getName():find("ArmorChestplate") end)
 
--- All shell armor parts
-local chestplateShellGroups = {
-	
-	pokemonParts.ShellArmorChestplate,
-	pokemonParts.SpikeMFArmorChestplate,
-	pokemonParts.SpikeMMArmorChestplate,
-	pokemonParts.SpikeMBArmorChestplate,
-	pokemonParts.SpikeLSArmorChestplate,
-	pokemonParts.SpikeLFArmorChestplate,
-	pokemonParts.SpikeLBArmorChestplate,
-	pokemonParts.SpikeRSArmorChestplate,
-	pokemonParts.SpikeRFArmorChestplate,
-	pokemonParts.SpikeRBArmorChestplate
-	
-}
+-- Leggings parts
+local leggingsGroups = parts:createTable(function(part) return part:getName():find("ArmorLeggings") end)
 
--- All leggings parts
-local leggingsGroups = {
-	
-	pokemonParts.bodyArmorLeggings,
-	pokemonParts.NeckArmorLeggings,
-	pokemonParts.MainArmorLeggings
-	
-}
+-- Boots parts
+local bootsGroups = parts:createTable(function(part) return part:getName():find("ArmorBoot") end)
 
--- All boots parts
-local bootsGroups = {
-	
-	pokemonParts.FrontLeftFlipperArmorBoot,
-	pokemonParts.FrontLeftFlipperTipArmorBoot,
-	
-	pokemonParts.FrontRightFlipperArmorBoot,
-	pokemonParts.FrontRightFlipperTipArmorBoot,
-	
-	pokemonParts.BackLeftFlipperArmorBoot,
-	pokemonParts.BackLeftFlipperTipArmorBoot,
-	
-	pokemonParts.BackRightFlipperArmorBoot,
-	pokemonParts.BackRightFlipperTipArmorBoot
-	
-}
+-- Shell parts
+local shellGroups = parts:createTable(function(part) return part:getName():find("ArmorShell") end)
 
-function events.TICK()
+function events.RENDER(delta, context)
 	
+	-- Apply
 	for _, part in ipairs(helmetGroups) do
 		part:visible(helmet)
 	end
@@ -310,14 +174,14 @@ function events.TICK()
 		part:visible(boots)
 	end
 	
-	for _, part in ipairs(chestplateShellGroups) do
+	for _, part in ipairs(shellGroups) do
 		part:visible(shell)
 	end
 	
 end
 
--- Armor all toggle
-local function setAll(boolean)
+-- All toggle
+function pings.setArmorAll(boolean)
 	
 	helmet     = boolean
 	chestplate = boolean
@@ -335,8 +199,8 @@ local function setAll(boolean)
 	
 end
 
--- Armor helmet toggle
-local function setHelmet(boolean)
+-- Helmet toggle
+function pings.setArmorHelmet(boolean)
 	
 	helmet = boolean
 	config:save("ArmorHelmet", helmet)
@@ -346,8 +210,8 @@ local function setHelmet(boolean)
 	
 end
 
--- Armor chestplate toggle
-local function setChestplate(boolean)
+-- Chestplate toggle
+function pings.setArmorChestplate(boolean)
 	
 	chestplate = boolean
 	config:save("ArmorChestplate", chestplate)
@@ -357,8 +221,8 @@ local function setChestplate(boolean)
 	
 end
 
--- Armor leggings toggle
-local function setLeggings(boolean)
+-- Leggings toggle
+function pings.setArmorLeggings(boolean)
 	
 	leggings = boolean
 	config:save("ArmorLeggings", leggings)
@@ -368,8 +232,8 @@ local function setLeggings(boolean)
 	
 end
 
--- Armor boots toggle
-local function setBoots(boolean)
+-- Boots toggle
+function pings.setArmorBoots(boolean)
 	
 	boots = boolean
 	config:save("ArmorBoots", boots)
@@ -379,8 +243,8 @@ local function setBoots(boolean)
 	
 end
 
--- Armor shell toggle
-local function setShell(boolean)
+-- Shell toggle
+function pings.setArmorShell(boolean)
 	
 	shell = boolean
 	config:save("ArmorShell", shell)
@@ -391,7 +255,7 @@ local function setShell(boolean)
 end
 
 -- Sync variables
-local function syncArmor(a, b, c, d, e)
+function pings.syncArmor(a, b, c, d, e)
 	
 	helmet     = a
 	chestplate = b
@@ -401,143 +265,128 @@ local function syncArmor(a, b, c, d, e)
 	
 end
 
--- Pings setup
-pings.setArmorAll        = setAll
-pings.setArmorHelmet     = setHelmet
-pings.setArmorChestplate = setChestplate
-pings.setArmorLeggings   = setLeggings
-pings.setArmorBoots      = setBoots
-pings.setArmorShell      = setShell
-pings.syncArmor          = syncArmor
+-- Host only instructions
+if not host:isHost() then return end
+
+-- Required scripts
+local itemCheck = require("lib.ItemCheck")
+local s, c = pcall(require, "scripts.ColorProperties")
+if not s then c = {} end
 
 -- Sync on tick
-if host:isHost() then
-	function events.TICK()
-		
-		if world.getTime() % 200 == 0 then
-			pings.syncArmor(helmet, chestplate, leggings, boots, shell)
-		end
-		
+function events.TICK()
+	
+	if world.getTime() % 200 == 0 then
+		pings.syncArmor(helmet, chestplate, leggings, boots, shell)
 	end
+	
 end
 
--- Activate actions
-setHelmet(helmet)
-setChestplate(chestplate)
-setLeggings(leggings)
-setBoots(boots)
-setShell(shell)
-
--- Setup table
+-- Table setup
 local t = {}
 
--- Action wheel pages
-t.allPage = action_wheel:newAction()
+-- Actions
+t.allAct = action_wheel:newAction()
 	:item(itemCheck("armor_stand"))
 	:toggleItem(itemCheck("netherite_chestplate"))
 	:onToggle(pings.setArmorAll)
 
-t.helmetPage = action_wheel:newAction()
+t.helmetAct = action_wheel:newAction()
 	:item(itemCheck("iron_helmet"))
 	:toggleItem(itemCheck("diamond_helmet"))
 	:onToggle(pings.setArmorHelmet)
 
-t.chestplatePage = action_wheel:newAction()
+t.chestplateAct = action_wheel:newAction()
 	:item(itemCheck("iron_chestplate"))
 	:toggleItem(itemCheck("diamond_chestplate"))
 	:onToggle(pings.setArmorChestplate)
 
-t.leggingsPage = action_wheel:newAction()
+t.leggingsAct = action_wheel:newAction()
 	:item(itemCheck("iron_leggings"))
 	:toggleItem(itemCheck("diamond_leggings"))
 	:onToggle(pings.setArmorLeggings)
 
-t.bootsPage = action_wheel:newAction()
+t.bootsAct = action_wheel:newAction()
 	:item(itemCheck("iron_boots"))
 	:toggleItem(itemCheck("diamond_boots"))
 	:onToggle(pings.setArmorBoots)
 
-t.shellPage = action_wheel:newAction()
+t.shellAct = action_wheel:newAction()
 	:item(itemCheck("scute"))
 	:toggleItem(itemCheck("turtle_helmet"))
 	:onToggle(pings.setArmorShell)
 
--- Update action page info
-function events.TICK()
+-- Update actions
+function events.RENDER(delta, context)
 	
-	t.allPage
-		:title(toJson(
-			{
-				"",
-				{text = "Toggle All Armor\n\n", bold = true, color = color.primary},
-				{text = "Toggles visibility of all armor parts.", color = color.secondary}
-			}
-		))
-		:hoverColor(color.hover)
-		:toggleColor(color.active)
-		:toggled(helmet and chestplate and leggings and boots and shell)
-	
-	t.helmetPage
-		:title(toJson(
-			{
-				"",
-				{text = "Toggle Helmet\n\n", bold = true, color = color.primary},
-				{text = "Toggles visibility of helmet parts.", color = color.secondary}
-			}
-		))
-		:hoverColor(color.hover)
-		:toggleColor(color.active)
-		:toggled(helmet)
-	
-	t.chestplatePage
-		:title(toJson(
-			{
-				"",
-				{text = "Toggle Chestplate\n\n", bold = true, color = color.primary},
-				{text = "Toggles visibility of chestplate parts.", color = color.secondary}
-			}
-		))
-		:hoverColor(color.hover)
-		:toggleColor(color.active)
-		:toggled(chestplate)
-	
-	t.leggingsPage
-		:title(toJson(
-			{
-				"",
-				{text = "Toggle Leggings\n\n", bold = true, color = color.primary},
-				{text = "Toggles visibility of leggings parts.", color = color.secondary}
-			}
-		))
-		:hoverColor(color.hover)
-		:toggleColor(color.active)
-		:toggled(leggings)
-	
-	t.bootsPage
-		:title(toJson(
-			{
-				"",
-				{text = "Toggle Boots\n\n", bold = true, color = color.primary},
-				{text = "Toggles visibility of boots.", color = color.secondary}
-			}
-		))
-		:hoverColor(color.hover)
-		:toggleColor(color.active)
-		:toggled(boots)
-	
-	t.shellPage
-		:title(toJson(
-			{
-				"",
-				{text = "Toggle Shell Armor\n\n", bold = true, color = color.primary},
-				{text = "Toggles visibility of armor on shell.", color = color.secondary}
-			}
-		))
-		:hoverColor(color.hover)
-		:toggleColor(color.active)
-		:toggled(shell)
+	if action_wheel:isEnabled() then
+		t.allAct
+			:title(toJson(
+				{
+					"",
+					{text = "Toggle All Armor\n\n", bold = true, color = c.primary},
+					{text = "Toggles visibility of all armor parts.", color = c.secondary}
+				}
+			))
+			:toggled(helmet and chestplate and leggings and boots)
+		
+		t.helmetAct
+			:title(toJson(
+				{
+					"",
+					{text = "Toggle Helmet\n\n", bold = true, color = c.primary},
+					{text = "Toggles visibility of helmet parts.", color = c.secondary}
+				}
+			))
+			:toggled(helmet)
+		
+		t.chestplateAct
+			:title(toJson(
+				{
+					"",
+					{text = "Toggle Chestplate\n\n", bold = true, color = c.primary},
+					{text = "Toggles visibility of chestplate parts.", color = c.secondary}
+				}
+			))
+			:toggled(chestplate)
+		
+		t.leggingsAct
+			:title(toJson(
+				{
+					"",
+					{text = "Toggle Leggings\n\n", bold = true, color = c.primary},
+					{text = "Toggles visibility of leggings parts.", color = c.secondary}
+				}
+			))
+			:toggled(leggings)
+		
+		t.bootsAct
+			:title(toJson(
+				{
+					"",
+					{text = "Toggle Boots\n\n", bold = true, color = c.primary},
+					{text = "Toggles visibility of boots.", color = c.secondary}
+				}
+			))
+			:toggled(boots)
+		
+		t.shellAct
+			:title(toJson(
+				{
+					"",
+					{text = "Toggle Shell Armor\n\n", bold = true, color = c.primary},
+					{text = "Toggles visibility of shell armor.", color = c.secondary}
+				}
+			))
+			:toggled(shell)
+		
+		for _, act in pairs(t) do
+			act:hoverColor(c.hover):toggleColor(c.active)
+		end
+		
+	end
 	
 end
 
--- Return action wheel pages
+-- Return actions
 return t
