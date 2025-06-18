@@ -221,8 +221,8 @@ pages.fall
 
 -- Whirlpool actions
 pages.whirlpool
-	:action( -1, whirlpool.bubblePage)
-	:action( -1, whirlpool.dolphinsGracePage)
+	:action( -1, whirlpool.bubbleAct)
+	:action( -1, whirlpool.dolphinsGraceAct)
 	:action( -1, backAct)
 
 -- Eye glow actions

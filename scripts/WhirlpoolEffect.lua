@@ -1,8 +1,6 @@
 -- Required scripts
-local itemCheck = require("lib.ItemCheck")
-local effects   = require("scripts.SyncedVariables")
-local pose      = require("scripts.Posing")
-local color     = require("scripts.ColorProperties")
+local effects = require("scripts.SyncedVariables")
+local pose    = require("scripts.Posing")
 
 -- Config setup
 config:name("LaprasTaur")
@@ -27,7 +25,7 @@ function events.TICK()
 end
 
 -- Bubbles toggle
-local function setBubbles(boolean)
+function pings.setWhirlpoolBubbles(boolean)
 	
 	bubbles = boolean
 	config:save("WhirlpoolBubbles", bubbles)
@@ -38,7 +36,7 @@ local function setBubbles(boolean)
 end
 
 -- Dolphins Grace toggle
-local function setDolphinsGrace(boolean)
+function pings.setWhirlpoolDolphinsGrace(boolean)
 	
 	dolphinsGrace = boolean
 	config:save("WhirlpoolDolphinsGrace", dolphinsGrace)
@@ -49,75 +47,75 @@ local function setDolphinsGrace(boolean)
 end
 
 -- Sync variables
-local function syncWhirlpool(a, b)
+function pings.syncWhirlpool(a, b)
 	
 	bubbles        = a
 	dolphinsGrace  = b
 	
 end
 
--- Pings setup
-pings.setWhirlpoolBubbles       = setBubbles
-pings.setWhirlpoolDolphinsGrace = setDolphinsGrace
-pings.syncWhirlpool             = syncWhirlpool
+-- Host only instructions
+if not host:isHost() then return end
+
+-- Required scripts
+local itemCheck = require("lib.ItemCheck")
+local s, c = pcall(require, "scripts.ColorProperties")
+if not s then c = {} end
 
 -- Sync on tick
-if host:isHost() then
-	function events.TICK()
-		
-		if world.getTime() % 200 == 0 then
-			pings.syncWhirlpool(bubbles, dolphinsGrace)
-		end
-		
+function events.TICK()
+	
+	if world.getTime() % 200 == 0 then
+		pings.syncWhirlpool(bubbles, dolphinsGrace)
 	end
+	
 end
-
--- Activate actions
-setBubbles(bubbles)
-setDolphinsGrace(dolphinsGrace)
 
 -- Table setup
 local t = {}
 
--- Action wheel pages
-t.bubblePage = action_wheel:newAction()
+-- Actions
+t.bubbleAct = action_wheel:newAction()
 	:item(itemCheck("soul_sand"))
 	:toggleItem(itemCheck("magma_block"))
 	:onToggle(pings.setWhirlpoolBubbles)
 	:toggled(bubbles)
 
-t.dolphinsGracePage = action_wheel:newAction()
+t.dolphinsGraceAct = action_wheel:newAction()
 	:item(itemCheck("egg"))
 	:toggleItem(itemCheck("dolphin_spawn_egg"))
 	:onToggle(pings.setWhirlpoolDolphinsGrace)
 	:toggled(dolphinsGrace)
 
--- Update action page info
-function events.TICK()
+-- Update actions
+function events.RENDER(delta, context)
 	
-	t.bubblePage
-		:title(toJson(
-			{
-				"",
-				{text = "Whirlpool Effect Toggle\n\n", bold = true, color = color.primary},
-				{text = "Toggles the whirlpool created while swimming.", color = color.secondary}
-			}
-		))
-		:hoverColor(color.hover)
-		:toggleColor(color.active)
-	
-	t.dolphinsGracePage
-		:title(toJson(
-			{
-				"",
-				{text = "Dolphin's Grace Toggle\n\n", bold = true, color = color.primary},
-				{text = "Toggles the whirlpool based on having the Dolphin's Grace Effect.", color = color.secondary}
-			}
-		))
-		:hoverColor(color.hover)
-		:toggleColor(color.active)
+	if action_wheel:isEnabled() then
+		t.bubbleAct
+			:title(toJson(
+				{
+					"",
+					{text = "Whirlpool Effect Toggle\n\n", bold = true, color = c.primary},
+					{text = "Toggles the whirlpool created while swimming.", color = c.secondary}
+				}
+			))
+		
+		t.dolphinsGraceAct
+			:title(toJson(
+				{
+					"",
+					{text = "Dolphin\'s Grace Toggle\n\n", bold = true, color = c.primary},
+					{text = "Toggles the whirlpool based on having the Dolphin\'s Grace Effect.", color = c.secondary}
+				}
+			))
+		
+		for _, act in pairs(t) do
+			act:hoverColor(c.hover):toggleColor(c.active)
+		end
+		
+	end
 	
 end
 
--- Return action wheel pages
+-- Return actions
 return t
