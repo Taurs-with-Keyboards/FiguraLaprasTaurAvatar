@@ -44126,7 +44126,7 @@
 			"name": "napDown",
 			"loop": "once",
 			"override": false,
-			"length": 2.25,
+			"length": 2.16667,
 			"snapping": 24,
 			"selected": false,
 			"anim_time_update": "",
@@ -45122,7 +45122,7 @@
 							"channel": "timeline",
 							"data_points": [
 								{
-									"script": "animations[\"models.LaprasTaur\"].napHold:play()"
+									"script": "animations.LaprasTaur.napHold:play()"
 								}
 							],
 							"uuid": "70e6f8d3-9e67-50b6-12df-f44709dae89f",
