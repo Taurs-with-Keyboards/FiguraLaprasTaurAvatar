@@ -16,9 +16,6 @@ if not s then camera = {} end
 local s, whirlpool = pcall(require, "scripts.WhirlpoolEffect")
 if not s then whirlpool = {} end
 
-local s, fall = pcall(require, "scripts.FallSound")
-if not s then fall = {} end
-
 local s, anims = pcall(require, "scripts.Anims")
 if not s then anims = {} end
 
@@ -63,7 +60,6 @@ local pages = {
 	armor     = action_wheel:newPage("Armor"),
 	camera    = action_wheel:newPage("Camera"),
 	lapras    = action_wheel:newPage("Lapras"),
-	fall      = action_wheel:newPage("FallSound"),
 	whirlpool = action_wheel:newPage("Whirlpool"),
 	eyes      = action_wheel:newPage("Eyes"),
 	anims     = action_wheel:newPage("Anims")
@@ -92,10 +88,6 @@ local pageActs = {
 	camera = action_wheel:newAction()
 		:item(itemCheck("redstone"))
 		:onLeftClick(function() descend(pages.camera) end),
-	
-	fall = action_wheel:newAction()
-		:item(itemCheck("pufferfish"))
-		:onLeftClick(function() descend(pages.fall) end),
 	
 	whirlpool = action_wheel:newAction()
 		:item(itemCheck("magma_block"))
@@ -134,11 +126,6 @@ function events.RENDER(delta, context)
 		pageActs.camera
 			:title(toJson(
 				{text = "Camera Settings", bold = true, color = c.primary}
-			))
-		
-		pageActs.fall
-			:title(toJson(
-				{text = "Fall Sound Settings", bold = true, color = c.primary}
 			))
 		
 		pageActs.whirlpool
@@ -208,12 +195,6 @@ pages.lapras
 	:action( -1, shiny.shinyAct)
 	:action( -1, pageActs.fall)
 	:action( -1, pageActs.whirlpool)
-	:action( -1, backAct)
-
--- Flop sound actions
-pages.fall
-	:action( -1, fall.soundPage)
-	:action( -1, fall.dryPage)
 	:action( -1, backAct)
 
 -- Whirlpool actions

@@ -33725,6 +33725,20 @@
 										"ae1ac44f-61a4-9351-e67a-1bdbe07e16f4",
 										"6749f8a2-a27d-10ac-3db9-4f8f10f7f19c",
 										{
+											"name": "FrontLeftGround",
+											"origin": [-34, 1, -10],
+											"color": 0,
+											"uuid": "7ef85020-3bf9-7956-06f4-85bd67848aa3",
+											"export": true,
+											"mirror_uv": false,
+											"isOpen": false,
+											"locked": false,
+											"visibility": true,
+											"autouv": 0,
+											"selected": false,
+											"children": []
+										},
+										{
 											"name": "FrontLeftFlipperTipArmorBoot",
 											"origin": [0, 0, 0],
 											"color": 0,
@@ -33786,6 +33800,20 @@
 									"children": [
 										"3f91d0e4-b562-b0d7-4e55-d5407f86af5f",
 										"eee29ffc-1777-7fe1-4608-049d30b1b456",
+										{
+											"name": "FrontRightGround",
+											"origin": [34, 1, -10],
+											"color": 0,
+											"uuid": "368ac4d3-3e3a-2c2d-846c-68281e4f430f",
+											"export": true,
+											"mirror_uv": false,
+											"isOpen": false,
+											"locked": false,
+											"visibility": true,
+											"autouv": 0,
+											"selected": false,
+											"children": []
+										},
 										{
 											"name": "FrontRightFlipperTipArmorBoot",
 											"origin": [0, 0, 0],
@@ -33849,6 +33877,20 @@
 										"57590a18-0abc-16be-14d7-162499affa9d",
 										"a54d1d3e-a78d-069e-5395-e121900d5a35",
 										{
+											"name": "BackLeftGround",
+											"origin": [-30, 1, 15],
+											"color": 0,
+											"uuid": "565c9858-b2a1-aed0-24d5-4f4ae5c5de29",
+											"export": true,
+											"mirror_uv": false,
+											"isOpen": false,
+											"locked": false,
+											"visibility": true,
+											"autouv": 0,
+											"selected": false,
+											"children": []
+										},
+										{
 											"name": "BackLeftFlipperTipArmorBoot",
 											"origin": [0, 0, 0],
 											"color": 0,
@@ -33910,6 +33952,20 @@
 									"children": [
 										"bed00313-e5dc-fa22-e089-097d8c9f0511",
 										"56f7e3d1-8a7f-007e-8ef4-9cf356812a76",
+										{
+											"name": "BackRightGround",
+											"origin": [30, 1, 15],
+											"color": 0,
+											"uuid": "aa59354e-db21-d6aa-1d4f-c486913cee50",
+											"export": true,
+											"mirror_uv": false,
+											"isOpen": false,
+											"locked": false,
+											"visibility": true,
+											"autouv": 0,
+											"selected": false,
+											"children": []
+										},
 										{
 											"name": "BackRightFlipperTipArmorBoot",
 											"origin": [0, 0, 0],
@@ -35892,36 +35948,6 @@
 							],
 							"uuid": "7aab1231-f6d9-d8d8-6b9c-21e32ddb808d",
 							"time": 0,
-							"color": -1,
-							"interpolation": "linear"
-						}
-					]
-				},
-				"effects": {
-					"name": "Effects",
-					"type": "effect",
-					"keyframes": [
-						{
-							"channel": "timeline",
-							"data_points": [
-								{
-									"script": "local ground = require(\"lib.GroundCheck\")\nif player:isLoaded() and ground() then\n\tfor i=1, 2 do\n\t\tsounds:playSound(\"entity.turtle.shamble\",\n \t\tplayer:getPos(),\n  \t\t0.75)\n \tend\nend"
-								}
-							],
-							"uuid": "6da822d5-52c4-f35f-1761-7530536aa2ec",
-							"time": 0.41667,
-							"color": -1,
-							"interpolation": "linear"
-						},
-						{
-							"channel": "timeline",
-							"data_points": [
-								{
-									"script": "local ground = require(\"lib.GroundCheck\")\nif player:isLoaded() and ground() then\n\tfor i=1, 2 do\n\t\tsounds:playSound(\"entity.turtle.shamble\",\n \t\tplayer:getPos(),\n  \t\t0.75)\n \tend\nend\n"
-								}
-							],
-							"uuid": "03fbaa2d-6107-3c07-ed94-99faa66e9ea9",
-							"time": 0.58333,
 							"color": -1,
 							"interpolation": "linear"
 						}
@@ -39358,24 +39384,6 @@
 							"bezier_left_value": [0, 0, 0],
 							"bezier_right_time": [0.1, 0.1, 0.1],
 							"bezier_right_value": [0, 0, 0]
-						}
-					]
-				},
-				"effects": {
-					"name": "Effects",
-					"type": "effect",
-					"keyframes": [
-						{
-							"channel": "timeline",
-							"data_points": [
-								{
-									"script": "if player:isLoaded() and not player:isInWater() then\n\tsounds:playSound(\"entity.puffer_fish.flop\", \n\tplayer:getPos(),\n\t0.5,\n\t0.45)\nend\n"
-								}
-							],
-							"uuid": "7fb9eead-fa34-16db-4f0b-b6b1d75f5f45",
-							"time": 2.45833,
-							"color": -1,
-							"interpolation": "linear"
 						}
 					]
 				}
@@ -48561,60 +48569,6 @@
 							"bezier_left_value": [0, 0, 0],
 							"bezier_right_time": [0.1, 0.1, 0.1],
 							"bezier_right_value": [0, 0, 0]
-						}
-					]
-				},
-				"effects": {
-					"name": "Effects",
-					"type": "effect",
-					"keyframes": [
-						{
-							"channel": "timeline",
-							"data_points": [
-								{
-									"script": "local ground = require(\"lib.GroundCheck\")\nif player:isLoaded() and ground() and not player:isInWater() then\n\tsounds:playSound(\"entity.puffer_fish.flop\", \n\tmodels.models.LaprasTaur.Player.Main.FrontLeftFlipper.FrontLeftFlipperTip.Flipper:partToWorldMatrix():apply(),\n\t0.5,\n\t0.5)\nend\n"
-								}
-							],
-							"uuid": "5a794b05-55b9-d368-bf24-d63867bbc271",
-							"time": 1.16667,
-							"color": -1,
-							"interpolation": "linear"
-						},
-						{
-							"channel": "timeline",
-							"data_points": [
-								{
-									"script": "local ground = require(\"lib.GroundCheck\")\nif player:isLoaded() and ground() and not player:isInWater() then\n\tsounds:playSound(\"entity.puffer_fish.flop\", \n\tmodels.models.LaprasTaur.Player.Main.FrontLeftFlipper.FrontLeftFlipperTip.Flipper:partToWorldMatrix():apply(),\n\t0.5,\n\t0.5)\nend\n"
-								}
-							],
-							"uuid": "d189ee91-bd54-d98c-a60c-bac2868db7c9",
-							"time": 1.66667,
-							"color": -1,
-							"interpolation": "linear"
-						},
-						{
-							"channel": "timeline",
-							"data_points": [
-								{
-									"script": "local ground = require(\"lib.GroundCheck\")\nif player:isLoaded() and ground() and not player:isInWater() then\n\tsounds:playSound(\"entity.puffer_fish.flop\", \n\tmodels.models.LaprasTaur.Player.Main.FrontLeftFlipper.FrontLeftFlipperTip.Flipper:partToWorldMatrix():apply(),\n\t0.5,\n\t0.5)\nend\n"
-								}
-							],
-							"uuid": "94473a14-e79f-c509-979f-bcc64e9ba328",
-							"time": 2.16667,
-							"color": -1,
-							"interpolation": "linear"
-						},
-						{
-							"channel": "timeline",
-							"data_points": [
-								{
-									"script": "local ground = require(\"lib.GroundCheck\")\nif player:isLoaded() and ground() and not player:isInWater() then\n\tsounds:playSound(\"entity.puffer_fish.flop\", \n\tmodels.models.LaprasTaur.Player.Main.FrontLeftFlipper.FrontLeftFlipperTip.Flipper:partToWorldMatrix():apply(),\n\t0.5,\n\t0.5)\nend\n"
-								}
-							],
-							"uuid": "926ff82d-9d6f-b1f6-8c10-329528bc33ef",
-							"time": 2.66667,
-							"color": -1,
-							"interpolation": "linear"
 						}
 					]
 				}
