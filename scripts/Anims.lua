@@ -1,36 +1,28 @@
 -- Required scripts
 require("lib.GSAnimBlend")
-local pokemonParts = require("lib.GroupIndex")(models.LaprasTaur)
-local ground       = require("lib.GroundCheck")
-local itemCheck    = require("lib.ItemCheck")
-local pose         = require("scripts.Posing")
-local color        = require("scripts.ColorProperties")
+require("lib.Molang")
+local parts   = require("lib.PartsAPI")
+local lerp    = require("lib.LerpAPI")
+local ground  = require("lib.GroundCheck")
+local pose    = require("scripts.Posing")
 
 -- Animations setup
 local anims = animations.LaprasTaur
 anims.napHold:priority(1)
 
--- Config setup
-config:name("LaprasTaur")
-
 -- Variables setup
-local waterTicks      = 0
-local underwaterTicks = 0
-local canStretch      = false
-local canFlip         = false
+local canStretch = false
+local canLaugh   = false
+local canFlip    = false
 
-local extendRot = {
-	current    = 0,
-	nextTick   = 0,
-	target     = 0,
-	currentPos = 0
-}
+-- Lerp table
+local extendLerp = lerp:new(0.2)
 
 -- Parrot pivots
 local parrots = {
 	
-	pokemonParts.LeftParrotPivot,
-	pokemonParts.RightParrotPivot
+	parts.group.LeftParrotPivot,
+	parts.group.RightParrotPivot
 	
 }
 
@@ -47,38 +39,69 @@ end
 
 function events.TICK()
 	
-	-- Player variables
-	local vel = player:getVelocity()
-	
-	-- Water timers
-	waterTicks      = not player:isInWater()    and waterTicks + 1      or 0
-	underwaterTicks = not player:isUnderwater() and underwaterTicks + 1 or 0
-	
-	-- Animation variables
+	-- Variables
+	local vel        = player:getVelocity()
+	local dir        = player:getLookDir()
+	local inWater    = player:isInWater()
+	local underwater = player:isUnderwater()
 	local walking    = vel.xz:length() ~= 0
-	local inWater    = waterTicks      < 20
-	local underwater = underwaterTicks < 20
+	local moving     = vel:length() ~= 0
 	local onGround   = ground()
 	
+	-- Directional velocity
+	local fbVel = player:getVelocity():dot((dir.x_z):normalize())
+	local lrVel = player:getVelocity():cross(dir.x_z:normalize()).y
+	local udVel = player:getVelocity().y
+	
+	-- Speed control
+	local moveSpeed  = math.clamp((pose.climb and udVel or fbVel < -0.05 and math.min(fbVel, math.abs(lrVel)) or math.max(fbVel, math.abs(lrVel))) * 15, -2, 2)
+	local waterSpeed = player:isUnderwater() and 0.5 or 1
+	
+	-- Animation speeds
+	anims.groundWalk:speed(moveSpeed)
+	anims.waterSwim:speed(moveSpeed)
+	anims.underwaterSwim:speed(moveSpeed)
+	anims.frontFlip:speed(waterSpeed)
+	anims.backFlip:speed(waterSpeed)
+	
+	-- Animation variables
+	local groundAnim     = (onGround or pose.climb) and not ((pose.swim and inWater) or pose.elytra or pose.spin)
+	local waterAnim      = (inWater or player:getVehicle()) and not (underwater or onGround or pose.elytra)
+	local underwaterAnim = underwater and (not onGround or pose.swim) and not pose.elytra
+	
 	-- Animation states
-	local groundIdle     = not walking and (not (inWater or player:getVehicle()) or onGround) and not ((pose.swim and inWater) or pose.elytra) or pose.spin or (pose.climb and vel:length() == 0)
-	local groundWalk     =     walking and (not (inWater or player:getVehicle()) or onGround) and not ((pose.swim and inWater) or pose.elytra or pose.spin) or (pose.climb and vel:length() ~= 0)
-	local waterIdle      = not walking and ((inWater or player:getVehicle()) and not onGround) and not pose.elytra and not underwater
-	local waterSwim      =     walking and ((inWater or player:getVehicle()) and not onGround) and not pose.elytra and not underwater
-	local underwaterIdle = vel:length() == 0 and underwater and (not onGround or pose.swim) and not pose.elytra
-	local underwaterSwim = vel:length() ~= 0 and underwater and (not onGround or pose.swim) and not pose.elytra
+	local groundIdle     = groundAnim and (not walking or (pose.climb and not moving))
+	local groundWalk     = groundAnim and (walking or (pose.climb and moving))
+	local waterIdle      = waterAnim and not walking
+	local waterSwim      = waterAnim and walking
+	local underwaterIdle = underwaterAnim and not moving
+	local underwaterSwim = underwaterAnim and moving
 	local extend         = pose.swim or pose.elytra or pose.spin
-	local climb          = pose.climb and not onGround
 	local elytra         = pose.elytra
+	local spin           = pose.spin
+	local climb          = pose.climb
 	local sleep          = pose.sleep
-	local breathe        = true
 	
-	-- Targets
-	extendRot.target = extend and 1 or 0
+	-- Animation actions
+	canStretch = onGround and not moving
+	canLaugh   = not moving
+	canFlip    = not onGround and #player:getPassengers() == 0
 	
-	-- Tick lerp
-	extendRot.current  = extendRot.nextTick
-	extendRot.nextTick = math.lerp(extendRot.nextTick, extendRot.target, 0.2)
+	-- Stop Stretch animation
+	if not canStretch then
+		anims.stretch:stop()
+	end
+	
+	-- Stop Laugh animation
+	if not canLaugh then
+		anims.laugh:stop()
+	end
+	
+	-- Stop Flip animations
+	if not canFlip then
+		anims.frontFlip:stop()
+		anims.backFlip:stop()
+	end
 	
 	-- Animations
 	anims.groundIdle:playing(groundIdle)
@@ -88,13 +111,9 @@ function events.TICK()
 	anims.underwaterIdle:playing(underwaterIdle)
 	anims.underwaterSwim:playing(underwaterSwim)
 	anims.extend:playing(extend)
-	anims.climb:playing(climb)
 	anims.elytra:playing(elytra)
-	anims.breathe:playing(breathe)
-	
-	-- Allow root rotations
-	local vanillaRot = not (anims.extend:isPlaying() and not pose.spin or sleep)
-	renderer:rootRotationAllowed(vanillaRot)
+	anims.spin:playing(spin)
+	anims.climb:playing(climb)
 	
 	-- Sleep animations
 	if pose.sleep and not anims.napHold:isPlaying() then
@@ -109,30 +128,8 @@ function events.TICK()
 		
 	end
 	
-	-- Stretch animations
-	canStretch = onGround and vel:length() == 0
-	if not canStretch then
-		
-		anims.stretch:stop()
-		
-	end
-	
-	-- Laugh animations
-	canLaugh = vel:length() == 0
-	if not canLaugh then
-		
-		anims.laugh:stop()
-		
-	end
-	
-	-- Flip animations
-	canFlip = not onGround and #player:getPassengers() == 0
-	if not canFlip then
-		
-		anims.frontFlip:stop()
-		anims.backFlip:stop()
-		
-	end
+	-- Lerp target
+	extendLerp.target = extend and 1 or 0
 	
 end
 
@@ -146,33 +143,13 @@ local dirRot = {
 
 function events.RENDER(delta, context)
 	
-	-- Player variables
-	local vel = player:getVelocity()
-	local dir = player:getLookDir()
-	
-	-- Directional velocity
-	local fbVel = player:getVelocity():dot((dir.x_z):normalize())
-	local lrVel = player:getVelocity():cross(dir.x_z:normalize()).y
-	local udVel = player:getVelocity().y
-	
-	-- Render lerp
-	extendRot.currentPos = math.lerp(extendRot.current, extendRot.nextTick, delta)
-	
-	-- Animation speeds
-	local moveSpeed = math.clamp(pose.climb and udVel * 15 or (fbVel < -0.05 and math.min(fbVel, math.abs(lrVel)) or math.max(fbVel, math.abs(lrVel))) * 15, -2, 2)
-	local waterSpeed = player:isUnderwater() and 0.5 or 1
-	anims.groundWalk:speed(moveSpeed)
-	anims.waterSwim:speed(moveSpeed)
-	anims.underwaterSwim:speed(moveSpeed)
-	anims.breathe:speed(math.min(vel:length() * 15 + 1, 8))
-	anims.frontFlip:speed(waterSpeed)
-	anims.backFlip:speed(waterSpeed)
-	
 	-- Simulate rotations when vanilla rotations are disabled
-	-- Aka player rotations
-	if not renderer:getRootRotationAllowed() then
+	if (anims.extend:isPlaying() or pose.sleep) and not pose.spin then
 		
-		-- Sleep rotation
+		-- Disable vanilla rotation
+		renderer:rootRotationAllowed(false)
+		
+		-- Sleep rotations
 		if pose.sleep then
 			
 			-- Find block
@@ -180,47 +157,40 @@ function events.RENDER(delta, context)
 			local sleepRot = dirRot[block.properties["facing"]]
 			
 			-- Apply
-			models
-				:rot(0, sleepRot, 0)
-				:pos(0)
+			models:rot(0, sleepRot, 0)
 			
+		-- Vanilla rotations
 		else
 			
+			-- Get rotation
 			local rot = ((player:getRot(delta) + 180) % 360 - 180)
 			local yaw = ((player:getBodyYaw(delta) + 180) % 360 - 180)
 			
 			-- Apply
-			models
-				:rot(math.lerp(0, -rot.x, extendRot.currentPos), -yaw + 180, 0)
-				:pos(0)
+			models:rot(math.lerp(0, -rot.x, extendLerp.currPos), -yaw + 180, 0)
 			
 		end
 		
-	elseif pose.spin then
-		
-		models
-			:rot(90, 0, 0)
-			:pos(0, 0, -8)
-		
 	else
 		
-		-- Reset rotation
-		models
-			:rot(0)
-			:pos(0)
+		-- Enable vanilla rotation
+		renderer:rootRotationAllowed(true)
+		
+		-- Reset
+		models:rot(0)
 		
 	end
 	
 	-- Parrot rot offset
 	for _, parrot in pairs(parrots) do
-		parrot:rot(-calculateParentRot(parrot:getParent()))
+		parrot:rot(-calculateParentRot(parrot:getParent()) - vanilla_model.BODY:getOriginRot())
 	end
 	
 	-- Crouch offset
 	local bodyRot = vanilla_model.BODY:getOriginRot(delta)
 	local crouchPos = vec(0, -math.sin(math.rad(bodyRot.x)) * 2, -math.sin(math.rad(bodyRot.x)) * 12)
-	pokemonParts.UpperBody:offsetPivot(crouchPos):pos(-crouchPos.x_z + crouchPos._y_)
-	pokemonParts.Player:pos(crouchPos.x_z + crouchPos._y_ * 2)
+	parts.group.UpperBody:offsetPivot(crouchPos):pos(-crouchPos.x_z + crouchPos._y_)
+	parts.group.Player:pos(crouchPos.x_z + crouchPos._y_ * 2)
 	
 end
 
@@ -253,13 +223,13 @@ function events.RENDER(delta, context)
 	
 	local rot = vanilla_model.HEAD:getOriginRot()
 	rot.x = math.clamp(rot.x, -90, 30)
-	pokemonParts.Spyglass:rot(rot)
+	parts.group.Spyglass:offsetRot(rot)
 		:pos(pose.crouch and vec(0, -4, 0) or nil)
 	
 end
 
 -- Play stretch anim
-local function playStretch()
+function pings.animPlayStretch()
 	
 	if canStretch then
 		anims.stretch:play()
@@ -268,7 +238,7 @@ local function playStretch()
 end
 
 -- Play laugh anim
-local function playLaugh()
+function pings.animPlayLaugh()
 	
 	if canLaugh then
 		anims.laugh:play()
@@ -277,7 +247,7 @@ local function playLaugh()
 end
 
 -- Play front flip anim
-local function playFrontFlip()
+function pings.animPlayFrontFlip()
 	
 	if canFlip and not anims.backFlip:isPlaying() then
 		anims.frontFlip:play()
@@ -286,7 +256,7 @@ local function playFrontFlip()
 end
 
 -- Play back flip anim
-local function playBackFlip()
+function pings.animPlayBackFlip()
 	
 	if canFlip and not anims.frontFlip:isPlaying() then
 		anims.backFlip:play()
@@ -294,11 +264,16 @@ local function playBackFlip()
 	
 end
 
--- Pings setup
-pings.animPlayStretch   = playStretch
-pings.animPlayLaugh     = playLaugh
-pings.animPlayFrontFlip = playFrontFlip
-pings.animPlayBackFlip  = playBackFlip
+-- Host only instructions
+if not host:isHost() then return end
+
+-- Required scripts
+local itemCheck = require("lib.ItemCheck")
+local s, c = pcall(require, "scripts.ColorProperties")
+if not s then c = {} end
+
+-- Config setup
+config:name("LaprasTaur")
 
 -- Stretch keybind
 local stretchBind   = config:load("AnimStretchKeybind") or "key.keyboard.keypad.3"
@@ -342,9 +317,10 @@ function events.TICK()
 	
 end
 
--- Setup table
+-- Table setup
 local t = {}
 
+-- Actions
 t.stretchPage = action_wheel:newAction()
 	:item(itemCheck("scaffolding"))
 	:onLeftClick(pings.animPlayStretch)
@@ -358,32 +334,36 @@ t.flipPage = action_wheel:newAction()
 	:onLeftClick(pings.animPlayFrontFlip)
 	:onRightClick(pings.animPlayBackFlip)
 
--- Update action page info
-function events.TICK()
+-- Update actions
+function events.RENDER(delta, context)
 	
-	t.stretchPage
-		:title(toJson(
-			{text = "Play Stretch animation", bold = true, color = color.primary}
-		))
-		:hoverColor(color.hover)
-	
-	t.laughPage
-		:title(toJson(
-			{text = "Play Laugh animation", bold = true, color = color.primary}
-		))
-		:hoverColor(color.hover)
-	
-	t.flipPage
-		:title(toJson(
-			{
-				"",
-				{text = "Play Flip animation\n\n", bold = true, color = color.primary},
-				{text = "Left click to Frontflip, right click to Backflip.\nMust not be on the ground.", color = color.secondary}
-			}
-		))
-		:hoverColor(color.hover)
+	if action_wheel:isEnabled() then
+		t.stretchPage
+			:title(toJson(
+				{text = "Play Stretch animation", bold = true, color = c.primary}
+			))
+		
+		t.laughPage
+			:title(toJson(
+				{text = "Play Laugh animation", bold = true, color = c.primary}
+			))
+		
+		t.flipPage
+			:title(toJson(
+				{
+					"",
+					{text = "Play Flip animation\n\n", bold = true, color = c.primary},
+					{text = "Left click to Frontflip, right click to Backflip.\nMust not be on the ground.", color = c.secondary}
+				}
+			))
+		
+		for _, act in pairs(t) do
+			act:hoverColor(c.hover)
+		end
+		
+	end
 	
 end
 
--- Returns animation variables/action wheel pages
+-- Returns actions
 return t

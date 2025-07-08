@@ -114,7 +114,7 @@ function events.TICK()
 	local onGround = ground()
 	
 	-- Set targets
-	if pose.crawl then
+	if pose.crawl or pose.spin then
 		laprasTarget = 0
 	elseif not onGround then
 		laprasTarget = yvel * 75
