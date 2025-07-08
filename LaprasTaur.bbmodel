@@ -35606,7 +35606,7 @@
 							"channel": "rotation",
 							"data_points": [
 								{
-									"x": "math.sin(math.rad(({...})[2]:getTime()*180-25))*2+math.sin(math.rad(({...})[2]:getTime()*180))*4+math.sin(math.rad(({...})[2]:getTime()*60))*4-5\n",
+									"x": "math.sin(math.rad(({...})[2]:getTime()*180-25))*2+math.sin(math.rad(({...})[2]:getTime()*180))*4+math.sin(math.rad(({...})[2]:getTime()*60))*4-5",
 									"y": "0",
 									"z": "0"
 								}
@@ -35626,7 +35626,7 @@
 							"channel": "rotation",
 							"data_points": [
 								{
-									"x": "-math.sin(math.rad(({...})[2]:getTime()*180+45))*6-math.sin(math.rad(({...})[2]:getTime()*60+45))*4+5\n",
+									"x": "-math.sin(math.rad(({...})[2]:getTime()*180+45))*6-math.sin(math.rad(({...})[2]:getTime()*60+45))*4+5",
 									"y": "0",
 									"z": "0"
 								}
@@ -35722,8 +35722,8 @@
 							"data_points": [
 								{
 									"x": "0",
-									"y": "math.max(math.sin(math.rad(({...})[2]:getTime()*180+45))*0.5,0)\n",
-									"z": "math.min(math.sin(math.rad(({...})[2]:getTime()*180+135)),0.25)*5\n"
+									"y": "math.max(math.sin(math.rad(({...})[2]:getTime()*180+45))*0.5,0)",
+									"z": "math.min(math.sin(math.rad(({...})[2]:getTime()*180+135)),0.25)*5"
 								}
 							],
 							"uuid": "ee59aab9-01f4-7523-95e6-7fd560f91f05",
@@ -35741,9 +35741,9 @@
 							"channel": "rotation",
 							"data_points": [
 								{
-									"x": "math.max(math.sin(math.rad(({...})[2]:getTime()*90-120))*10,0)+math.max(math.sin(math.rad(({...})[2]:getTime()*90+60))*10,0)-math.max(math.sin(math.rad(({...})[2]:getTime()*180+120))*10,0)\n",
-									"y": "-math.sin(math.rad(({...})[2]:getTime()*180+270))*39+21\n",
-									"z": "-math.max(math.sin(math.rad(({...})[2]:getTime()*180+135))*20,0)-math.clamp(math.sin(math.rad(({...})[2]:getTime()*180+155))*7,-2,0)+math.min(math.sin(math.rad(({...})[2]:getTime()*180+155)),0)-math.min(math.sin(math.rad(({...})[2]:getTime()*180+250))*40,-32)-25\n"
+									"x": "math.max(math.sin(math.rad(({...})[2]:getTime()*90-120))*10,0)+math.max(math.sin(math.rad(({...})[2]:getTime()*90+60))*10,0)-math.max(math.sin(math.rad(({...})[2]:getTime()*180+120))*10,0)",
+									"y": "-math.sin(math.rad(({...})[2]:getTime()*180+270))*39+21",
+									"z": "-math.max(math.sin(math.rad(({...})[2]:getTime()*180+135))*20,0)-math.clamp(math.sin(math.rad(({...})[2]:getTime()*180+155))*7,-2,0)+math.min(math.sin(math.rad(({...})[2]:getTime()*180+155)),0)-math.min(math.sin(math.rad(({...})[2]:getTime()*180+250))*40,-32)-25"
 								}
 							],
 							"uuid": "8fa4005a-274c-1ff6-dfb1-b2e11e30ad65",
@@ -35901,9 +35901,9 @@
 							"channel": "rotation",
 							"data_points": [
 								{
-									"x": "math.max(math.sin(math.rad(({...})[2]:getTime()*90-120))*10,0)+math.max(math.sin(math.rad(({...})[2]:getTime()*90+60))*10,0)-math.max(math.sin(math.rad(({...})[2]:getTime()*180+120))*10,0)\n",
-									"y": "math.sin(math.rad(({...})[2]:getTime()*180+270))*39-21\n",
-									"z": "math.max(math.sin(math.rad(({...})[2]:getTime()*180+135))*20,0)+math.clamp(math.sin(math.rad(({...})[2]:getTime()*180+155))*7,-2,0)-math.min(math.sin(math.rad(({...})[2]:getTime()*180+155)),0)+math.min(math.sin(math.rad(({...})[2]:getTime()*180+250))*40,-32)+25\n"
+									"x": "math.max(math.sin(math.rad(({...})[2]:getTime()*90-120))*10,0)+math.max(math.sin(math.rad(({...})[2]:getTime()*90+60))*10,0)-math.max(math.sin(math.rad(({...})[2]:getTime()*180+120))*10,0)",
+									"y": "math.sin(math.rad(({...})[2]:getTime()*180+270))*39-21",
+									"z": "math.max(math.sin(math.rad(({...})[2]:getTime()*180+135))*20,0)+math.clamp(math.sin(math.rad(({...})[2]:getTime()*180+155))*7,-2,0)-math.min(math.sin(math.rad(({...})[2]:getTime()*180+155)),0)+math.min(math.sin(math.rad(({...})[2]:getTime()*180+250))*40,-32)+25"
 								}
 							],
 							"uuid": "2a0bc880-d133-4e4d-94c2-e9ee66790ba9",
@@ -35998,7 +35998,7 @@
 								{
 									"x": "math.sin(math.rad(({...})[2]:getTime()*180))*2",
 									"y": "math.sin(math.rad(({...})[2]:getTime()*180-90))*3.25+10.25",
-									"z": "-math.sin(math.rad(({...})[2]:getTime()*60+90))*6+10\n"
+									"z": "-math.sin(math.rad(({...})[2]:getTime()*60+90))*6+10"
 								}
 							],
 							"uuid": "1668e520-16ee-4f82-2066-428ce3960aa5",
@@ -36038,7 +36038,7 @@
 								{
 									"x": "math.sin(math.rad(({...})[2]:getTime()*180))*2",
 									"y": "math.sin(math.rad(({...})[2]:getTime()*180))*3.25-9.75",
-									"z": "-math.sin(math.rad(({...})[2]:getTime()*60+90))*6+10\n"
+									"z": "-math.sin(math.rad(({...})[2]:getTime()*60+90))*6+10"
 								}
 							],
 							"uuid": "c179fbd7-a779-f84a-0e00-2cfe62680aac",
@@ -36078,7 +36078,7 @@
 								{
 									"x": "math.sin(math.rad(({...})[2]:getTime()*180))*2",
 									"y": "-math.sin(math.rad(({...})[2]:getTime()*180))*3.25+9.75",
-									"z": "math.sin(math.rad(({...})[2]:getTime()*60+90))*6-10\n"
+									"z": "math.sin(math.rad(({...})[2]:getTime()*60+90))*6-10"
 								}
 							],
 							"uuid": "82e17c00-b61e-ecc1-be7e-ec9eb87a4c4e",
@@ -36116,7 +36116,7 @@
 							"channel": "rotation",
 							"data_points": [
 								{
-									"x": "math.sin(math.rad(({...})[2]:getTime()*180-25))*2+math.sin(math.rad(({...})[2]:getTime()*180))*4+math.sin(math.rad(({...})[2]:getTime()*60))*4-5\n",
+									"x": "math.sin(math.rad(({...})[2]:getTime()*180-25))*2+math.sin(math.rad(({...})[2]:getTime()*180))*4+math.sin(math.rad(({...})[2]:getTime()*60))*4-5",
 									"y": "0",
 									"z": "0"
 								}
@@ -36158,7 +36158,7 @@
 								{
 									"x": "math.sin(math.rad(({...})[2]:getTime()*180))*2",
 									"y": "-math.sin(math.rad(({...})[2]:getTime()*180-90))*3.25-10.25",
-									"z": "math.sin(math.rad(({...})[2]:getTime()*60+90))*6-10\n"
+									"z": "math.sin(math.rad(({...})[2]:getTime()*60+90))*6-10"
 								}
 							],
 							"uuid": "d9c2ac32-30bb-3ed2-e1f5-a8763a7c92d6",
@@ -36253,7 +36253,7 @@
 								{
 									"x": "math.abs(math.sin(math.rad(({...})[2]:getTime()*90))*8)-math.min(math.sin(math.rad(({...})[2]:getTime()*180))*4,0)",
 									"y": "-math.sin(math.rad(({...})[2]:getTime()*180+90))*16.5+4.5",
-									"z": "-math.sin(math.rad(({...})[2]:getTime()*180))*6+10\n"
+									"z": "-math.sin(math.rad(({...})[2]:getTime()*180))*6+10"
 								}
 							],
 							"uuid": "3b63081e-7648-cb4b-8ed1-d738aa5b700d",
@@ -36293,7 +36293,7 @@
 								{
 									"x": "math.abs(math.sin(math.rad(({...})[2]:getTime()*90))*2)-math.min(math.sin(math.rad(({...})[2]:getTime()*180))*5,0)",
 									"y": "-math.sin(math.rad(({...})[2]:getTime()*180+60))*13-11",
-									"z": "-math.sin(math.rad(({...})[2]:getTime()*180-45))*10+10\n"
+									"z": "-math.sin(math.rad(({...})[2]:getTime()*180-45))*10+10"
 								}
 							],
 							"uuid": "2b745a06-61d6-152c-51e7-03f4263e1573",
@@ -36332,7 +36332,7 @@
 							"data_points": [
 								{
 									"x": "math.abs(math.sin(math.rad(({...})[2]:getTime()*90))*2)-math.min(math.sin(math.rad(({...})[2]:getTime()*180))*5,0)",
-									"y": "math.sin(math.rad(({...})[2]:getTime()*180+60))*13+11\n",
+									"y": "math.sin(math.rad(({...})[2]:getTime()*180+60))*13+11",
 									"z": "math.sin(math.rad(({...})[2]:getTime()*180-45))*10-10"
 								}
 							],
@@ -36371,7 +36371,7 @@
 							"channel": "rotation",
 							"data_points": [
 								{
-									"x": "math.sin(math.rad(({...})[2]:getTime()*180-25))*2+math.sin(math.rad(({...})[2]:getTime()*180))*4+math.sin(math.rad(({...})[2]:getTime()*60))*4\n",
+									"x": "math.sin(math.rad(({...})[2]:getTime()*180-25))*2+math.sin(math.rad(({...})[2]:getTime()*180))*4+math.sin(math.rad(({...})[2]:getTime()*60))*4",
 									"y": "0",
 									"z": "0"
 								}
@@ -36413,7 +36413,7 @@
 								{
 									"x": "math.abs(math.sin(math.rad(({...})[2]:getTime()*90))*8)-math.min(math.sin(math.rad(({...})[2]:getTime()*180))*4,0)",
 									"y": "math.sin(math.rad(({...})[2]:getTime()*180+90))*16.5-4.5",
-									"z": "math.sin(math.rad(({...})[2]:getTime()*180))*6-10\n"
+									"z": "math.sin(math.rad(({...})[2]:getTime()*180))*6-10"
 								}
 							],
 							"uuid": "57ab150d-e87a-a7a5-50ef-97f65c675ac3",
@@ -36508,7 +36508,7 @@
 								{
 									"x": "math.sin(math.rad(({...})[2]:getTime()*180))*2",
 									"y": "math.sin(math.rad(({...})[2]:getTime()*180-90))*3.25+10.25",
-									"z": "-math.sin(math.rad(({...})[2]:getTime()*60+90))*6+10\n"
+									"z": "-math.sin(math.rad(({...})[2]:getTime()*60+90))*6+10"
 								}
 							],
 							"uuid": "b13663b6-5aed-cea6-5d0d-b7a88f9adb75",
@@ -36548,7 +36548,7 @@
 								{
 									"x": "math.sin(math.rad(({...})[2]:getTime()*180))*2",
 									"y": "math.sin(math.rad(({...})[2]:getTime()*180))*3.25-9.75",
-									"z": "-math.sin(math.rad(({...})[2]:getTime()*60+90))*6+10\n"
+									"z": "-math.sin(math.rad(({...})[2]:getTime()*60+90))*6+10"
 								}
 							],
 							"uuid": "d71ef0a1-edbb-8dad-dd98-cf9ad8492913",
@@ -36588,7 +36588,7 @@
 								{
 									"x": "math.sin(math.rad(({...})[2]:getTime()*180))*2",
 									"y": "-math.sin(math.rad(({...})[2]:getTime()*180))*3.25+9.75",
-									"z": "math.sin(math.rad(({...})[2]:getTime()*60+90))*6-10\n"
+									"z": "math.sin(math.rad(({...})[2]:getTime()*60+90))*6-10"
 								}
 							],
 							"uuid": "c0bd7852-026c-cad0-d2ee-3d3ccf9f0d36",
@@ -36668,7 +36668,7 @@
 								{
 									"x": "math.sin(math.rad(({...})[2]:getTime()*180))*2",
 									"y": "-math.sin(math.rad(({...})[2]:getTime()*180-90))*3.25-10.25",
-									"z": "math.sin(math.rad(({...})[2]:getTime()*60+90))*6-10\n"
+									"z": "math.sin(math.rad(({...})[2]:getTime()*60+90))*6-10"
 								}
 							],
 							"uuid": "223fdeaf-5b7b-4b8b-0814-055a7f55bca2",
@@ -36761,9 +36761,9 @@
 							"channel": "rotation",
 							"data_points": [
 								{
-									"x": "math.abs(math.sin(math.rad(({...})[2]:getTime()*90+45))*8)-math.min(math.sin(math.rad(({...})[2]:getTime()*180+90))*4,0)\n",
+									"x": "math.abs(math.sin(math.rad(({...})[2]:getTime()*90+45))*8)-math.min(math.sin(math.rad(({...})[2]:getTime()*180+90))*4,0)",
 									"y": "math.sin(math.rad(({...})[2]:getTime()*180))*20.5+7.5",
-									"z": "-math.sin(math.rad(({...})[2]:getTime()*180))*72.5+2.5\n"
+									"z": "-math.sin(math.rad(({...})[2]:getTime()*180))*72.5+2.5"
 								}
 							],
 							"uuid": "81a23301-db8a-8c09-0613-39f257686993",
@@ -36802,7 +36802,7 @@
 							"data_points": [
 								{
 									"x": "math.abs(math.sin(math.rad(({...})[2]:getTime()*90+180))*8)+math.min(math.sin(math.rad(({...})[2]:getTime()*180+180))*4,0)",
-									"y": "-math.abs(math.sin(math.rad(({...})[2]:getTime()*90))*15)\n",
+									"y": "-math.abs(math.sin(math.rad(({...})[2]:getTime()*90))*15)",
 									"z": "math.sin(math.rad(({...})[2]:getTime()*180))*62+12"
 								}
 							],
@@ -36842,7 +36842,7 @@
 							"data_points": [
 								{
 									"x": "math.abs(math.sin(math.rad(({...})[2]:getTime()*90+180))*8)+math.min(math.sin(math.rad(({...})[2]:getTime()*180+180))*4,0)",
-									"y": "math.abs(math.sin(math.rad(({...})[2]:getTime()*90))*15)\n",
+									"y": "math.abs(math.sin(math.rad(({...})[2]:getTime()*90))*15)",
 									"z": "-math.sin(math.rad(({...})[2]:getTime()*180))*62-12"
 								}
 							],
@@ -36921,9 +36921,9 @@
 							"channel": "rotation",
 							"data_points": [
 								{
-									"x": "math.abs(math.sin(math.rad(({...})[2]:getTime()*90+45))*8)-math.min(math.sin(math.rad(({...})[2]:getTime()*180+90))*4,0)\n",
+									"x": "math.abs(math.sin(math.rad(({...})[2]:getTime()*90+45))*8)-math.min(math.sin(math.rad(({...})[2]:getTime()*180+90))*4,0)",
 									"y": "-math.sin(math.rad(({...})[2]:getTime()*180))*20.5-7.5",
-									"z": "math.sin(math.rad(({...})[2]:getTime()*180))*72.5-2.5\n"
+									"z": "math.sin(math.rad(({...})[2]:getTime()*180))*72.5-2.5"
 								}
 							],
 							"uuid": "1f56b496-2901-f009-c420-918bb76ff03c",
@@ -37045,9 +37045,9 @@
 							"channel": "rotation",
 							"data_points": [
 								{
-									"x": "return\nvanilla_model.LEFT_ELYTRA:getOriginRot().y\n",
-									"y": "return\n-vanilla_model.LEFT_ELYTRA:getOriginRot().z*0.75-67.5\n",
-									"z": "return\nvanilla_model.LEFT_ELYTRA:getOriginRot().x\n"
+									"x": "return\nvanilla_model.LEFT_ELYTRA:getOriginRot().y",
+									"y": "return\n-vanilla_model.LEFT_ELYTRA:getOriginRot().z*0.75-67.5",
+									"z": "return\nvanilla_model.LEFT_ELYTRA:getOriginRot().x"
 								}
 							],
 							"uuid": "81e1c948-9d8e-e5b4-faf3-85ec5082f4c0",
@@ -37065,9 +37065,9 @@
 							"channel": "rotation",
 							"data_points": [
 								{
-									"x": "return\nvanilla_model.RIGHT_ELYTRA:getOriginRot().y\n",
-									"y": "return\n-vanilla_model.RIGHT_ELYTRA:getOriginRot().z*0.75+67.5\n",
-									"z": "return\n-vanilla_model.RIGHT_ELYTRA:getOriginRot().x\n"
+									"x": "return\nvanilla_model.RIGHT_ELYTRA:getOriginRot().y",
+									"y": "return\n-vanilla_model.RIGHT_ELYTRA:getOriginRot().z*0.75+67.5",
+									"z": "return\n-vanilla_model.RIGHT_ELYTRA:getOriginRot().x"
 								}
 							],
 							"uuid": "e9ba8e88-04be-d123-8b6c-feb87ed152c7",
@@ -37085,9 +37085,9 @@
 							"channel": "rotation",
 							"data_points": [
 								{
-									"x": "return\nvanilla_model.LEFT_ELYTRA:getOriginRot().y\n",
-									"y": "return\n-vanilla_model.LEFT_ELYTRA:getOriginRot().z*0.75-67.5\n",
-									"z": "return\nvanilla_model.LEFT_ELYTRA:getOriginRot().x\n"
+									"x": "return\nvanilla_model.LEFT_ELYTRA:getOriginRot().y",
+									"y": "return\n-vanilla_model.LEFT_ELYTRA:getOriginRot().z*0.75-67.5",
+									"z": "return\nvanilla_model.LEFT_ELYTRA:getOriginRot().x"
 								}
 							],
 							"uuid": "26612573-5492-a811-9ebb-dbe381ed4664",
@@ -37105,9 +37105,9 @@
 							"channel": "rotation",
 							"data_points": [
 								{
-									"x": "return\nvanilla_model.RIGHT_ELYTRA:getOriginRot().y\n",
-									"y": "return\n-vanilla_model.RIGHT_ELYTRA:getOriginRot().z*0.75+67.5\n",
-									"z": "return\n-vanilla_model.RIGHT_ELYTRA:getOriginRot().x\n"
+									"x": "return\nvanilla_model.RIGHT_ELYTRA:getOriginRot().y",
+									"y": "return\n-vanilla_model.RIGHT_ELYTRA:getOriginRot().z*0.75+67.5",
+									"z": "return\n-vanilla_model.RIGHT_ELYTRA:getOriginRot().x"
 								}
 							],
 							"uuid": "5d4ee467-2aeb-39ca-a2b5-048b05114e4d",
@@ -47338,7 +47338,7 @@
 							"channel": "rotation",
 							"data_points": [
 								{
-									"x": "10\n",
+									"x": "10",
 									"y": "15",
 									"z": "-12.5"
 								}
@@ -47357,7 +47357,7 @@
 							"channel": "rotation",
 							"data_points": [
 								{
-									"x": "10\n",
+									"x": "10",
 									"y": "15",
 									"z": "-12.5"
 								}
@@ -48019,7 +48019,7 @@
 							"channel": "rotation",
 							"data_points": [
 								{
-									"x": "10\n",
+									"x": "10",
 									"y": "15",
 									"z": "-12.5"
 								}
@@ -48282,7 +48282,7 @@
 							"channel": "rotation",
 							"data_points": [
 								{
-									"x": "10\n",
+									"x": "10",
 									"y": "15",
 									"z": "-12.5"
 								}
