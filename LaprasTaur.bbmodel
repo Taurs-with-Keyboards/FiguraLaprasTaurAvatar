@@ -37046,9 +37046,9 @@
 							"channel": "rotation",
 							"data_points": [
 								{
-									"x": "return\nvanilla_model.LEFT_ELYTRA:getOriginRot().y",
-									"y": "return\n-vanilla_model.LEFT_ELYTRA:getOriginRot().z*0.75-67.5",
-									"z": "return\nvanilla_model.LEFT_ELYTRA:getOriginRot().x"
+									"x": "vanilla_model.LEFT_ELYTRA:getOriginRot().y",
+									"y": "-vanilla_model.LEFT_ELYTRA:getOriginRot().z*0.75-67.5",
+									"z": "vanilla_model.LEFT_ELYTRA:getOriginRot().x"
 								}
 							],
 							"uuid": "81e1c948-9d8e-e5b4-faf3-85ec5082f4c0",
@@ -37066,9 +37066,9 @@
 							"channel": "rotation",
 							"data_points": [
 								{
-									"x": "return\nvanilla_model.RIGHT_ELYTRA:getOriginRot().y",
-									"y": "return\n-vanilla_model.RIGHT_ELYTRA:getOriginRot().z*0.75+67.5",
-									"z": "return\n-vanilla_model.RIGHT_ELYTRA:getOriginRot().x"
+									"x": "vanilla_model.RIGHT_ELYTRA:getOriginRot().y",
+									"y": "-vanilla_model.RIGHT_ELYTRA:getOriginRot().z*0.75+67.5",
+									"z": "-vanilla_model.RIGHT_ELYTRA:getOriginRot().x"
 								}
 							],
 							"uuid": "e9ba8e88-04be-d123-8b6c-feb87ed152c7",
@@ -37086,9 +37086,9 @@
 							"channel": "rotation",
 							"data_points": [
 								{
-									"x": "return\nvanilla_model.LEFT_ELYTRA:getOriginRot().y",
-									"y": "return\n-vanilla_model.LEFT_ELYTRA:getOriginRot().z*0.75-67.5",
-									"z": "return\nvanilla_model.LEFT_ELYTRA:getOriginRot().x"
+									"x": "vanilla_model.LEFT_ELYTRA:getOriginRot().y",
+									"y": "-vanilla_model.LEFT_ELYTRA:getOriginRot().z*0.75-67.5",
+									"z": "vanilla_model.LEFT_ELYTRA:getOriginRot().x"
 								}
 							],
 							"uuid": "26612573-5492-a811-9ebb-dbe381ed4664",
@@ -37106,9 +37106,9 @@
 							"channel": "rotation",
 							"data_points": [
 								{
-									"x": "return\nvanilla_model.RIGHT_ELYTRA:getOriginRot().y",
-									"y": "return\n-vanilla_model.RIGHT_ELYTRA:getOriginRot().z*0.75+67.5",
-									"z": "return\n-vanilla_model.RIGHT_ELYTRA:getOriginRot().x"
+									"x": "vanilla_model.RIGHT_ELYTRA:getOriginRot().y",
+									"y": "-vanilla_model.RIGHT_ELYTRA:getOriginRot().z*0.75+67.5",
+									"z": "-vanilla_model.RIGHT_ELYTRA:getOriginRot().x"
 								}
 							],
 							"uuid": "5d4ee467-2aeb-39ca-a2b5-048b05114e4d",
