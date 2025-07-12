@@ -267,11 +267,6 @@ end
 -- Host only instructions
 if not host:isHost() then return end
 
--- Required scripts
-local itemCheck = require("lib.ItemCheck")
-local s, c = pcall(require, "scripts.ColorProperties")
-if not s then c = {} end
-
 -- Config setup
 config:name("LaprasTaur")
 
@@ -317,19 +312,36 @@ function events.TICK()
 	
 end
 
--- Table setup
-local t = {}
+-- Required script
+local s, wheel, itemCheck, c = pcall(require, "scripts.ActionWheel")
+if not s then return end -- Kills script early if ActionWheel.lua isnt found
+
+-- Check for if page already exists
+local pageExists = action_wheel:getPage("Anims")
+
+-- Pages
+local parentPage = action_wheel:getPage("Main")
+local animsPage  = pageExists or action_wheel:newPage("Anims")
+
+-- Actions table setup
+local a = {}
 
 -- Actions
-t.stretchPage = action_wheel:newAction()
+if not pageExists then
+	a.pageAct = parentPage:newAction()
+		:item(itemCheck("jukebox"))
+		:onLeftClick(function() wheel:descend(animsPage) end)
+end
+
+a.stretchPage = animsPage:newAction()
 	:item(itemCheck("scaffolding"))
 	:onLeftClick(pings.animPlayStretch)
 
-t.laughPage = action_wheel:newAction()
+a.laughPage = animsPage:newAction()
 	:item(itemCheck("cookie"))
 	:onLeftClick(pings.animPlayLaugh)
 
-t.flipPage = action_wheel:newAction()
+a.flipPage = animsPage:newAction()
 	:item(itemCheck("music_disc_wait"))
 	:onLeftClick(pings.animPlayFrontFlip)
 	:onRightClick(pings.animPlayBackFlip)
@@ -338,17 +350,24 @@ t.flipPage = action_wheel:newAction()
 function events.RENDER(delta, context)
 	
 	if action_wheel:isEnabled() then
-		t.stretchPage
+		if a.pageAct then
+			a.pageAct
+				:title(toJson(
+					{text = "Animation Settings", bold = true, color = c.primary}
+				))
+		end
+		
+		a.stretchPage
 			:title(toJson(
 				{text = "Play Stretch animation", bold = true, color = c.primary}
 			))
 		
-		t.laughPage
+		a.laughPage
 			:title(toJson(
 				{text = "Play Laugh animation", bold = true, color = c.primary}
 			))
 		
-		t.flipPage
+		a.flipPage
 			:title(toJson(
 				{
 					"",
@@ -357,13 +376,10 @@ function events.RENDER(delta, context)
 				}
 			))
 		
-		for _, act in pairs(t) do
+		for _, act in pairs(a) do
 			act:hoverColor(c.hover)
 		end
 		
 	end
 	
 end
-
--- Returns actions
-return t
