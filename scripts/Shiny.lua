@@ -72,28 +72,31 @@ local s, wheel, itemCheck, c = pcall(require, "scripts.ActionWheel")
 if not s then return end -- Kills script early if ActionWheel.lua isnt found
 pcall(require, "scripts.Pokeball") -- Tries to find script, not required
 
-if c ~= {} then
+-- Dont preform if color properties is empty
+if next(c) ~= nil then
 	
 	-- Store init colors
-	local temp = {}
-	temp.hover     = c.hover
-	temp.active    = c.active
-	temp.primary   = c.primary
-	temp.secondary = c.secondary
-	
-	function events.RENDER(delta, context)
-		
-		-- Update action wheel colors
-		c.hover     = shiny and vectors.hexToRGB("9775CE") or temp.hover
-		c.active    = shiny and vectors.hexToRGB("F3C9B9") or temp.active
-		c.primary   = shiny and "#F3C9B9" or temp.primary
-		c.secondary = shiny and "#9775CE" or temp.secondary
-		
+	local initColors = {}
+	for k, v in pairs(c) do
+		initColors[k] = v
 	end
 	
-else
+	-- Create shiny colors
+	local shinyColors = {
+		hover     = vectors.hexToRGB("9775CE"),
+		active    = vectors.hexToRGB("F3C9B9"),
+		primary   = "#F3C9B9",
+		secondary = "#9775CE"
+	}
 	
-	c = {}
+	-- Update action wheel colors
+	function events.RENDER(delta, context)
+		
+		for k in pairs(c) do
+			c[k] = shiny and shinyColors[k] or initColors[k]
+		end
+		
+	end
 	
 end
 
