@@ -47,6 +47,8 @@ local ears = squapi.ear:new(
 local headParts = {
 	
 	parts.group.UpperBody,
+	parts.group.Neck3,
+	parts.group.Neck2,
 	parts.group.Neck
 	
 }
@@ -54,7 +56,7 @@ local headParts = {
 -- Squishy smooth torso
 local head = squapi.smoothHead:new(
 	headParts,
-	0.3,  -- Strength (0.3)
+	0.7,  -- Strength (0.7)
 	0.4,  -- Tilt (0.4)
 	1,    -- Speed (1)
 	false -- Keep Original Head Pos (false)
@@ -83,6 +85,34 @@ local rightArmStrength = rightArm.strength
 local lapras = squassets.BERP:new(0.01, 0.975, -25)
 local laprasTarget = 0
 local _onGround = true
+
+-- Flipper parts tables
+local flippers = {
+	frontLeft = {
+		parts.group.FrontLeftFlipper,
+		parts.group.FrontLeftFlipper2,
+		parts.group.FrontLeftFlipper3,
+		parts.group.FrontLeftFlipper4
+	},
+	frontRight = {
+		parts.group.FrontRightFlipper,
+		parts.group.FrontRightFlipper2,
+		parts.group.FrontRightFlipper3,
+		parts.group.FrontRightFlipper4
+	},
+	backLeft = {
+		parts.group.BackLeftFlipper,
+		parts.group.BackLeftFlipper2,
+		parts.group.BackLeftFlipper3,
+		parts.group.BackLeftFlipper4
+	},
+	backRight = {
+		parts.group.BackRightFlipper,
+		parts.group.BackRightFlipper2,
+		parts.group.BackRightFlipper3,
+		parts.group.BackRightFlipper4
+	}
+}
 
 function events.TICK()
 	
@@ -187,15 +217,13 @@ function events.RENDER(delta, context)
 	lapras:berp(laprasTarget, delta)
 	
 	-- Apply body bounce
-	parts.group.Main:offsetRot(lapras.pos, 0, 0)
-	parts.group.FrontLeftFlipper:offsetRot(0, 0, lapras.pos * 2)
-	parts.group.FrontLeftFlipperTip:offsetRot(0, 0, lapras.pos * 2)
-	parts.group.FrontRightFlipper:offsetRot(0, 0, -lapras.pos * 2)
-	parts.group.FrontRightFlipperTip:offsetRot(0, 0, -lapras.pos * 2)
-	parts.group.BackLeftFlipper:offsetRot(0, 0, lapras.pos * 2)
-	parts.group.BackLeftFlipperTip:offsetRot(0, 0, lapras.pos * 2)
-	parts.group.BackRightFlipper:offsetRot(0, 0, -lapras.pos * 2)
-	parts.group.BackRightFlipperTip:offsetRot(0, 0, -lapras.pos * 2)
+	parts.group.LowerBody:offsetRot(lapras.pos, 0, 0)
+	for k, v in pairs(flippers) do
+		local flipperRot = vec(0, 0, lapras.pos * (k:find("Right") and -1 or 1))
+		for _, part in ipairs(v) do
+			part:offsetRot(flipperRot)
+		end
+	end
 	
 end
 
