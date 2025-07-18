@@ -30,10 +30,10 @@ function events.RENDER(delta, context)
 	wasShiny = shiny
 	
 	-- Avatar color
-	avatar:color(shiny and vectors.hexToRGB("9775CE") or initAvatarColor)
+	avatar:color(shiny and vectors.hexToRGB("9C6DE0") or initAvatarColor)
 	
 	-- Glowing outline
-	renderer:outlineColor(shiny and vectors.hexToRGB("9775CE") or initGlowColor)
+	renderer:outlineColor(shiny and vectors.hexToRGB("9C6DE0") or initGlowColor)
 	
 end
 
@@ -83,10 +83,10 @@ if next(c) ~= nil then
 	
 	-- Create shiny colors
 	local shinyColors = {
-		hover     = vectors.hexToRGB("9775CE"),
-		active    = vectors.hexToRGB("F3C9B9"),
-		primary   = "#F3C9B9",
-		secondary = "#9775CE"
+		hover     = vectors.hexToRGB("9C6DE0"),
+		active    = vectors.hexToRGB("F1C4B4"),
+		primary   = "#9C6DE0",
+		secondary = "#F1C4B4"
 	}
 	
 	-- Update action wheel colors
