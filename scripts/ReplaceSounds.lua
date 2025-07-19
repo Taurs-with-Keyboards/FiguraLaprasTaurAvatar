@@ -10,21 +10,23 @@ local groundParts = parts:createTable(function(part) return part:getName():find(
 -- Stop script if ground parts could not be found
 if #groundParts == 0 then return end
 
+-- Config setup
+config:name("LaprasTaur")
+local makeSound = config:load("SoundsToggle")
+if makesound == nil then makesound = true end
+
 -- Animations setup
 local anims = animations.LaprasTaur
-
--- Variable
-local waterTimer = 0
 
 -- Setup groundParts table
 for k, i in ipairs(groundParts) do
 	
-	groundParts[k] = { part = i, wasGround = true }
+	groundParts[k] = { part = i, wasGround = true, _pos = vec(0, 0, 0) }
 	
 end
 
 -- Play footstep sound
-local function playFootstep(p, b, sound)
+local function playFootstep(p, b, volume, heavy)
 	
 	-- Snow check
 	local snow = false
@@ -35,10 +37,10 @@ local function playFootstep(p, b, sound)
 	
 	-- Play sound
 	sounds:playSound(
-		snow and b:getSounds()["step"] or sound,
+		snow and b:getSounds()["step"] or "entity.puffer_fish.flop",
 		p,
-		snow and 0.5 or 0.75,
-		0.5
+		(math.min(volume * 3 * (heavy and 2 or 1), 0.75)) * (snow and 0.66 or 1),
+		heavy and 0.35 or 0.5
 	)
 	
 end
@@ -71,22 +73,11 @@ end
 function events.TICK()
 	
 	-- Variables
-	local vel      = player:getVelocity()
 	local onGround = ground()
 	local inWater  = player:isInWater()
 	
-	-- Count down water timer
-	waterTimer = math.max(waterTimer - 1, 0)
-	
-	-- If in water, change sound type by adjusting timer
-	if inWater then
-		waterTimer = 200
-	end
-	
-	local soundType = (waterTimer ~= 0 or anims.laugh and anims.laugh:isPlaying()) and "entity.puffer_fish.flop" or "entity.turtle.shamble"
-	
 	-- Play footsteps based on placement
-	if onGround and not (inWater or player:getVehicle() or effects.cF) then
+	if makeSound and onGround and not (inWater or player:getVehicle() or effects.cF) then
 		
 		for _, flipper in ipairs(groundParts) do
 			
@@ -113,12 +104,18 @@ function events.TICK()
 			-- Play footstep
 			if grounded and not flipper.wasGround then
 				
-				playFootstep(groundPos, groundBlock, soundType)
+				playFootstep(
+					groundPos,
+					groundBlock,
+					(flipper._pos - groundPos):length(),
+					flipper.part:getName():find("Torso")
+				)
 				
 			end
 			
 			-- Store last ground
 			flipper.wasGround = grounded
+			flipper._pos = groundPos
 			
 		end
 		
@@ -128,7 +125,94 @@ function events.TICK()
 		for _, flipper in ipairs(groundParts) do
 			
 			flipper.wasGround = true
+			flipper._pos = flipper.part:partToWorldMatrix():apply()
 			
+		end
+		
+	end
+	
+end
+
+-- Sound toggle
+function pings.setSoundToggle(boolean)
+	
+	makeSound = boolean
+	config:save("SoundsToggle", makeSound)
+	if player:isLoaded() and makeSound then
+		sounds:playSound("item.bucket.fill", player:getPos())
+	end
+	
+end
+
+-- Sync variable
+function pings.syncSound(a)
+	
+	makeSound = a
+	
+end
+
+-- Host only instructions
+if not host:isHost() then return end
+
+-- Sync on tick
+function events.TICK()
+	
+	if world.getTime() % 200 == 0 then
+		pings.syncSound(makeSound)
+	end
+	
+end
+
+-- Required scripts
+local s, wheel, itemCheck, c = pcall(require, "scripts.ActionWheel")
+if not s then return end -- Kills script early if ActionWheel.lua isnt found
+pcall(require, "scripts.Shiny") -- Tries to find script, not required
+
+-- Check for if page already exists
+local pageExists = action_wheel:getPage("Lapras")
+
+-- Pages
+local parentPage = action_wheel:getPage("Main")
+local laprasPage = pageExists or action_wheel:newPage("Lapras")
+
+-- Actions table setup
+local a = {}
+
+-- Actions
+if not pageExists then
+	a.pageAct = parentPage:newAction()
+		:item(itemCheck("cobblemon:water_stone", "turtle_egg"))
+		:onLeftClick(function() wheel:descend(laprasPage) end)
+end
+
+a.soundAct = laprasPage:newAction()
+	:item(itemCheck("sponge"))
+	:toggleItem(itemCheck("water_bucket"))
+	:onToggle(pings.setSoundToggle)
+
+-- Update actions
+function events.RENDER(delta, context)
+	
+	if action_wheel:isEnabled() then
+		if a.pageAct then
+			a.pageAct
+				:title(toJson(
+					{text = "Lapras Settings", bold = true, color = c.primary}
+				))
+		end
+		
+		a.soundAct
+			:title(toJson(
+				{
+					"",
+					{text = "Toggle Movement Sounds\n\n", bold = true, color = c.primary},
+					{text = "Toggles the sounds played by the movement/flopping of your flippers.", color = c.secondary}
+				}
+			))
+			:toggled(makeSound)
+		
+		for _, act in pairs(a) do
+			act:hoverColor(c.hover):toggleColor(c.active)
 		end
 		
 	end

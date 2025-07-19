@@ -71,6 +71,7 @@ local s, wheel, itemCheck, c = pcall(require, "scripts.ActionWheel")
 if not s then return end -- Kills script early if ActionWheel.lua isnt found
 pcall(require, "scripts.Pokeball") -- Tries to find script, not required
 pcall(require, "scripts.Shiny") -- Tries to find script, not required
+pcall(require, "scripts.ReplaceSounds") -- Tries to find script, not required
 
 -- Pages
 local parentPage    = action_wheel:getPage("Lapras") or action_wheel:getPage("Main")
