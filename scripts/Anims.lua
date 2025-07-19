@@ -5,6 +5,7 @@ local parts   = require("lib.PartsAPI")
 local lerp    = require("lib.LerpAPI")
 local ground  = require("lib.GroundCheck")
 local pose    = require("scripts.Posing")
+local effects = require("scripts.SyncedVariables")
 
 -- Animations setup
 local anims = animations.LaprasTaur
@@ -67,7 +68,7 @@ function events.TICK()
 	-- Animation variables
 	local groundAnim     = (onGround or pose.climb) and not ((pose.swim and inWater) or pose.elytra or pose.spin)
 	local waterAnim      = (inWater or player:getVehicle()) and not (underwater or onGround or pose.elytra)
-	local underwaterAnim = underwater and (not onGround or pose.swim) and not pose.elytra
+	local underwaterAnim = (underwater or effects.cF) and (not onGround or pose.swim) and not pose.elytra
 	
 	-- Animation states
 	local groundIdle     = groundAnim and (not walking or (pose.climb and not moving))
