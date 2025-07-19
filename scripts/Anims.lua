@@ -81,12 +81,13 @@ function events.TICK()
 	local elytra         = pose.elytra
 	local spin           = pose.spin
 	local climb          = pose.climb
+	local isAct          = anims.stretch:isPlaying() or anims.laugh:isPlaying() or anims.frontFlip:isPlaying() or anims.backFlip:isPlaying()
 	local sleep          = pose.sleep
 	
 	-- Animation actions
-	canStretch = onGround and not moving
-	canLaugh   = not moving
-	canFlip    = not onGround and #player:getPassengers() == 0
+	canStretch = not moving and (not isAct or anims.stretch:isPlaying())
+	canLaugh   = not moving and (not isAct or anims.laugh:isPlaying())
+	canFlip    = not onGround and #player:getPassengers() == 0 and (not isAct or anims.frontFlip:isPlaying() or anims.backFlip:isPlaying())
 	
 	-- Stop Stretch animation
 	if not canStretch then
