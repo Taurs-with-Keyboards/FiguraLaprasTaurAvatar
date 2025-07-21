@@ -17,7 +17,7 @@ config:name("LaprasTaur")
 local cooldown = 0
 
 -- Cry Keybind
-local cryBind   = config:load("CryKeybind") or "key.keyboard.keypad.7"
+local cryBind   = config:load("CryKeybind") or "key.keyboard.keypad.8"
 local setCryKey = keybinds:newKeybind("Pokemon Cry"):onPress(function() pings.playPokemonCry() cooldown = 30 end):key(cryBind)
 
 function events.TICK()

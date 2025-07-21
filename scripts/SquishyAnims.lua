@@ -11,6 +11,9 @@ local ground  = require("lib.GroundCheck")
 local pose    = require("scripts.Posing")
 local effects = require("scripts.SyncedVariables")
 
+-- Animation setup
+local anims = animations.LaprasTaur
+
 -- Config setup
 config:name("LaprasTaur")
 local armsMove = config:load("SquapiArmsMove") or false
@@ -61,6 +64,9 @@ local head = squapi.smoothHead:new(
 	1,    -- Speed (1)
 	false -- Keep Original Head Pos (false)
 )
+
+-- Head variable
+local headStrength = head.strength[1] * #head.strength
 
 -- Squishy vanilla arms
 local leftArm = squapi.arm:new(
@@ -133,11 +139,17 @@ function events.TICK()
 	local crossR      = rightItem.tag and rightItem.tag["Charged"] == 1
 	
 	-- Arm movement overrides
-	local armShouldMove = pose.swim or pose.crawl
+	local armShouldMove = pose.crawl
 	
 	-- Control targets based on variables
 	leftArmLerp.target  = (armsMove or armShouldMove or leftSwing  or bow or ((crossL or crossR) or (using and usingL ~= "NONE"))) and 1 or 0
 	rightArmLerp.target = (armsMove or armShouldMove or rightSwing or bow or ((crossL or crossR) or (using and usingR ~= "NONE"))) and 1 or 0
+	
+	-- Body lean overrides
+	local bodyShouldBend = not (pose.sleep or anims.pushUp:isPlaying())
+	for i in ipairs(head.strength) do
+		head.strength[i] = (headStrength / #head.strength) * (bodyShouldBend and 1 or 0)
+	end
 	
 	-- Variables
 	local yvel = math.clamp(squassets.verticalVel(), -0.5, 0.5)

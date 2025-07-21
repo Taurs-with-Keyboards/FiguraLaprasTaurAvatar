@@ -9,11 +9,11 @@ local effects = require("scripts.SyncedVariables")
 
 -- Animations setup
 local anims = animations.LaprasTaur
-anims.napHold:priority(1)
 
 -- Variables setup
 local canStretch = false
 local canLaugh   = false
+local canPush    = false
 local canFlip    = false
 
 -- Lerp table
@@ -38,6 +38,14 @@ local function calculateParentRot(m)
 	
 end
 
+-- Set staticYaw to Yaw on init
+local _yaw = 0
+function events.ENTITY_INIT()
+	
+	_yaw = player:getBodyYaw()
+	
+end
+
 function events.TICK()
 	
 	-- Variables
@@ -55,18 +63,28 @@ function events.TICK()
 	local udVel = player:getVelocity().y
 	
 	-- Speed control
-	local moveSpeed  = math.clamp((pose.climb and udVel or fbVel < -0.05 and math.min(fbVel, math.abs(lrVel)) or math.max(fbVel, math.abs(lrVel))) * 15, -2, 2)
-	local waterSpeed = player:isUnderwater() and 0.5 or 1
+	local moveSpeed  = math.clamp((pose.climb and udVel or fbVel < -0.05 and math.min(fbVel, math.abs(lrVel)) or math.max(fbVel, math.abs(lrVel))) * 20, -4, 4)
+	local pushSpeed  = inWater and 0.25 or math.max((15 - anims.pushUp:getTime()) / 15, 0.1)
+	local waterSpeed = underwater and 0.75 or 1
 	
 	-- Animation speeds
 	anims.groundWalk:speed(moveSpeed)
 	anims.waterSwim:speed(moveSpeed)
-	anims.underwaterSwim:speed(moveSpeed)
+	anims.underwaterSwim:speed(moveSpeed * 0.75)
+	anims.stretch:speed(waterSpeed)
+	anims.laugh:speed(waterSpeed)
+	anims.pushUp:speed(pushSpeed)
 	anims.frontFlip:speed(waterSpeed)
 	anims.backFlip:speed(waterSpeed)
 	
+	-- Blend control
+	local shakeBlend = math.clamp(math.map(anims.pushUp:getTime(), 0, 15, -1, 1), 0, 1)
+	
+	-- Animation blend
+	anims.pushUpShake:blend(shakeBlend)
+	
 	-- Animation variables
-	local groundAnim     = (onGround or pose.climb) and not ((pose.swim and inWater) or pose.elytra or pose.spin)
+	local groundAnim     = (onGround or pose.climb) and not ((pose.swim and inWater) or pose.elytra or pose.spin or anims.pushUp:isPlaying())
 	local waterAnim      = (inWater or player:getVehicle()) and not (underwater or onGround or pose.elytra)
 	local underwaterAnim = (underwater or effects.cF) and (not onGround or pose.swim) and not pose.elytra
 	
@@ -81,12 +99,14 @@ function events.TICK()
 	local elytra         = pose.elytra
 	local spin           = pose.spin
 	local climb          = pose.climb
-	local isAct          = anims.stretch:isPlaying() or anims.laugh:isPlaying() or anims.frontFlip:isPlaying() or anims.backFlip:isPlaying()
+	local isAct          = anims.stretch:isPlaying() or anims.laugh:isPlaying() or anims.pushUp:isPlaying() or anims.frontFlip:isPlaying() or anims.backFlip:isPlaying()
 	local sleep          = pose.sleep
 	
 	-- Animation actions
-	canStretch = not moving and (not isAct or anims.stretch:isPlaying())
-	canLaugh   = not moving and (not isAct or anims.laugh:isPlaying())
+	local canAct = onGround and not (moving or (player:getBodyYaw() ~= _yaw))
+	canStretch = canAct and (not isAct or anims.stretch:isPlaying())
+	canLaugh   = canAct and (not isAct or anims.laugh:isPlaying())
+	canPush    = canAct and not pose.crouch and (not isAct or anims.pushUp:isPlaying())
 	canFlip    = not onGround and #player:getPassengers() == 0 and (not isAct or anims.frontFlip:isPlaying() or anims.backFlip:isPlaying())
 	
 	-- Stop Stretch animation
@@ -99,10 +119,20 @@ function events.TICK()
 		anims.laugh:stop()
 	end
 	
+	-- Stop Pushup animation
+	if not canPush then
+		anims.pushUp:stop()
+		anims.pushUpShake:stop()
+	end
+	
 	-- Stop Flip animations
 	if not canFlip then
 		anims.frontFlip:stop()
 		anims.backFlip:stop()
+	end
+	
+	if (anims.napDown:isPlaying() or anims.napDown:getPlayState() == "HOLDING") and not sleep then
+		anims.napUp:play()
 	end
 	
 	-- Animations
@@ -116,22 +146,13 @@ function events.TICK()
 	anims.elytra:playing(elytra)
 	anims.spin:playing(spin)
 	anims.climb:playing(climb)
-	
-	-- Sleep animations
-	if pose.sleep and not anims.napHold:isPlaying() then
-		
-		anims.napDown:play()
-		
-	elseif not pose.sleep and (anims.napDown:isPlaying() or anims.napHold:isPlaying()) then
-		
-		anims.napDown:stop()
-		anims.napHold:stop()
-		anims.napUp:play()
-		
-	end
+	anims.napDown:playing(sleep)
 	
 	-- Lerp target
 	extendLerp.target = extend and 1 or 0
+	
+	-- Store data
+	_yaw = player:getBodyYaw()
 	
 end
 
@@ -209,6 +230,7 @@ local blendAnims = {
 	{ anim = anims.elytra,         ticks = {7,7}   },
 	{ anim = anims.stretch,        ticks = {7,7}   },
 	{ anim = anims.laugh,          ticks = {7,7}   },
+	{ anim = anims.pushUp,         ticks = {14,14} },
 	{ anim = anims.napDown,        ticks = {7,7}   },
 	{ anim = anims.napUp,          ticks = {7,7}   }
 }
@@ -248,6 +270,15 @@ function pings.animPlayLaugh()
 	
 end
 
+-- Play pushup anim
+function pings.setAnimTogglePushUp(boolean)
+	
+	local play = canPush and boolean
+	anims.pushUp:playing(play)
+	anims.pushUpShake:playing(play and not player:isInWater())
+	
+end
+
 -- Play front flip anim
 function pings.animPlayFrontFlip()
 	
@@ -280,12 +311,16 @@ local setStretchKey = keybinds:newKeybind("Stretch Animation"):onPress(pings.ani
 local laughBind   = config:load("AnimLaughKeybind") or "key.keyboard.keypad.4"
 local setLaughKey = keybinds:newKeybind("Laugh Animation"):onPress(pings.animPlayLaugh):key(laughBind)
 
+-- Pushup keybind
+local pushUpBind   = config:load("AnimPushUpKeybind") or "key.keyboard.keypad.5"
+local setPushUpKey = keybinds:newKeybind("Push Up Animation"):onPress(function() pings.setAnimTogglePushUp(not anims.pushUp:isPlaying()) end):key(pushUpBind)
+
 -- FrontFlip keybind
-local frontFlipBind   = config:load("AnimFrontFlipKeybind") or "key.keyboard.keypad.5"
+local frontFlipBind   = config:load("AnimFrontFlipKeybind") or "key.keyboard.keypad.6"
 local setFrontFlipKey = keybinds:newKeybind("Front Flip Animation"):onPress(pings.animPlayFrontFlip):key(frontFlipBind)
 
 -- FrontFlip keybind
-local backFlipBind   = config:load("AnimBackFlipKeybind") or "key.keyboard.keypad.6"
+local backFlipBind   = config:load("AnimBackFlipKeybind") or "key.keyboard.keypad.7"
 local setBackFlipKey = keybinds:newKeybind("Back Flip Animation"):onPress(pings.animPlayBackFlip):key(backFlipBind)
 
 -- Keybind updaters
@@ -293,6 +328,7 @@ function events.TICK()
 	
 	local stretchKey   = setStretchKey:getKey()
 	local laughKey     = setLaughKey:getKey()
+	local pushUpKey    = setPushUpKey:getKey()
 	local frontFlipKey = setFrontFlipKey:getKey()
 	local backFlipKey  = setBackFlipKey:getKey()
 	if stretchKey ~= stretchBind then
@@ -302,6 +338,10 @@ function events.TICK()
 	if laughKey ~= laughBind then
 		laughBind = laughKey
 		config:save("AnimLaughKeybind", laughKey)
+	end
+	if pushUpKey ~= pushUpBind then
+		pushUpBind = pushUpKey
+		config:save("AnimPushUpKeybind", pushUpKey)
 	end
 	if frontFlipKey ~= frontFlipBind then
 		frontFlipBind = frontFlipKey
@@ -343,6 +383,11 @@ a.laughPage = animsPage:newAction()
 	:item(itemCheck("cookie"))
 	:onLeftClick(pings.animPlayLaugh)
 
+a.pushUpPage = animsPage:newAction()
+	:item(itemCheck("stick"))
+	:toggleItem(itemCheck("iron_ingot"))
+	:onToggle(pings.setAnimTogglePushUp)
+
 a.flipPage = animsPage:newAction()
 	:item(itemCheck("music_disc_wait"))
 	:onLeftClick(pings.animPlayFrontFlip)
@@ -368,6 +413,12 @@ function events.RENDER(delta, context)
 			:title(toJson(
 				{text = "Play Laugh animation", bold = true, color = c.primary}
 			))
+		
+		a.pushUpPage
+			:title(toJson(
+				{text = "Toggle Push Up animation", bold = true, color = c.primary}
+			))
+			:toggled(anims.pushUp:isPlaying())
 		
 		a.flipPage
 			:title(toJson(
