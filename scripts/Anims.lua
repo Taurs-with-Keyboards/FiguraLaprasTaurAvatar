@@ -63,7 +63,7 @@ function events.TICK()
 	local udVel = player:getVelocity().y
 	
 	-- Speed control
-	local moveSpeed  = math.clamp((pose.climb and udVel or fbVel < -0.05 and math.min(fbVel, math.abs(lrVel)) or math.max(fbVel, math.abs(lrVel))) * 20, -4, 4)
+	local moveSpeed  = math.clamp((effects.cF and vel:length() or (pose.climb and udVel or fbVel < -0.05 and math.min(fbVel, math.abs(lrVel)) or math.max(fbVel, math.abs(lrVel)))) * 20, -4, 4)
 	local pushSpeed  = inWater and 0.25 or math.max((15 - anims.pushUp:getTime()) / 15, 0.1)
 	local waterSpeed = underwater and 0.75 or 1
 	
