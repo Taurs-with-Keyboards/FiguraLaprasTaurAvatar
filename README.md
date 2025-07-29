@@ -1,5 +1,5 @@
 # [Lapras Taur](https://github.com/Taurs-with-Keyboards/FiguraLaprasTaurAvatar)
-### Version: 1.6.1
+### Version: 2.0.0
 This Figura avatar is a template designed around turning the user into a Lapras-Taur.
 
 # IF YOU ARE READING THIS, YOU CONCEDE TO THE FOLLOWING:
