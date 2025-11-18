@@ -17,7 +17,7 @@ local canPush    = false
 local canFlip    = false
 
 -- Lerp table
-local extendLerp = lerp:new(0.2)
+local extendLerp = lerp:new()
 
 -- Parrot pivots
 local parrots = {
