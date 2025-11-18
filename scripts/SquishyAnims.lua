@@ -1,15 +1,11 @@
 -- Kills script if squAPI or squAssets cannot be found
 local s, squapi = pcall(require, "lib.SquAPI")
 if not s then return {} end
-local s, squassets = pcall(require, "lib.SquAssets")
-if not s then return {} end
 
 -- Required scripts
-local parts   = require("lib.PartsAPI")
-local lerp    = require("lib.LerpAPI")
-local ground  = require("lib.GroundCheck")
-local pose    = require("scripts.Posing")
-local effects = require("scripts.SyncedVariables")
+local parts = require("lib.PartsAPI")
+local lerp  = require("lib.LerpAPI")
+local pose  = require("scripts.Posing")
 
 -- Animation setup
 local anims = animations.LaprasTaur
@@ -87,39 +83,6 @@ local rightArm = squapi.arm:new(
 local leftArmStrength  = leftArm.strength
 local rightArmStrength = rightArm.strength
 
--- Body bounce
-local lapras = squassets.BERP:new(0.01, 0.975, -25)
-local laprasTarget = 0
-local _onGround = true
-
--- Flipper parts tables
-local flippers = {
-	frontLeft = {
-		parts.group.FrontLeftFlipper,
-		parts.group.FrontLeftFlipper2,
-		parts.group.FrontLeftFlipper3,
-		parts.group.FrontLeftFlipper4
-	},
-	frontRight = {
-		parts.group.FrontRightFlipper,
-		parts.group.FrontRightFlipper2,
-		parts.group.FrontRightFlipper3,
-		parts.group.FrontRightFlipper4
-	},
-	backLeft = {
-		parts.group.BackLeftFlipper,
-		parts.group.BackLeftFlipper2,
-		parts.group.BackLeftFlipper3,
-		parts.group.BackLeftFlipper4
-	},
-	backRight = {
-		parts.group.BackRightFlipper,
-		parts.group.BackRightFlipper2,
-		parts.group.BackRightFlipper3,
-		parts.group.BackRightFlipper4
-	}
-}
-
 function events.TICK()
 	
 	-- Arm variables
@@ -150,38 +113,6 @@ function events.TICK()
 	for i in ipairs(head.strength) do
 		head.strength[i] = (headStrength / #head.strength) * (bodyShouldBend and 1 or 0)
 	end
-	
-	-- Variables
-	local yvel = math.clamp(squassets.verticalVel(), -0.5, 0.5)
-	local onGround = ground()
-	
-	-- Set targets
-	if pose.crawl or pose.spin or effects.cF then
-		laprasTarget = 0
-	elseif not onGround then
-		laprasTarget = yvel * 75
-	elseif onGround ~= _onGround then
-		laprasTarget = -laprasTarget
-	end
-	
-	-- Limits
-	if onGround then
-		lapras.upper = 0
-	else
-		lapras.upper = 35
-	end
-	
-	-- Stiffness and bounce
-	if player:isInWater() then
-		lapras.stiff = 0.005
-		lapras.bounce = 0.99
-	else
-		lapras.stiff = 0.02
-		lapras.bounce = 0.95
-	end
-	
-	-- Store data
-	_onGround = onGround
 	
 end
 
@@ -222,18 +153,6 @@ function events.RENDER(delta, context)
 	for _, group in ipairs(parts.group.UpperBody:getChildren()) do
 		if group ~= parts.group.Body then
 			group:rot(-calculateParentRot(group:getParent()))
-		end
-	end
-	
-	-- Calc body bounce
-	lapras:berp(laprasTarget, delta)
-	
-	-- Apply body bounce
-	parts.group.LowerBody:offsetRot(lapras.pos, 0, 0)
-	for k, v in pairs(flippers) do
-		local flipperRot = vec(0, 0, lapras.pos * (k:find("Right") and -1 or 1))
-		for _, part in ipairs(v) do
-			part:offsetRot(flipperRot)
 		end
 	end
 	

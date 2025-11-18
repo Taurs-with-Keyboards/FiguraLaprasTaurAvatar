@@ -46,11 +46,44 @@ function events.ENTITY_INIT()
 	
 end
 
+-- Body bounce
+local bodyBounce = lerp:new(0, 0.3, 0.15)
+local _onGround = true
+
+-- Flipper parts tables
+local flippers = {
+	frontLeft = {
+		parts.group.FrontLeftFlipper,
+		parts.group.FrontLeftFlipper2,
+		parts.group.FrontLeftFlipper3,
+		parts.group.FrontLeftFlipper4
+	},
+	frontRight = {
+		parts.group.FrontRightFlipper,
+		parts.group.FrontRightFlipper2,
+		parts.group.FrontRightFlipper3,
+		parts.group.FrontRightFlipper4
+	},
+	backLeft = {
+		parts.group.BackLeftFlipper,
+		parts.group.BackLeftFlipper2,
+		parts.group.BackLeftFlipper3,
+		parts.group.BackLeftFlipper4
+	},
+	backRight = {
+		parts.group.BackRightFlipper,
+		parts.group.BackRightFlipper2,
+		parts.group.BackRightFlipper3,
+		parts.group.BackRightFlipper4
+	}
+}
+
 function events.TICK()
 	
 	-- Variables
 	local vel        = player:getVelocity()
 	local dir        = player:getLookDir()
+	local yaw        = player:getBodyYaw()
 	local inWater    = player:isInWater()
 	local underwater = player:isUnderwater()
 	local walking    = vel.xz:length() ~= 0
@@ -103,7 +136,7 @@ function events.TICK()
 	local sleep          = pose.sleep
 	
 	-- Animation actions
-	local canAct = onGround and not (moving or (player:getBodyYaw() ~= _yaw))
+	local canAct = onGround and not (moving or (yaw ~= _yaw))
 	canStretch = canAct and (not isAct or anims.stretch:isPlaying())
 	canLaugh   = canAct and (not isAct or anims.laugh:isPlaying())
 	canPush    = canAct and not pose.crouch and (not isAct or anims.pushUp:isPlaying())
@@ -151,8 +184,36 @@ function events.TICK()
 	-- Lerp target
 	extendLerp.target = extend and 1 or 0
 	
+	-- Set bounce target
+	if pose.crawl or pose.spin or effects.cF then
+		bodyBounce.target = 0
+	elseif not onGround then
+		bodyBounce.target = math.clamp(player:getVelocity().y, -0.5, 0.5) * 75
+	elseif onGround and not _onGround then
+		bodyBounce.target = -bodyBounce.target
+	end
+	
+	-- Bounce limits
+	if onGround and bodyBounce.currTick > 0 then
+		bodyBounce:bounce(0)
+	elseif bodyBounce.currTick < -25 then
+		bodyBounce:bounce(-25)
+	elseif bodyBounce.currTick > 35 then
+		bodyBounce:bounce(35)
+	end
+	
+	-- Stiffness and damping
+	if player:isInWater() then
+		bodyBounce:setStiff(0.1)
+		bodyBounce:setDamp(0.025)
+	else
+		bodyBounce:setStiff(0.3)
+		bodyBounce:setDamp(0.15)
+	end
+	
 	-- Store data
 	_yaw = player:getBodyYaw()
+	_onGround = onGround
 	
 end
 
@@ -202,6 +263,15 @@ function events.RENDER(delta, context)
 		-- Reset
 		models:rot(0)
 		
+	end
+	
+	-- Apply body bounce
+	parts.group.LowerBody:offsetRot(bodyBounce.currPos, 0, 0)
+	for k, v in pairs(flippers) do
+		local flipperRot = vec(0, 0, bodyBounce.currPos * (k:find("Right") and -1 or 1))
+		for _, part in ipairs(v) do
+			part:offsetRot(flipperRot)
+		end
 	end
 	
 	-- Parrot rot offset
