@@ -52,30 +52,10 @@ local _onGround = true
 
 -- Flipper parts tables
 local flippers = {
-	frontLeft = {
-		parts.group.FrontLeftFlipper,
-		parts.group.FrontLeftFlipper2,
-		parts.group.FrontLeftFlipper3,
-		parts.group.FrontLeftFlipper4
-	},
-	frontRight = {
-		parts.group.FrontRightFlipper,
-		parts.group.FrontRightFlipper2,
-		parts.group.FrontRightFlipper3,
-		parts.group.FrontRightFlipper4
-	},
-	backLeft = {
-		parts.group.BackLeftFlipper,
-		parts.group.BackLeftFlipper2,
-		parts.group.BackLeftFlipper3,
-		parts.group.BackLeftFlipper4
-	},
-	backRight = {
-		parts.group.BackRightFlipper,
-		parts.group.BackRightFlipper2,
-		parts.group.BackRightFlipper3,
-		parts.group.BackRightFlipper4
-	}
+	frontLeft  = parts:createChain("FrontLeftFlipper"),
+	frontRight = parts:createChain("FrontRightFlipper"),
+	backLeft   = parts:createChain("BackLeftFlipper"),
+	backRight  = parts:createChain("BackRightFlipper")
 }
 
 function events.TICK()
