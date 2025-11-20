@@ -192,7 +192,7 @@ function events.TICK()
 	end
 	
 	-- Store data
-	_yaw = player:getBodyYaw()
+	_yaw = yaw
 	_onGround = onGround
 	
 end
