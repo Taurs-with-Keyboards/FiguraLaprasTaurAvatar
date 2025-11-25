@@ -55,77 +55,34 @@ laprasArmor.Materials.turtle
 	)
 
 -- Trims
--- Bolt
-laprasArmor.TrimPatterns.bolt
-	:setTexture(textures["textures.armor.trims.boltTrim"] or textures["LaprasTaur.boltTrim"])
+local trims = {
+	"bolt",
+	"coast",
+	"dune",
+	"eye",
+	"flow",
+	"host",
+	"raiser",
+	"rib",
+	"sentry",
+	"shaper",
+	"silence",
+	"snout",
+	"spire",
+	"tide",
+	"vex",
+	"ward",
+	"wayfinder",
+	"wild"
+}
 
--- Coast
-laprasArmor.TrimPatterns.coast
-	:setTexture(textures["textures.armor.trims.coastTrim"] or textures["LaprasTaur.coastTrim"])
-
--- Dune
-laprasArmor.TrimPatterns.dune
-	:setTexture(textures["textures.armor.trims.duneTrim"] or textures["LaprasTaur.duneTrim"])
-
--- Eye
-laprasArmor.TrimPatterns.eye
-	:setTexture(textures["textures.armor.trims.eyeTrim"] or textures["LaprasTaur.eyeTrim"])
-
--- Flow
-laprasArmor.TrimPatterns.flow
-	:setTexture(textures["textures.armor.trims.flowTrim"] or textures["LaprasTaur.flowTrim"])
-
--- Host
-laprasArmor.TrimPatterns.host
-	:setTexture(textures["textures.armor.trims.hostTrim"] or textures["LaprasTaur.hostTrim"])
-
--- Raiser
-laprasArmor.TrimPatterns.raiser
-	:setTexture(textures["textures.armor.trims.raiserTrim"] or textures["LaprasTaur.raiserTrim"])
-
--- Rib
-laprasArmor.TrimPatterns.rib
-	:setTexture(textures["textures.armor.trims.ribTrim"] or textures["LaprasTaur.ribTrim"])
-
--- Sentry
-laprasArmor.TrimPatterns.sentry
-	:setTexture(textures["textures.armor.trims.sentryTrim"] or textures["LaprasTaur.sentryTrim"])
-
--- Shaper
-laprasArmor.TrimPatterns.shaper
-	:setTexture(textures["textures.armor.trims.shaperTrim"] or textures["LaprasTaur.shaperTrim"])
-
--- Silence
-laprasArmor.TrimPatterns.silence
-	:setTexture(textures["textures.armor.trims.silenceTrim"] or textures["LaprasTaur.silenceTrim"])
-
--- Snout
-laprasArmor.TrimPatterns.snout
-	:setTexture(textures["textures.armor.trims.snoutTrim"] or textures["LaprasTaur.snoutTrim"])
-
--- Spire
-laprasArmor.TrimPatterns.spire
-	:setTexture(textures["textures.armor.trims.spireTrim"] or textures["LaprasTaur.spireTrim"])
-
--- Tide
-laprasArmor.TrimPatterns.tide
-	:setTexture(textures["textures.armor.trims.tideTrim"] or textures["LaprasTaur.tideTrim"])
-
--- Vex
-laprasArmor.TrimPatterns.vex
-	:setTexture(textures["textures.armor.trims.vexTrim"] or textures["LaprasTaur.vexTrim"])
-
--- Ward
-laprasArmor.TrimPatterns.ward
-	:setTexture(textures["textures.armor.trims.wardTrim"] or textures["LaprasTaur.wardTrim"])
-
--- Wayfinder
-laprasArmor.TrimPatterns.wayfinder
-	:setTexture(textures["textures.armor.trims.wayfinderTrim"] or textures["LaprasTaur.wayfinderTrim"])
-
--- Wild
-laprasArmor.TrimPatterns.wild
-	:setTexture(textures["textures.armor.trims.wildTrim"] or textures["LaprasTaur.wildTrim"])
+-- Apply trims
+for _, trim in ipairs(trims) do
+	local tex = textures["textures.armor.trims."..trim.."Trim"] or textures["LaprasTaur."..trim.."Trim"] or false
+	if tex then
+		laprasArmor.TrimPatterns[trim]:setTexture(tex)
+	end
+end
 
 -- Config setup
 config:name("LaprasTaur")
