@@ -476,7 +476,7 @@ function events.RENDER(delta, context)
 			))
 		
 		for _, act in pairs(a) do
-			act:hoverColor(c.hover)
+			act:hoverColor(c.hover):toggleColor(c.active)
 		end
 		
 	end
