@@ -61,9 +61,9 @@ local flippers = {
 function events.TICK()
 	
 	-- Variables
-	local vel        = player:getVelocity()
-	local dir        = player:getLookDir()
-	local yaw        = player:getBodyYaw()
+	local vel = player:getVelocity()
+	local yaw = player:getBodyYaw()
+	local dir = vec(math.sin(math.rad(-yaw)), 0, math.cos(math.rad(-yaw)))
 	local inWater    = player:isInWater()
 	local underwater = player:isUnderwater()
 	local walking    = vel.xz:length() ~= 0
@@ -71,12 +71,12 @@ function events.TICK()
 	local onGround   = ground()
 	
 	-- Directional velocity
-	local fbVel = player:getVelocity():dot((dir.x_z):normalize())
-	local lrVel = player:getVelocity():cross(dir.x_z:normalize()).y
-	local udVel = player:getVelocity().y
+	local fbVel = vel:dot((dir.x_z):normalized())
+	local lrVel = vel:crossed(dir.x_z:normalized()).y
+	local udVel = vel.y
 	
 	-- Speed control
-	local moveSpeed  = math.clamp((effects.cF and vel:length() or (pose.climb and udVel or fbVel < -0.05 and math.min(fbVel, math.abs(lrVel)) or math.max(fbVel, math.abs(lrVel)))) * 20, -4, 4)
+	local moveSpeed  = math.clamp((effects.cF and vel:length() or pose.climb and udVel or fbVel) * 20, -4, 4)
 	local pushSpeed  = inWater and 0.25 or math.max((15 - anims.pushUp:getTime()) / 15, 0.1)
 	local waterSpeed = underwater and 0.75 or 1
 	
