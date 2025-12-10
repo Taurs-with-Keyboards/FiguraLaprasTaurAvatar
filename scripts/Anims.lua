@@ -395,9 +395,9 @@ function pings.setAnimsArmsMove(boolean)
 end
 
 -- Sync variables
-function pings.syncAnims(a)
+function pings.syncAnims(...)
 	
-	armsMove = a
+	armsMove = ...
 	
 end
 

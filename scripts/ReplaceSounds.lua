@@ -144,10 +144,10 @@ function pings.setSoundToggle(boolean)
 	
 end
 
--- Sync variable
-function pings.syncSound(a)
+-- Sync variables
+function pings.syncSound(...)
 	
-	makeSound = a
+	makeSound = ...
 	
 end
 
