@@ -164,7 +164,7 @@ function events.TICK()
 end
 
 -- Required scripts
-local s, wheel, itemCheck, c = pcall(require, "scripts.ActionWheel")
+local s, wheel, c = pcall(require, "scripts.ActionWheel")
 if not s then return end -- Kills script early if ActionWheel.lua isnt found
 pcall(require, "scripts.Shiny") -- Tries to find script, not required
 
@@ -181,13 +181,13 @@ local a = {}
 -- Actions
 if not pageExists then
 	a.pageAct = parentPage:newAction()
-		:item(itemCheck("cobblemon:water_stone", "turtle_egg"))
+		:item("cobblemon:water_stone", "turtle_egg")
 		:onLeftClick(function() wheel:descend(laprasPage) end)
 end
 
 a.soundAct = laprasPage:newAction()
-	:item(itemCheck("sponge"))
-	:toggleItem(itemCheck("water_bucket"))
+	:item("sponge")
+	:toggleItem("water_bucket")
 	:onToggle(pings.setSoundToggle)
 
 -- Update actions

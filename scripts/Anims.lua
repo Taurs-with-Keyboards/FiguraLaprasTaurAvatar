@@ -465,7 +465,7 @@ function events.TICK()
 end
 
 -- Required script
-local s, wheel, itemCheck, c = pcall(require, "scripts.ActionWheel")
+local s, wheel, c = pcall(require, "scripts.ActionWheel")
 if not s then return end -- Kills script early if ActionWheel.lua isnt found
 
 -- Check for if page already exists
@@ -481,31 +481,31 @@ local a = {}
 -- Actions
 if not pageExists then
 	a.pageAct = parentPage:newAction()
-		:item(itemCheck("jukebox"))
+		:item("jukebox")
 		:onLeftClick(function() wheel:descend(animsPage) end)
 end
 
 a.stretchPage = animsPage:newAction()
-	:item(itemCheck("scaffolding"))
+	:item("scaffolding")
 	:onLeftClick(pings.animPlayStretch)
 
 a.laughPage = animsPage:newAction()
-	:item(itemCheck("cookie"))
+	:item("cookie")
 	:onLeftClick(pings.animPlayLaugh)
 
 a.pushUpPage = animsPage:newAction()
-	:item(itemCheck("stick"))
-	:toggleItem(itemCheck("iron_ingot"))
+	:item("stick")
+	:toggleItem("iron_ingot")
 	:onToggle(pings.setAnimTogglePushUp)
 
 a.flipPage = animsPage:newAction()
-	:item(itemCheck("music_disc_wait"))
+	:item("music_disc_wait")
 	:onLeftClick(pings.animPlayFrontFlip)
 	:onRightClick(pings.animPlayBackFlip)
 
 a.armsAct = animsPage:newAction()
-	:item(itemCheck("red_dye"))
-	:toggleItem(itemCheck("rabbit_foot"))
+	:item("red_dye")
+	:toggleItem("rabbit_foot")
 	:onToggle(pings.setAnimsArmsMove)
 	:toggled(armsMove)
 
