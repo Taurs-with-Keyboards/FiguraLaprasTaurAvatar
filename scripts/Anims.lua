@@ -2,6 +2,7 @@
 require("lib.GSAnimBlend")
 require("lib.Molang")
 local parts   = require("lib.PartsAPI")
+local sync    = require("lib.LetThatSyncFig")
 local lerp    = require("lib.LerpAPI")
 local ground  = require("lib.GroundCheck")
 local pose    = require("scripts.Posing")
@@ -10,8 +11,8 @@ local effects = require("scripts.SyncedVariables")
 -- Animations setup
 local anims = animations.LaprasTaur
 
-config:name("LaprasTaur")
-local armsMove = config:load("ArmsMove") or false
+-- Synced variables setup
+local armsMove = sync.add(config:load("ArmsMove"), false)
 
 -- Variables setup
 local canStretch = false
@@ -23,8 +24,8 @@ local canFlip    = false
 local extendLerp = lerp:new()
 
 -- Arms setup
-local leftArmLerp  = lerp:new(armsMove and 1 or 0, 0.5)
-local rightArmLerp = lerp:new(armsMove and 1 or 0, 0.5)
+local leftArmLerp  = lerp:new(sync[armsMove] and 1 or 0, 0.5)
+local rightArmLerp = lerp:new(sync[armsMove] and 1 or 0, 0.5)
 
 -- Gets the origin rotation of a part, clamped
 local function getOriginRot(part, delta)
@@ -193,8 +194,8 @@ function events.TICK()
 	local armShouldMove = pose.crawl
 	
 	-- Arms movement targets
-	leftArmLerp.target  = (armsMove or armShouldMove or swingL or usingL or bow) and 0 or -1
-	rightArmLerp.target = (armsMove or armShouldMove or swingR or usingR or bow) and 0 or -1
+	leftArmLerp.target  = (sync[armsMove] or armShouldMove or swingL or usingL or bow) and 0 or -1
+	rightArmLerp.target = (sync[armsMove] or armShouldMove or swingR or usingR or bow) and 0 or -1
 	
 	-- Lerp target
 	extendLerp.target = extend and 1 or 0
@@ -389,80 +390,32 @@ end
 -- Arm movement toggle
 function pings.setAnimsArmsMove(boolean)
 	
-	armsMove = boolean
-	config:save("ArmsMove", armsMove)
-	
-end
-
--- Sync variables
-function pings.syncAnims(...)
-	
-	armsMove = ...
+	sync[armsMove] = boolean
+	config:save("ArmsMove", sync[armsMove])
 	
 end
 
 -- Host only instructions
 if not host:isHost() then return end
 
--- Sync on tick
-function events.TICK()
-	
-	if world.getTime() % 200 == 0 then
-		pings.syncAnims(armsMove)
-	end
-	
-end
+-- Keybinds
+local stretchKeybind = keybinds:newKeybind("Stretch Animation", "key.keyboard.keypad.3")
+	:onPress(pings.animPlayStretch)
+local laughKeybind = keybinds:newKeybind("Laugh Animation", "key.keyboard.keypad.4")
+	:onPress(pings.animPlayLaugh)
+local pushUpKeybind = keybinds:newKeybind("Push Up Animation", "key.keyboard.keypad.5")
+	:onPress(function() pings.setAnimTogglePushUp(not anims.pushUp:isPlaying()) end)
+local frontFlipKeybind = keybinds:newKeybind("Front Flip Animation", "key.keyboard.keypad.6")
+	:onPress(pings.animPlayFrontFlip)
+local backFlipKeybind = keybinds:newKeybind("Back Flip Animation", "key.keyboard.keypad.7")
+	:onPress(pings.animPlayBackFlip)
 
--- Stretch keybind
-local stretchBind   = config:load("AnimStretchKeybind") or "key.keyboard.keypad.3"
-local setStretchKey = keybinds:newKeybind("Stretch Animation"):onPress(pings.animPlayStretch):key(stretchBind)
-
--- Stretch keybind
-local laughBind   = config:load("AnimLaughKeybind") or "key.keyboard.keypad.4"
-local setLaughKey = keybinds:newKeybind("Laugh Animation"):onPress(pings.animPlayLaugh):key(laughBind)
-
--- Pushup keybind
-local pushUpBind   = config:load("AnimPushUpKeybind") or "key.keyboard.keypad.5"
-local setPushUpKey = keybinds:newKeybind("Push Up Animation"):onPress(function() pings.setAnimTogglePushUp(not anims.pushUp:isPlaying()) end):key(pushUpBind)
-
--- FrontFlip keybind
-local frontFlipBind   = config:load("AnimFrontFlipKeybind") or "key.keyboard.keypad.6"
-local setFrontFlipKey = keybinds:newKeybind("Front Flip Animation"):onPress(pings.animPlayFrontFlip):key(frontFlipBind)
-
--- FrontFlip keybind
-local backFlipBind   = config:load("AnimBackFlipKeybind") or "key.keyboard.keypad.7"
-local setBackFlipKey = keybinds:newKeybind("Back Flip Animation"):onPress(pings.animPlayBackFlip):key(backFlipBind)
-
--- Keybind updaters
-function events.TICK()
-	
-	local stretchKey   = setStretchKey:getKey()
-	local laughKey     = setLaughKey:getKey()
-	local pushUpKey    = setPushUpKey:getKey()
-	local frontFlipKey = setFrontFlipKey:getKey()
-	local backFlipKey  = setBackFlipKey:getKey()
-	if stretchKey ~= stretchBind then
-		stretchBind = stretchKey
-		config:save("AnimStretchKeybind", stretchKey)
-	end
-	if laughKey ~= laughBind then
-		laughBind = laughKey
-		config:save("AnimLaughKeybind", laughKey)
-	end
-	if pushUpKey ~= pushUpBind then
-		pushUpBind = pushUpKey
-		config:save("AnimPushUpKeybind", pushUpKey)
-	end
-	if frontFlipKey ~= frontFlipBind then
-		frontFlipBind = frontFlipKey
-		config:save("AnimFrontFLipKeybind", frontFlipKey)
-	end
-	if backFlipKey ~= backFlipBind then
-		backFlipBind = backFlipKey
-		config:save("AnimBackFLipKeybind", backFlipKey)
-	end
-	
-end
+-- Sync config keybinds
+sync.keybind(stretchKeybind, "AnimStretchKeybind")
+sync.keybind(laughKeybind, "AnimLaughKeybind")
+sync.keybind(pushUpKeybind, "AnimPushUpKeybind")
+sync.keybind(frontFlipKeybind, "AnimFrontFlipKeybind")
+sync.keybind(backFlipKeybind, "AnimBackFlipKeybind")
 
 -- Required script
 local s, wheel, c = pcall(require, "scripts.ActionWheel")
@@ -507,7 +460,7 @@ a.armsAct = animsPage:newAction()
 	:item("red_dye")
 	:toggleItem("rabbit_foot")
 	:onToggle(pings.setAnimsArmsMove)
-	:toggled(armsMove)
+	:toggled(sync[armsMove])
 
 -- Update actions
 function events.RENDER(delta, context)

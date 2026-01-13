@@ -1,5 +1,6 @@
 -- Required scripts
 local parts   = require("lib.PartsAPI")
+local sync    = require("lib.LetThatSyncFig")
 local ground  = require("lib.GroundCheck")
 local pose    = require("scripts.Posing")
 local effects = require("scripts.SyncedVariables")
@@ -10,10 +11,8 @@ local groundParts = parts:createTable(function(part) return part:getName():find(
 -- Stop script if ground parts could not be found
 if #groundParts == 0 then return end
 
--- Config setup
-config:name("LaprasTaur")
-local makeSound = config:load("SoundsToggle")
-if makesound == nil then makesound = true end
+-- Synced variables setup
+local makeSound = sync.add(config:load("SoundsToggle"), true)
 
 -- Animations setup
 local anims = animations.LaprasTaur
@@ -77,7 +76,7 @@ function events.TICK()
 	local inWater  = player:isInWater()
 	
 	-- Play footsteps based on placement
-	if makeSound and onGround and not (inWater or player:getVehicle() or effects.cF) then
+	if sync[makeSound] and onGround and not (inWater or player:getVehicle() or effects.cF) then
 		
 		for _, flipper in ipairs(groundParts) do
 			
@@ -136,32 +135,16 @@ end
 -- Sound toggle
 function pings.setSoundToggle(boolean)
 	
-	makeSound = boolean
-	config:save("SoundsToggle", makeSound)
-	if player:isLoaded() and makeSound then
+	sync[makeSound] = boolean
+	config:save("SoundsToggle", sync[makeSound])
+	if player:isLoaded() and sync[makeSound] then
 		sounds:playSound("item.bucket.fill", player:getPos())
 	end
 	
 end
 
--- Sync variables
-function pings.syncSound(...)
-	
-	makeSound = ...
-	
-end
-
 -- Host only instructions
 if not host:isHost() then return end
-
--- Sync on tick
-function events.TICK()
-	
-	if world.getTime() % 200 == 0 then
-		pings.syncSound(makeSound)
-	end
-	
-end
 
 -- Required scripts
 local s, wheel, c = pcall(require, "scripts.ActionWheel")
@@ -209,7 +192,7 @@ function events.RENDER(delta, context)
 					{text = "Toggles the sounds played by the movement/flopping of your flippers.", color = c.secondary}
 				}
 			))
-			:toggled(makeSound)
+			:toggled(sync[makeSound])
 		
 		for _, act in pairs(a) do
 			act:hoverColor(c.hover):toggleColor(c.active)
