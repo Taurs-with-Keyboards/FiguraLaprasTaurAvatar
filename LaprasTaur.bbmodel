@@ -1,9 +1,11 @@
 {
 	"meta": {
 		"format_version": "5.0",
-		"model_format": "figura",
+		"model_format": "free",
 		"box_uv": false
 	},
+	"name": "LaprasTaur",
+	"model_identifier": "",
 	"visible_box": [1, 1, 0],
 	"variable_placeholders": "",
 	"multi_file_ruleset": "",
@@ -15846,6 +15848,7 @@
 		{
 			"uuid": "7761ef0d-0656-02c8-125d-cc1975c4f737",
 			"name": "VanillaSkin",
+			"model_identifier": "",
 			"scope": 0,
 			"saved": true,
 			"export_codec": "",
@@ -15880,6 +15883,7 @@
 		{
 			"uuid": "c2ba8c82-4c09-3cf7-7872-e2dc23c4490c",
 			"name": "ShinyParts",
+			"model_identifier": "",
 			"scope": 0,
 			"saved": true,
 			"export_codec": "",
@@ -15932,6 +15936,7 @@
 		{
 			"uuid": "4d371aaf-7c69-9331-c6df-37343b80614e",
 			"name": "HatLayer",
+			"model_identifier": "",
 			"scope": 0,
 			"saved": true,
 			"export_codec": "",
@@ -15952,6 +15957,7 @@
 		{
 			"uuid": "e3969d4b-5139-128b-9f70-3df0ba4e30e4",
 			"name": "JacketLayer",
+			"model_identifier": "",
 			"scope": 0,
 			"saved": true,
 			"export_codec": "",
@@ -15961,6 +15967,7 @@
 		{
 			"uuid": "fb716691-7b56-46a5-86fd-a2e6b8488d19",
 			"name": "LeftSleeveLayer",
+			"model_identifier": "",
 			"scope": 0,
 			"saved": true,
 			"export_codec": "",
@@ -15975,6 +15982,7 @@
 		{
 			"uuid": "33974e5f-8d16-7ebb-2d80-5f17b17f5359",
 			"name": "RightSleeveLayer",
+			"model_identifier": "",
 			"scope": 0,
 			"saved": true,
 			"export_codec": "",
@@ -15989,6 +15997,7 @@
 		{
 			"uuid": "bff83013-d40b-af15-23cb-464643fdaeb3",
 			"name": "LeftPantsLegLayer",
+			"model_identifier": "",
 			"scope": 0,
 			"saved": true,
 			"export_codec": "",
@@ -16007,6 +16016,7 @@
 		{
 			"uuid": "e72c4e42-f36c-83b6-7140-0060c6663e9c",
 			"name": "RightPantsLegLayer",
+			"model_identifier": "",
 			"scope": 0,
 			"saved": true,
 			"export_codec": "",
@@ -16025,6 +16035,7 @@
 		{
 			"uuid": "53588e67-c548-00ae-63d8-144371a79ae7",
 			"name": "LowerLayer",
+			"model_identifier": "",
 			"scope": 0,
 			"saved": true,
 			"export_codec": "",
@@ -16052,6 +16063,7 @@
 		{
 			"uuid": "e9c89967-2797-05d6-c4a6-498726954058",
 			"name": "Cape",
+			"model_identifier": "",
 			"scope": 0,
 			"saved": true,
 			"export_codec": "",
@@ -16061,6 +16073,7 @@
 		{
 			"uuid": "211e15aa-4c80-b6a7-c13d-d289c33a7e3e",
 			"name": "ArmorHelmet",
+			"model_identifier": "",
 			"scope": 0,
 			"saved": true,
 			"export_codec": "",
@@ -16070,6 +16083,7 @@
 		{
 			"uuid": "a8cd28a3-2cbd-30e3-cc8b-70d949e1a378",
 			"name": "ArmorChestplate",
+			"model_identifier": "",
 			"scope": 0,
 			"saved": true,
 			"export_codec": "",
@@ -16089,6 +16103,7 @@
 		{
 			"uuid": "68b81b17-2098-ae32-c932-0df5c29c9589",
 			"name": "ArmorLeggings",
+			"model_identifier": "",
 			"scope": 0,
 			"saved": true,
 			"export_codec": "",
@@ -16109,6 +16124,7 @@
 		{
 			"uuid": "a14502c0-f0b8-f655-a616-c08cb221af53",
 			"name": "ArmorBoots",
+			"model_identifier": "",
 			"scope": 0,
 			"saved": true,
 			"export_codec": "",
@@ -16127,6 +16143,7 @@
 		{
 			"uuid": "14e5b358-104b-ab20-1c8e-5a5d76bb5b00",
 			"name": "ArmorShell",
+			"model_identifier": "",
 			"scope": 0,
 			"saved": true,
 			"export_codec": "",
