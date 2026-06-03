@@ -12,7 +12,8 @@ local effects = require("scripts.SyncedVariables")
 local anims = animations.LaprasTaur
 
 -- Synced variables setup
-local armsMove = sync.add(config:load("ArmsMove"), false)
+local armsMove = sync.new("AnimsArms", false):config()
+local pushup   = sync.new("AnimsPushup", false)
 
 -- Variables setup
 local canStretch = false
@@ -21,11 +22,11 @@ local canPush    = false
 local canFlip    = false
 
 -- Lerp table
-local extendLerp = lerp:new()
+local extendLerp = lerp.new()
 
 -- Arms setup
-local leftArmLerp  = lerp:new(sync[armsMove] and 1 or 0, 0.5)
-local rightArmLerp = lerp:new(sync[armsMove] and 1 or 0, 0.5)
+local leftArmLerp  = lerp.new(armsMove.curr and 1 or 0, 0.5)
+local rightArmLerp = lerp.new(armsMove.curr and 1 or 0, 0.5)
 
 -- Gets the origin rotation of a part, clamped
 local function getOriginRot(part, delta)
@@ -62,7 +63,7 @@ function events.ENTITY_INIT()
 end
 
 -- Body bounce
-local bodyBounce = lerp:new(0, 0.3, 0.15)
+local bodyBounce = lerp.new(0, 0.3, 0.15)
 local _onGround = true
 
 -- Flipper parts tables
@@ -148,9 +149,8 @@ function events.TICK()
 	end
 	
 	-- Stop Pushup animation
-	if not canPush then
-		anims.pushUp:stop()
-		anims.pushUpShake:stop()
+	if pushup.curr and not canPush then
+		pushup:update(false)
 	end
 	
 	-- Stop Flip animations
@@ -175,6 +175,8 @@ function events.TICK()
 	anims.spin:playing(spin)
 	anims.climb:playing(climb)
 	anims.napDown:playing(sleep)
+	anims.pushUp:playing(pushup.curr)
+	anims.pushUpShake:playing(pushup.curr and not inWater)
 	
 	-- Arm variables
 	local handedness = player:isLeftHanded()
@@ -194,8 +196,8 @@ function events.TICK()
 	local armShouldMove = pose.crawl
 	
 	-- Arms movement targets
-	leftArmLerp.target  = (sync[armsMove] or armShouldMove or swingL or usingL or bow) and 0 or -1
-	rightArmLerp.target = (sync[armsMove] or armShouldMove or swingR or usingR or bow) and 0 or -1
+	leftArmLerp.target  = (armsMove.curr or armShouldMove or swingL or usingL or bow) and 0 or -1
+	rightArmLerp.target = (armsMove.curr or armShouldMove or swingR or usingR or bow) and 0 or -1
 	
 	-- Lerp target
 	extendLerp.target = extend and 1 or 0
@@ -360,15 +362,6 @@ function pings.animPlayLaugh()
 	
 end
 
--- Play pushup anim
-function pings.setAnimTogglePushUp(boolean)
-	
-	local play = canPush and boolean
-	anims.pushUp:playing(play)
-	anims.pushUpShake:playing(play and not player:isInWater())
-	
-end
-
 -- Play front flip anim
 function pings.animPlayFrontFlip()
 	
@@ -387,35 +380,46 @@ function pings.animPlayBackFlip()
 	
 end
 
--- Arm movement toggle
-function pings.setAnimsArmsMove(boolean)
-	
-	sync[armsMove] = boolean
-	config:save("ArmsMove", sync[armsMove])
-	
-end
-
 -- Host only instructions
 if not host:isHost() then return end
 
--- Keybinds
-local stretchKeybind = keybinds:newKeybind("Stretch Animation", "key.keyboard.keypad.3")
-	:onPress(pings.animPlayStretch)
-local laughKeybind = keybinds:newKeybind("Laugh Animation", "key.keyboard.keypad.4")
-	:onPress(pings.animPlayLaugh)
-local pushUpKeybind = keybinds:newKeybind("Push Up Animation", "key.keyboard.keypad.5")
-	:onPress(function() pings.setAnimTogglePushUp(not anims.pushUp:isPlaying()) end)
-local frontFlipKeybind = keybinds:newKeybind("Front Flip Animation", "key.keyboard.keypad.6")
-	:onPress(pings.animPlayFrontFlip)
-local backFlipKeybind = keybinds:newKeybind("Back Flip Animation", "key.keyboard.keypad.7")
-	:onPress(pings.animPlayBackFlip)
+-- Required script
+local keybound = require("lib.Keybound")
 
--- Sync config keybinds
-sync.keybind(stretchKeybind, "AnimStretchKeybind")
-sync.keybind(laughKeybind, "AnimLaughKeybind")
-sync.keybind(pushUpKeybind, "AnimPushUpKeybind")
-sync.keybind(frontFlipKeybind, "AnimFrontFlipKeybind")
-sync.keybind(backFlipKeybind, "AnimBackFlipKeybind")
+-- Setup keybinds
+local stretchKeybind = keybound.new(
+	keybinds
+		:newKeybind("Stretch Animation", "key.keyboard.keypad.3")
+		:onPress(pings.animPlayStretch),
+	"AnimStretchKeybind"
+)
+local laughKeybind = keybound.new(
+	keybinds
+		:newKeybind("Laugh Animation", "key.keyboard.keypad.4")
+		:onPress(pings.animPlayLaugh),
+	"AnimLaughKeybind"
+)
+local pushUpKeybind = keybound.new(
+	keybinds
+		:newKeybind("Push Up Animation", "key.keyboard.keypad.5")
+		:onPress(function()
+			if not canPush then return end
+			pushup:update(not pushup.curr)
+		end),
+	"AnimPushUpKeybind"
+)
+local frontFlipKeybind = keybound.new(
+	keybinds
+		:newKeybind("Front Flip Animation", "key.keyboard.keypad.6")
+		:onPress(pings.animPlayFrontFlip),
+	"AnimFrontFlipKeybind"
+)
+local backFlipKeybind = keybound.new(
+	keybinds
+		:newKeybind("Back Flip Animation", "key.keyboard.keypad.7")
+		:onPress(pings.animPlayBackFlip),
+	"AnimBackFlipKeybind"
+)
 
 -- Required script
 local s, wheel, c = pcall(require, "scripts.ActionWheel")
@@ -449,7 +453,10 @@ a.laughPage = animsPage:newAction()
 a.pushUpPage = animsPage:newAction()
 	:item("stick")
 	:toggleItem("iron_ingot")
-	:onToggle(pings.setAnimTogglePushUp)
+	:onToggle(function(bool)
+		if not canPush then return end
+		pushup:update(bool)
+	end)
 
 a.flipPage = animsPage:newAction()
 	:item("music_disc_wait")
@@ -459,8 +466,10 @@ a.flipPage = animsPage:newAction()
 a.armsAct = animsPage:newAction()
 	:item("red_dye")
 	:toggleItem("rabbit_foot")
-	:onToggle(pings.setAnimsArmsMove)
-	:toggled(sync[armsMove])
+	:onToggle(function(bool)
+		armsMove:update(bool)
+	end)
+	:toggled(armsMove.curr)
 
 -- Update actions
 function events.RENDER(delta, context)
@@ -487,7 +496,7 @@ function events.RENDER(delta, context)
 			:title(toJson(
 				{text = "Toggle Push Up animation", bold = true, color = c.primary}
 			))
-			:toggled(anims.pushUp:isPlaying())
+			:toggled(pushup.curr)
 		
 		a.flipPage
 			:title(toJson(
