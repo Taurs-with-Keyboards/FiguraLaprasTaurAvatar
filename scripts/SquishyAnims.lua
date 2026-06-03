@@ -4,7 +4,6 @@ if not s then return {} end
 
 -- Required scripts
 local parts = require("lib.PartsAPI")
-local lerp  = require("lib.LerpAPI")
 local pose  = require("scripts.Posing")
 
 -- Animation setup
