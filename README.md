@@ -19,7 +19,7 @@ This Figura avatar is a template designed around turning the user into a Lapras-
 - Squishy (SquAPI)
 - Katt (OriginsAPI, KattArmor)
 - 4P5 (GroundCheck)
-- Manuel (Molang Conversions)
+- Manuel (Molang Conversions, OriginsAPI)
 - Auria (Molang Conversions)
 
 ### Origin Datapack:
