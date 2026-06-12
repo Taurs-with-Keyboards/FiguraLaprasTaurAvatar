@@ -26399,8 +26399,8 @@
 							"channel": "rotation",
 							"data_points": [
 								{
-									"x": "-vanilla_model.LEFT_ELYTRA:-getOriginRot().y",
-									"y": "vanilla_model.LEFT_ELYTRA:-getOriginRot().z*0.75+67.5",
+									"x": "-vanilla_model.LEFT_ELYTRA:getOriginRot().y",
+									"y": "vanilla_model.LEFT_ELYTRA:getOriginRot().z*0.75+67.5",
 									"z": "vanilla_model.LEFT_ELYTRA:getOriginRot().x"
 								}
 							],
@@ -26421,8 +26421,8 @@
 							"channel": "rotation",
 							"data_points": [
 								{
-									"x": "-vanilla_model.RIGHT_ELYTRA:-getOriginRot().y",
-									"y": "vanilla_model.RIGHT_ELYTRA:-getOriginRot().z*0.75-67.5",
+									"x": "-vanilla_model.RIGHT_ELYTRA:getOriginRot().y",
+									"y": "vanilla_model.RIGHT_ELYTRA:getOriginRot().z*0.75-67.5",
 									"z": "-vanilla_model.RIGHT_ELYTRA:getOriginRot().x"
 								}
 							],
@@ -26443,8 +26443,8 @@
 							"channel": "rotation",
 							"data_points": [
 								{
-									"x": "-vanilla_model.LEFT_ELYTRA:-getOriginRot().y",
-									"y": "vanilla_model.LEFT_ELYTRA:-getOriginRot().z*0.75+67.5",
+									"x": "-vanilla_model.LEFT_ELYTRA:getOriginRot().y",
+									"y": "vanilla_model.LEFT_ELYTRA:getOriginRot().z*0.75+67.5",
 									"z": "vanilla_model.LEFT_ELYTRA:getOriginRot().x"
 								}
 							],
@@ -26465,8 +26465,8 @@
 							"channel": "rotation",
 							"data_points": [
 								{
-									"x": "-vanilla_model.RIGHT_ELYTRA:-getOriginRot().y",
-									"y": "vanilla_model.RIGHT_ELYTRA:-getOriginRot().z*0.75-67.5",
+									"x": "-vanilla_model.RIGHT_ELYTRA:getOriginRot().y",
+									"y": "vanilla_model.RIGHT_ELYTRA:getOriginRot().z*0.75-67.5",
 									"z": "-vanilla_model.RIGHT_ELYTRA:getOriginRot().x"
 								}
 							],
