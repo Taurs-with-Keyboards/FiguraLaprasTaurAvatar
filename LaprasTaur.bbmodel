@@ -39107,13 +39107,45 @@
 					"name": "NameplatePivot",
 					"type": "bone",
 					"rotation_global": false,
-					"quaternion_interpolation": false
+					"quaternion_interpolation": false,
+					"keyframes": [
+						{
+							"channel": "rotation",
+							"data_points": [
+								{
+									"x": "90",
+									"y": "0",
+									"z": "0"
+								}
+							],
+							"uuid": "03c264f2-8014-6888-f395-16dcd7f69991",
+							"time": 0,
+							"color": -1,
+							"interpolation": "linear"
+						}
+					]
 				},
 				"ff22c786-4cf3-239a-d7a6-873ca5f1e791": {
 					"name": "Nameplate",
 					"type": "bone",
 					"rotation_global": false,
-					"quaternion_interpolation": false
+					"quaternion_interpolation": false,
+					"keyframes": [
+						{
+							"channel": "position",
+							"data_points": [
+								{
+									"x": "0",
+									"y": "5",
+									"z": "0"
+								}
+							],
+							"uuid": "274aa455-5e85-a026-2940-33159b115641",
+							"time": 0,
+							"color": -1,
+							"interpolation": "linear"
+						}
+					]
 				}
 			}
 		},
