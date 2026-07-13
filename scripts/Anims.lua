@@ -211,11 +211,11 @@ function events.TICK()
 	
 	-- Bounce limits
 	if onGround and bodyBounce.currTick > 0 then
-		bodyBounce:bounce(0)
+		bodyBounce:bounce(0, 0.85)
 	elseif bodyBounce.currTick < -25 then
-		bodyBounce:bounce(-25)
+		bodyBounce:bounce(-25, 0.85)
 	elseif bodyBounce.currTick > 35 then
-		bodyBounce:bounce(35)
+		bodyBounce:bounce(35, 0.85)
 	end
 	
 	-- Stiffness and damping
