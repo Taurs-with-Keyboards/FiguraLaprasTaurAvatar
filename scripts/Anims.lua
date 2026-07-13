@@ -219,7 +219,7 @@ function events.TICK()
 	end
 	
 	-- Stiffness and damping
-	if player:isInWater() then
+	if inWater then
 		bodyBounce:setStiff(0.1)
 		bodyBounce:setDamp(0.025)
 	else
