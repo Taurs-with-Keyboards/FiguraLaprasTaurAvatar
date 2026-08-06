@@ -420,7 +420,7 @@ local backFlipKeybind = keybound.new(
 )
 
 -- Required script
-local s, pageNav, c = pcall(require, "scripts.ActionWheel")
+local s, pageNav, acts, c = pcall(require, "scripts.ActionWheel")
 if not s then return end -- Kills script early if ActionWheel.lua isnt found
 
 -- Check for if page already exists
@@ -430,25 +430,22 @@ local pageExists = action_wheel:getPage("Anims")
 local parentPage = action_wheel:getPage("Main")
 local animsPage  = pageExists or action_wheel:newPage("Anims")
 
--- Actions table setup
-local a = {}
-
 -- Actions
 if not pageExists then
-	a.pageAct = parentPage:newAction()
+	acts.animsPage = parentPage:newAction()
 		:item("jukebox")
 		:onLeftClick(function() pageNav.descend(animsPage) end)
 end
 
-a.stretchPage = animsPage:newAction()
+acts.animsStretch = animsPage:newAction()
 	:item("scaffolding")
 	:onLeftClick(pings.animPlayStretch)
 
-a.laughPage = animsPage:newAction()
+acts.animsLaugh = animsPage:newAction()
 	:item("cookie")
 	:onLeftClick(pings.animPlayLaugh)
 
-a.pushUpPage = animsPage:newAction()
+acts.animsPushUpToggle = animsPage:newAction()
 	:item("stick")
 	:toggleItem("iron_ingot")
 	:onToggle(function(bool)
@@ -456,12 +453,12 @@ a.pushUpPage = animsPage:newAction()
 		pushup:update(bool)
 	end)
 
-a.flipPage = animsPage:newAction()
+acts.animsFlip = animsPage:newAction()
 	:item("music_disc_wait")
 	:onLeftClick(pings.animPlayFrontFlip)
 	:onRightClick(pings.animPlayBackFlip)
 
-a.armsAct = animsPage:newAction()
+acts.animsArmsToggle = animsPage:newAction()
 	:item("red_dye")
 	:toggleItem("rabbit_foot")
 	:onToggle(function(bool)
@@ -473,30 +470,35 @@ a.armsAct = animsPage:newAction()
 function events.RENDER(delta, context)
 	
 	if action_wheel:isEnabled() then
-		if a.pageAct then
-			a.pageAct
+		if acts.animsPage then
+			acts.animsPage
 				:title(toJson(
 					{text = "Animation Settings", bold = true, color = c.primary}
 				))
+				:hoverColor(c.hover)
 		end
 		
-		a.stretchPage
+		acts.animsStretch
 			:title(toJson(
 				{text = "Play Stretch animation", bold = true, color = c.primary}
 			))
+			:hoverColor(c.hover)
 		
-		a.laughPage
+		acts.animsLaugh
 			:title(toJson(
 				{text = "Play Laugh animation", bold = true, color = c.primary}
 			))
+			:hoverColor(c.hover)
 		
-		a.pushUpPage
+		acts.animsPushUpToggle
 			:title(toJson(
 				{text = "Toggle Push Up animation", bold = true, color = c.primary}
 			))
 			:toggled(pushup.curr)
+			:hoverColor(c.hover)
+			:toggleColor(c.active)
 		
-		a.flipPage
+		acts.animsFlip
 			:title(toJson(
 				{
 					"",
@@ -504,8 +506,9 @@ function events.RENDER(delta, context)
 					{text = "Left click to Frontflip, right click to Backflip.\nMust not be on the ground.", color = c.secondary}
 				}
 			))
+			:hoverColor(c.hover)
 		
-		a.armsAct
+		acts.animsArmsToggle
 			:title(toJson(
 				{
 					"",
@@ -513,10 +516,8 @@ function events.RENDER(delta, context)
 					{text = "Toggles the movement swing movement of the arms.\nActions are not effected.", color = c.secondary}
 				}
 			))
-		
-		for _, act in pairs(a) do
-			act:hoverColor(c.hover):toggleColor(c.active)
-		end
+			:hoverColor(c.hover)
+			:toggleColor(c.active)
 		
 	end
 	
