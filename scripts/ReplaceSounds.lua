@@ -142,7 +142,7 @@ makeSound:applyFunc(function()
 end)
 
 -- Required scripts
-local s, pageNav, acts, c = pcall(require, "scripts.ActionWheel")
+local s, pageNav, acts, colors = pcall(require, "scripts.ActionWheel")
 if not s then return end -- Kills script early if ActionWheel.lua isnt found
 pcall(require, "scripts.Shiny") -- Tries to find script, not required
 
@@ -175,21 +175,21 @@ function events.RENDER(delta, context)
 		if acts.laprasPage then
 			acts.laprasPage
 				:title(toJson(
-					{text = "Lapras Settings", bold = true, color = c.primary}
+					{text = "Lapras Settings", bold = true, color = colors.primary}
 				))
-				:hoverColor(c.hover)
+				:hoverColor(colors.hover)
 		end
 		
 		acts.flopSoundToggle
 			:title(toJson(
 				{
 					"",
-					{text = "Toggle Movement Sounds\n\n", bold = true, color = c.primary},
-					{text = "Toggles the sounds played by the movement/flopping of your flippers.", color = c.secondary}
+					{text = "Toggle Movement Sounds\n\n", bold = true, color = colors.primary},
+					{text = "Toggles the sounds played by the movement/flopping of your flippers.", color = colors.secondary}
 				}
 			))
-			:hoverColor(c.hover)
-			:toggleColor(c.active)
+			:hoverColor(colors.hover)
+			:toggleColor(colors.active)
 		
 	end
 	

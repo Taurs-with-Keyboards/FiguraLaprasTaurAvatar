@@ -8,13 +8,13 @@ renderer:outlineColor(vectors.hexToRGB("408ED7"))
 if not host:isHost() then return end
 
 -- Table setup
-local c = {}
+local colors = {}
 
 -- Action variables
-c.hover     = vectors.hexToRGB("408ED7")
-c.active    = vectors.hexToRGB("EED0A3")
-c.primary   = "#408ED7"
-c.secondary = "#EED0A3"
+colors.hover     = vectors.hexToRGB("408ED7")
+colors.active    = vectors.hexToRGB("EED0A3")
+colors.primary   = "#408ED7"
+colors.secondary = "#EED0A3"
 
 -- Return variables
-return c
+return colors

@@ -420,7 +420,7 @@ local backFlipKeybind = keybound.new(
 )
 
 -- Required script
-local s, pageNav, acts, c = pcall(require, "scripts.ActionWheel")
+local s, pageNav, acts, colors = pcall(require, "scripts.ActionWheel")
 if not s then return end -- Kills script early if ActionWheel.lua isnt found
 
 -- Check for if page already exists
@@ -473,51 +473,51 @@ function events.RENDER(delta, context)
 		if acts.animsPage then
 			acts.animsPage
 				:title(toJson(
-					{text = "Animation Settings", bold = true, color = c.primary}
+					{text = "Animation Settings", bold = true, color = colors.primary}
 				))
-				:hoverColor(c.hover)
+				:hoverColor(colors.hover)
 		end
 		
 		acts.animsStretch
 			:title(toJson(
-				{text = "Play Stretch animation", bold = true, color = c.primary}
+				{text = "Play Stretch animation", bold = true, color = colors.primary}
 			))
-			:hoverColor(c.hover)
+			:hoverColor(colors.hover)
 		
 		acts.animsLaugh
 			:title(toJson(
-				{text = "Play Laugh animation", bold = true, color = c.primary}
+				{text = "Play Laugh animation", bold = true, color = colors.primary}
 			))
-			:hoverColor(c.hover)
+			:hoverColor(colors.hover)
 		
 		acts.animsPushUpToggle
 			:title(toJson(
-				{text = "Toggle Push Up animation", bold = true, color = c.primary}
+				{text = "Toggle Push Up animation", bold = true, color = colors.primary}
 			))
 			:toggled(pushup.curr)
-			:hoverColor(c.hover)
-			:toggleColor(c.active)
+			:hoverColor(colors.hover)
+			:toggleColor(colors.active)
 		
 		acts.animsFlip
 			:title(toJson(
 				{
 					"",
-					{text = "Play Flip animation\n\n", bold = true, color = c.primary},
-					{text = "Left click to Frontflip, right click to Backflip.\nMust not be on the ground.", color = c.secondary}
+					{text = "Play Flip animation\n\n", bold = true, color = colors.primary},
+					{text = "Left click to Frontflip, right click to Backflip.\nMust not be on the ground.", color = colors.secondary}
 				}
 			))
-			:hoverColor(c.hover)
+			:hoverColor(colors.hover)
 		
 		acts.animsArmsToggle
 			:title(toJson(
 				{
 					"",
-					{text = "Arm Movement Toggle\n\n", bold = true, color = c.primary},
-					{text = "Toggles the movement swing movement of the arms.\nActions are not effected.", color = c.secondary}
+					{text = "Arm Movement Toggle\n\n", bold = true, color = colors.primary},
+					{text = "Toggles the movement swing movement of the arms.\nActions are not effected.", color = colors.secondary}
 				}
 			))
-			:hoverColor(c.hover)
-			:toggleColor(c.active)
+			:hoverColor(colors.hover)
+			:toggleColor(colors.active)
 		
 	end
 	
