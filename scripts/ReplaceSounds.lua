@@ -135,7 +135,7 @@ end
 if not host:isHost() then return end
 
 -- Apply sound function
-makeSound:applyFunc(function()
+makeSound:addFunc(function()
 	if player:isLoaded() and makeSound.curr then
 		sounds:playSound("item.bucket.fill", player:getPos())
 	end
